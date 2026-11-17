@@ -1,0 +1,76 @@
+<style id="ilayer">
+#wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+#stage{flex:none;transform-origin:center center}
+#mode{position:absolute;inset:0;z-index:25;background:#0c1411}
+#modebg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.38) blur(7px);transform:scale(1.06)}
+#mapbox{position:absolute;left:50px;top:116px;padding:16px;background:#121615;border-radius:30px;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+#mapin{width:1180px;height:648px;border-radius:12px;overflow:hidden}
+#mapin polygon[id^="ch-"]{cursor:pointer}
+#mapin text{pointer-events:none}
+#modetitle{position:absolute;left:50px;top:26px;color:#fff;font-size:30px;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+#modetitle small{display:block;font-size:19px;font-weight:600;color:#cfe6da}
+#legend{position:absolute;left:66px;top:796px;display:flex;gap:18px;flex-wrap:wrap;color:#fff;font-size:20px;font-weight:700}
+#legend span{display:inline-flex;align-items:center;gap:8px}#legend i{display:inline-block;width:20px;height:20px;border-radius:5px}
+.mpanel{position:absolute;left:1292px;top:116px;width:580px;color:#fff;background:rgba(10,26,20,.92);border-radius:24px;padding:24px 28px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.mpanel .lbl{color:#d6e9df;font-size:21px}
+.mpanel button,#cta button,#start button{font:700 21px 'Noto Sans','Segoe UI',sans-serif;min-height:56px;padding:0 18px;border-radius:14px;border:2px solid #3d5a4c;background:#21352c;color:#fff;cursor:pointer}
+.mpanel button.primary,#cta button.primary,#start button.primary{background:#2B654F;border-color:#9fe0bf}
+.mpanel button:hover,#cta button:hover,#start button:hover{border-color:#9fe0bf}
+button:focus-visible,input:focus-visible{outline:4px solid #9fe0bf;outline-offset:2px}
+.blocks{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin:14px 0 10px}
+.blocks button{padding:0;font-size:24px;font-weight:800}
+.blocks button.sel{background:#2f8fd8;border-color:#bfe0ff}.blocks button.closed{opacity:.5;text-decoration:line-through}
+.budget{height:16px;background:rgba(255,255,255,.15);border-radius:8px;overflow:hidden;margin:6px 0}
+#cbar{height:100%;width:0;background:#2f8fd8;transition:width .25s}
+#clist{margin:8px 0 12px;padding-left:30px;font-size:20px;line-height:1.5;min-height:30px}
+.btns{display:flex;gap:9px;flex-wrap:wrap}
+.tog{display:flex;align-items:center;gap:12px;font-size:20px;margin-top:12px;cursor:pointer}.tog input{width:26px;height:26px;accent-color:#2f8fd8}
+#cres{margin-top:12px;background:rgba(255,255,255,.08);border-radius:16px;padding:14px 18px;font-size:20px;line-height:1.45}
+#toast{position:absolute;left:50%;bottom:150px;transform:translateX(-50%);background:rgba(8,16,12,.94);color:#fff;font-size:26px;font-weight:700;padding:14px 26px;border-radius:14px;opacity:0;transition:opacity .2s;z-index:40;pointer-events:none;white-space:nowrap}
+#info .close{position:absolute;right:14px;top:12px;min-height:56px;min-width:56px;padding:0;font-size:32px;line-height:1}
+#infophoto{width:100%;height:220px;object-fit:cover;border-radius:14px;margin:6px 0 10px;display:block}
+#cta{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(6,14,10,.5);z-index:35}
+#cta .box{background:rgba(12,32,24,.95);color:#fff;border-radius:26px;padding:40px 50px;text-align:center;max-width:980px}
+#cta .btns,#start .btns{justify-content:center;margin-top:24px}
+#ctl{position:absolute;left:50%;bottom:calc(14px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);display:flex;gap:7px;align-items:center;background:rgba(10,20,16,.9);color:#fff;border-radius:16px;padding:8px 12px;font-size:14px;z-index:50;transition:opacity .3s;flex-wrap:wrap;justify-content:center;max-width:96vw}
+#ctl button{display:inline-flex;align-items:center;gap:8px;min-height:44px;min-width:44px;background:#21352c;color:#fff;border:1px solid #3d5a4c;border-radius:10px;padding:0 12px;font:700 13px 'Noto Sans','Segoe UI',sans-serif;cursor:pointer}
+#ctl button[aria-pressed=true],#ctl button[aria-current=true]{background:#2B654F;border-color:#9fe0bf}
+#ctl input[type=range]{width:170px;height:44px;accent-color:#9fe0bf}
+#chips{display:flex;gap:4px;flex-wrap:nowrap}#chips button{padding:0 8px;font-size:12px}
+#start{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:60;background:rgba(6,14,10,.62)}
+#start button{font-size:24px;min-height:62px;padding:0 30px;margin:0 6px}
+#start p{color:#dfeee6;font-size:16px;text-align:center;margin-top:16px;line-height:1.5}
+[hidden]{display:none!important}
+</style>
+<div id="ilayerhtml">
+<div id="mode" hidden>
+ <img id="modebg" src="photos/02_hook_close.jpg" alt="">
+ <div id="modetitle"></div>
+ <div id="mapbox"><div id="mapin"></div></div>
+ <div id="legend"></div>
+ <div id="chal" class="mpanel" hidden role="region" aria-label="Your turn challenge">
+  <div class="kick">Your turn</div><div class="h2" style="font-size:36px">Plan the 30-minute round</div>
+  <p class="lbl" style="margin:8px 0 0">48 mm of rain fell overnight. Pick blocks in the order you'd walk them, on the map or with the letters. Where is the black pod?</p>
+  <div id="cblocks" class="blocks" role="group" aria-label="Add a block to your route"></div>
+  <div class="budget" aria-hidden="true"><div id="cbar"></div></div>
+  <div id="cmin" class="lbl" aria-live="polite">0 of 30 min used</div>
+  <ol id="clist"></ol>
+  <div class="btns"><button id="cwalk" class="primary">Walk my route</button><button id="cks" class="primary" hidden>Watch KokoShield's route</button><button id="cundo">Undo</button><button id="creset">Try again</button></div>
+  <div id="clive" class="lbl" style="margin-top:10px" aria-live="polite" hidden>Walking… found <b id="cfound">0</b> of 7</div>
+  <label class="tog"><input type="checkbox" id="chint"> Fly the drone survey (shows standing water and past cases)</label>
+  <div id="cres" hidden aria-live="polite"></div>
+ </div>
+ <div id="info" class="mpanel" hidden role="dialog" aria-label="Details"><button id="infoclose" class="close" aria-label="Close details">×</button><div id="infobody"></div></div>
+ <div id="toast" role="status" aria-live="polite"></div>
+</div>
+<div id="cta" hidden><div class="box"><div class="kick">That was KokoShield</div><div class="h2">Your turn: can you beat the ranked route?</div><div class="btns"><button id="ctaCh" class="primary">Try the challenge</button><button id="ctaEx">Explore the farm map</button><button id="ctaRe">Replay</button></div></div></div>
+</div>
+<div id="start"><div><div class="btns"><button id="startBtn" class="primary">Play the KokoShield story</button><button id="startCh">Try the challenge</button></div><p>Narrated with music, about 2 minutes. Real photos, the real Field Desk app and the drone survey concept.<br>Best on a laptop or desktop screen. The farm map, counts and drone survey are a demo simulation.</p></div></div>
+<div id="ctl" role="toolbar" aria-label="Story controls">
+ <button id="pp" aria-label="Play the story"></button>
+ <span id="chips" role="group" aria-label="Chapters"></span>
+ <input id="seek" type="range" min="0" max="118.5" step="0.1" value="0" aria-label="Story position">
+ <span id="tm">0:00</span>
+ <button id="explore" aria-pressed="false">Explore map</button>
+ <button id="challenge" aria-pressed="false">Your turn</button>
+</div>

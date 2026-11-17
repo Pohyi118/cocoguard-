@@ -1,0 +1,835 @@
+<title>KokoShield 3D Farm</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--g:#2B654F;--g2:#8CAE9E;--red:#B5462E;--amb:#D9A23A;--ink:#13201a}
+html,body{margin:0;height:100%;background:#0c1411;overflow:hidden;font-family:'Noto Sans','Segoe UI',sans-serif}
+#wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+#stage{position:relative;width:1920px;height:1080px;flex:none;overflow:hidden;background:#cfe3ea;transform-origin:center center}
+#gl{position:absolute;inset:0;width:1920px;height:1080px;display:block}
+.ov{position:absolute;opacity:0;display:none;will-change:transform,opacity}
+.glass{background:rgba(12,32,24,.80);color:#fff;border-radius:22px;padding:26px 34px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.card{background:rgba(255,255,255,.97);color:var(--ink);border-radius:22px;padding:26px 30px;box-shadow:0 20px 50px rgba(8,30,20,.22)}
+.kick{font-size:21px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#9fe0bf;margin-bottom:10px}
+.card .kick{color:var(--g)}
+.h1{font-size:58px;font-weight:800;line-height:1.08;letter-spacing:-.01em}
+.h2{font-size:40px;font-weight:800;line-height:1.12}
+.big{font-size:96px;font-weight:800;line-height:1;color:var(--g)}
+.lbl{font-size:24px;line-height:1.35;color:#33403a}
+.chip{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:8px 18px;font-weight:700;font-size:22px}
+#brand{left:44px;top:34px;display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.92);border-radius:999px;padding:10px 22px 10px 14px;font-weight:800;font-size:24px;color:var(--g)}
+#brand small{font-weight:600;color:#56645d;font-size:18px}
+#chap{right:44px;top:38px;background:rgba(12,32,24,.72);color:#fff;border-radius:999px;padding:10px 22px;font-size:19px;font-weight:700;letter-spacing:.04em}
+#cap{left:50%;bottom:44px;transform:translateX(-50%);max-width:1500px;background:rgba(8,16,12,.72);color:#fff;font-size:33px;line-height:1.35;font-weight:600;padding:14px 30px;border-radius:16px;text-align:center}
+#prog{left:0;bottom:0;height:8px;background:#9fe0bf;display:block;opacity:1}
+.phone{width:360px;height:740px;border-radius:52px;background:#0f1412;padding:14px;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:40px;overflow:hidden;background:#fff}
+.phone img{position:absolute;left:0;top:0;width:100%}
+.tap{position:absolute;width:70px;height:70px;border-radius:50%;border:5px solid #2B654F;opacity:0}
+.row{display:flex;align-items:center;gap:18px;margin:0 0 16px}
+.num{flex:none;width:52px;height:52px;border-radius:50%;background:#14201b;color:#fff;font-weight:800;font-size:26px;display:flex;align-items:center;justify-content:center}
+.sw{display:inline-block;width:22px;height:22px;border-radius:6px;vertical-align:-3px;margin-right:8px}
+.stat{width:430px}
+.status{display:inline-block;border-radius:10px;padding:4px 14px;font-size:21px;font-weight:800}
+.dot{display:inline-block;width:20px;height:20px;border-radius:50%;margin:5px}
+/* KS_V3 */
+.w{display:inline-block;will-change:transform,opacity}
+.big,#mins,#mm,#farms,#cfound{font-variant-numeric:tabular-nums}
+#flash{position:absolute;inset:0;background:#eef6ff;opacity:0;pointer-events:none}
+#wipe{position:absolute;top:-220px;left:0;width:2600px;height:1520px;background:linear-gradient(90deg,#123527 0%,#2B654F 38%,#2B654F 62%,#123527 100%);display:none;align-items:center;justify-content:center;pointer-events:none;z-index:3}
+#wipe svg{transform:skewX(16deg)}
+.panel{position:absolute;right:40px;top:96px;width:620px;z-index:4;color:#fff;background:rgba(12,32,24,.9);border-radius:24px;padding:26px 30px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.panel .lbl{color:#d6e9df;font-size:22px}
+.panel button,#cta button,#start button{font:700 21px 'Noto Sans','Segoe UI',sans-serif;min-height:56px;padding:0 20px;border-radius:14px;border:2px solid #3d5a4c;background:#21352c;color:#fff;cursor:pointer}
+.panel button.primary,#cta button.primary,#start button.primary{background:#2B654F;border-color:#9fe0bf}
+.panel button:hover,#cta button:hover,#start button:hover{border-color:#9fe0bf}
+button:focus-visible,input:focus-visible{outline:4px solid #9fe0bf;outline-offset:2px}
+.blocks{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin:14px 0 10px}
+.blocks button{padding:0;font-size:24px;font-weight:800}
+.blocks button.sel{background:#2f8fd8;border-color:#bfe0ff}
+.blocks button.closed{opacity:.5;text-decoration:line-through}
+.budget{height:16px;background:rgba(255,255,255,.15);border-radius:8px;overflow:hidden;margin:6px 0 6px}
+#cbar{height:100%;width:0;background:#2f8fd8;transition:width .25s}
+#clist{margin:8px 0 12px;padding-left:30px;font-size:21px;line-height:1.5;min-height:34px}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.tog{display:flex;align-items:center;gap:12px;font-size:21px;margin-top:12px;cursor:pointer}
+.tog input{width:26px;height:26px;accent-color:#2f8fd8}
+#cres{margin-top:12px;background:rgba(255,255,255,.08);border-radius:16px;padding:16px 18px;font-size:21px;line-height:1.45}
+#toast{position:absolute;left:50%;bottom:150px;transform:translateX(-50%);background:rgba(8,16,12,.92);color:#fff;font-size:26px;font-weight:700;padding:14px 26px;border-radius:14px;opacity:0;transition:opacity .2s;z-index:6;pointer-events:none;white-space:nowrap}
+#info .close{position:absolute;right:14px;top:12px;min-height:56px;min-width:56px;padding:0;font-size:32px;line-height:1}
+#cta{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(6,14,10,.45);z-index:5}
+#cta .box{background:rgba(12,32,24,.95);color:#fff;border-radius:26px;padding:40px 50px;text-align:center;max-width:980px}
+#cta .btns,#start .btns{justify-content:center;margin-top:24px}
+#ctl{position:absolute;left:50%;bottom:calc(16px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);display:flex;gap:8px;align-items:center;background:rgba(10,20,16,.9);color:#fff;border-radius:16px;padding:8px 12px;font-size:14px;z-index:7;transition:opacity .3s;flex-wrap:wrap;justify-content:center;max-width:96vw}
+#ctl button{display:inline-flex;align-items:center;gap:8px;min-height:44px;min-width:44px;background:#21352c;color:#fff;border:1px solid #3d5a4c;border-radius:10px;padding:0 13px;font:700 14px 'Noto Sans','Segoe UI',sans-serif;cursor:pointer}
+#ctl button[aria-pressed=true],#ctl button[aria-current=true]{background:#2B654F;border-color:#9fe0bf}
+#ctl input[type=range]{width:180px;height:44px;accent-color:#9fe0bf}
+#chips button{padding:0 9px;font-size:13px}
+#start{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:8;background:rgba(6,14,10,.6)}
+#start button{font-size:26px;min-height:64px;padding:0 32px;margin:0 6px}
+#start p{color:#dfeee6;font-size:17px;text-align:center;margin-top:16px}
+[hidden]{display:none!important}
+body.video #ctl,body.video #start,body.video #chal,body.video #info,body.video #toast,body.video #cta{display:none!important}
+</style>
+<script src="assets/data.js"></script>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+"three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+
+<div id="wrap"><div id="stage">
+<canvas id="gl" width="1920" height="1080" aria-label="3D model of a demo cocoa farm"></canvas>
+<div id="flash"></div>
+<div id="ovl"></div>
+<div id="wipe"><svg width="150" height="168" viewBox="0 0 34 38" aria-hidden="true"><path d="M17 2 31 7v11c0 9-6 15-14 18C9 33 3 27 3 18V7z" fill="#ffffff"/><path d="M17 11c-4 3-6 7-5 12 4 0 7-3 8-7 1 4 0 8-3 11" stroke="#2B654F" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></div>
+<div id="chal" class="panel" hidden role="region" aria-label="Your turn challenge">
+ <div class="kick">Your turn</div>
+ <div class="h2" style="font-size:38px">Plan the 30-minute round</div>
+ <p class="lbl" style="margin:8px 0 0">48 mm of rain fell overnight. Pick blocks in the order you'd walk them, on the farm or with the buttons. Can you find the black pod?</p>
+ <div id="cblocks" class="blocks" role="group" aria-label="Add a block to your route"></div>
+ <div class="budget" aria-hidden="true"><div id="cbar"></div></div>
+ <div id="cmin" class="lbl" aria-live="polite">0 of 30 min used</div>
+ <ol id="clist"></ol>
+ <div class="btns"><button id="cwalk" class="primary">Walk my route</button><button id="cks" class="primary" hidden>Watch KokoShield's route</button><button id="cundo">Undo</button><button id="creset">Try again</button><button id="cback">Back to story</button></div>
+ <div id="clive" class="lbl" style="margin-top:10px" aria-live="polite" hidden>Walking… found <b id="cfound">0</b> of 7</div>
+ <label class="tog"><input type="checkbox" id="chint"> Show KokoShield's signals</label>
+ <div id="cres" hidden aria-live="polite"></div>
+</div>
+<div id="info" class="panel" hidden role="dialog" aria-label="Details"><button id="infoclose" class="close" aria-label="Close details">×</button><div id="infobody"></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="cta" hidden><div class="box"><div class="kick">That was KokoShield</div><div class="h2">Your turn: can you beat the ranked route?</div><div class="btns"><button id="ctaCh" class="primary">Try the challenge</button><button id="ctaEx">Explore the 3D farm</button><button id="ctaRe">Replay</button></div></div></div>
+</div></div>
+<div id="start"><div><div class="btns"><button id="startBtn" class="primary">Play the KokoShield story</button><button id="startCh">Try the challenge</button></div><p>Narrated with music, about 2 minutes. Explore 3D lets you orbit the farm and click blocks.<br>Best on a laptop or desktop screen. Demo farm with simulated pods.</p></div></div>
+<div id="ctl" role="toolbar" aria-label="Story controls">
+ <button id="pp" aria-label="Play the story"></button>
+ <span id="chips" role="group" aria-label="Chapters" style="display:flex;gap:5px;flex-wrap:nowrap"></span>
+ <input id="seek" type="range" min="0" max="119.5" step="0.1" value="0" aria-label="Story position">
+ <span id="tm">0:00</span>
+ <button id="explore" aria-pressed="false">Explore 3D</button>
+ <button id="challenge" aria-pressed="false">Your turn</button>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const VIDEO = new URLSearchParams(location.search).get('mode') === 'video';
+if (VIDEO) document.body.classList.add('video');
+const REDUCED = !VIDEO && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const S = window.KS_STARTS, CAPS = window.KS_CAPS, END = S[8];
+const NAMES = ['Hook','Climate risk','Market gap','Solution','Record & confirm','Pilot','Impact & market','Close'];
+
+/* ---------- helpers ---------- */
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const sm = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+const ramp = (t, a, b) => sm((t - a) / (b - a));
+const win = (t, a, b, f = 0.6) => Math.min(ramp(t, a, a + f), 1 - ramp(t, b - f, b));
+const lerp = (a, b, k) => a + (b - a) * k;
+let seed = 7; const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const C = h => new THREE.Color(h);
+const eo = x => 1 - Math.pow(1 - clamp(x), 3);            /* decelerate: entering */
+const ei = x => clamp(x) * clamp(x);                      /* accelerate: leaving */
+const bo = x => { x = clamp(x); const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };  /* spring-like overshoot */
+
+/* ---------- renderer / scene ---------- */
+const canvas = document.getElementById('gl');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(1920, 1080, false);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(38, 1920 / 1080, 0.1, 900);
+scene.fog = new THREE.Fog(0xdfeef2, 120, 420);
+
+const skyU = { top: { value: C('#8ec5e8') }, bot: { value: C('#e8f3f6') } };
+const sky = new THREE.Mesh(new THREE.SphereGeometry(500, 32, 16), new THREE.ShaderMaterial({
+  side: THREE.BackSide, depthWrite: false, fog: false, uniforms: skyU,
+  vertexShader: 'varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
+  fragmentShader: 'uniform vec3 top; uniform vec3 bot; varying vec3 vP; void main(){ float h = clamp(vP.y*1.6+0.15,0.0,1.0); gl_FragColor = vec4(mix(bot,top,h),1.0); }'
+}));
+scene.add(sky);
+const hemi = new THREE.HemisphereLight(0xdfefff, 0x5a4a32, 0.95); scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xfff2dc, 2.4); sun.position.set(-50, 70, 35); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -60, right: 60, top: 50, bottom: -50, near: 10, far: 220 });
+sun.shadow.bias = -0.0005; scene.add(sun);
+
+/* ---------- farm layout (prototype map coordinates, x right / z down) ---------- */
+const MAP = {
+  A: [[8,10],[28,8],[32,20],[24,30],[6,28]],   B: [[34,6],[54,6],[56,26],[40,30],[34,20]],
+  C: [[62,8],[84,10],[88,24],[70,32],[60,26]], D: [[6,34],[26,32],[34,44],[26,52],[8,50]],
+  E: [[36,34],[54,32],[58,48],[44,54],[36,46]],F: [[60,36],[82,34],[90,52],[70,58],[62,48]],
+  G: [[14,56],[34,54],[40,64],[30,70],[12,68]],H: [[44,58],[80,60],[86,68],[50,72],[42,66]]
+};
+const W = (x, z, y = 0) => new THREE.Vector3((x - 48) * 0.62, y, (z - 39) * 0.62);
+const GATE = W(3, 74);
+const blocks = {};
+const NAT = { A:'#6c8c4b', B:'#73924f', C:'#6f8d4c', D:'#678747', E:'#759450', F:'#7b8f5a', G:'#6a8a49', H:'#71904e' };
+const PRI = { A:'#B5462E', D:'#B5462E', G:'#B5462E', B:'#D9A23A', C:'#BFD4C5', E:'#BFD4C5', H:'#BFD4C5', F:'#a3a8a5' };
+const WET = new Set(['A','D','G']);
+
+const dirt = new THREE.Mesh(new THREE.PlaneGeometry(64, 48), new THREE.MeshStandardMaterial({ color: '#b9a57c', roughness: 1 }));
+dirt.rotation.x = -Math.PI / 2; dirt.position.set(-0.6, 0.02, -0.6); dirt.receiveShadow = true; scene.add(dirt);
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(900, 900), new THREE.MeshStandardMaterial({ color: '#7d9358', roughness: 1 }));
+ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+
+function inPoly(p, poly) { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, zi] = poly[i], [xj, zj] = poly[j]; if ((zi > p[1]) !== (zj > p[1]) && p[0] < (xj - xi) * (p[1] - zi) / (zj - zi) + xi) c = !c; } return c; }
+
+function stripeTex() {
+  const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+  g.clearRect(0, 0, 64, 64); g.strokeStyle = 'rgba(70,74,72,.75)'; g.lineWidth = 9;
+  for (let i = -64; i < 128; i += 22) { g.beginPath(); g.moveTo(i, 0); g.lineTo(i + 64, 64); g.stroke(); }
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(0.35, 0.35); return t;
+}
+for (const k of Object.keys(MAP)) {
+  const pts = MAP[k].map(([x, z]) => W(x, z));
+  const shape = new THREE.Shape(pts.map(p => new THREE.Vector2(p.x, -p.z)));
+  const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.28, bevelEnabled: false }); geo.rotateX(-Math.PI / 2);
+  const mat = new THREE.MeshStandardMaterial({ color: NAT[k], roughness: 0.95 });
+  const mesh = new THREE.Mesh(geo, mat); mesh.receiveShadow = true; scene.add(mesh);
+  const cen = pts.reduce((a, p) => a.add(p), new THREE.Vector3()).multiplyScalar(1 / pts.length);
+  const flat = new THREE.ShapeGeometry(shape); flat.rotateX(-Math.PI / 2);
+  const pud = new THREE.Mesh(flat, new THREE.MeshStandardMaterial({ color: '#5b86a6', transparent: true, opacity: 0, roughness: 0.15, metalness: 0.1, depthWrite: false }));
+  pud.position.y = 0.3; scene.add(pud);
+  let stripes = null;
+  if (k === 'F') { stripes = new THREE.Mesh(flat.clone(), new THREE.MeshBasicMaterial({ map: stripeTex(), transparent: true, opacity: 0, depthWrite: false })); stripes.position.y = 0.31; scene.add(stripes); }
+  blocks[k] = { mesh, mat, cen, pts, pud, stripes, trees: [] };
+}
+
+/* ---------- trees and pods ---------- */
+const trees = [];
+for (const k of Object.keys(MAP)) {
+  const poly = MAP[k]; const xs = poly.map(p => p[0]), zs = poly.map(p => p[1]);
+  const placed = []; let tries = 0;
+  while (placed.length < 9 && tries++ < 600) {
+    const p = [lerp(Math.min(...xs), Math.max(...xs), rnd()), lerp(Math.min(...zs), Math.max(...zs), rnd())];
+    if (!inPoly(p, poly)) continue;
+    let ok = inPoly([p[0] + 2.2, p[1]], poly) && inPoly([p[0] - 2.2, p[1]], poly) && inPoly([p[0], p[1] + 2.2], poly) && inPoly([p[0], p[1] - 2.2], poly);
+    if (!ok) continue;
+    if (placed.some(q => Math.hypot(q[0] - p[0], q[1] - p[1]) < 5.2)) continue;
+    placed.push(p);
+  }
+  for (const p of placed) { const t = { block: k, pos: W(p[0], p[1], 0.28), s: 0.85 + rnd() * 0.35, pods: [] }; trees.push(t); blocks[k].trees.push(t); }
+}
+const trunkG = new THREE.CylinderGeometry(0.13, 0.19, 1.5, 7); trunkG.translate(0, 0.75, 0);
+const canG = new THREE.IcosahedronGeometry(1.05, 1); canG.scale(1, 0.78, 1);
+const podG = new THREE.SphereGeometry(0.12, 10, 8); podG.scale(1, 1.9, 1);
+const trunks = new THREE.InstancedMesh(trunkG, new THREE.MeshStandardMaterial({ color: '#6b4a2f', roughness: 1 }), trees.length);
+const cans = new THREE.InstancedMesh(canG, new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.9, flatShading: true }), trees.length * 2);
+trunks.castShadow = cans.castShadow = true;
+const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), sc = new THREE.Vector3();
+const podList = [];
+trees.forEach((t, i) => {
+  m4.compose(t.pos, q.identity(), sc.set(t.s, t.s, t.s)); trunks.setMatrixAt(i, m4);
+  for (let j = 0; j < 2; j++) {
+    const off = new THREE.Vector3((rnd() - .5) * 0.8, 1.75 + j * 0.55, (rnd() - .5) * 0.8).multiplyScalar(t.s);
+    m4.compose(t.pos.clone().add(off), q.setFromEuler(new THREE.Euler(0, rnd() * 6, 0)), sc.set(t.s * (1 - j * .25), t.s * (1 - j * .25), t.s * (1 - j * .25)));
+    cans.setMatrixAt(i * 2 + j, m4); cans.setColorAt(i * 2 + j, C(['#2f5a2a', '#3a6b31', '#2a5228'][Math.floor(rnd() * 3)]));
+  }
+  for (let j = 0; j < 4; j++) {
+    const a = j * 1.57 + rnd() * .6, h = 0.45 + rnd() * 0.55;
+    const pos = t.pos.clone().add(new THREE.Vector3(Math.cos(a) * 0.24 * t.s, h * t.s, Math.sin(a) * 0.24 * t.s));
+    const pod = { pos, tree: t, block: t.block, inf: false, base: C(rnd() < .5 ? '#d39a2c' : '#c27d2a') };
+    t.pods.push(pod); podList.push(pod);
+  }
+});
+/* forest ring around the farm */
+const ringN = 420, forest = new THREE.InstancedMesh(canG, new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .95, flatShading: true }), ringN);
+const fTr = new THREE.InstancedMesh(trunkG, trunks.material, ringN);
+for (let i = 0; i < ringN; i++) {
+  const a = rnd() * Math.PI * 2, r = 125 + rnd() * 110, s = 2.6 + rnd() * 2.4;
+  const p = new THREE.Vector3(Math.cos(a) * r * 1.15, 0, Math.sin(a) * r);
+  m4.compose(p.clone().setY(1.8 * s), q.identity(), sc.set(s * 1.4, s * 1.3, s * 1.4)); forest.setMatrixAt(i, m4); forest.setColorAt(i, C(['#2f5a2a', '#3e6e33', '#355f2c', '#4a7a3a'][Math.floor(rnd() * 4)]));
+  m4.compose(p, q.identity(), sc.set(s, s * 1.2, s)); fTr.setMatrixAt(i, m4);
+}
+scene.add(forest, fTr);
+const pods = new THREE.InstancedMesh(podG, new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.6 }), podList.length);
+podList.forEach((p, i) => { m4.compose(p.pos, q.identity(), sc.set(1, 1, 1)); pods.setMatrixAt(i, m4); pods.setColorAt(i, p.base); });
+pods.castShadow = true; scene.add(trunks, cans, pods);
+
+/* infected pods: A 3, G 2, D 1, B 1 (prototype preset: 7 finds on the ranked route) */
+const INF = { A: 3, G: 2, D: 1, B: 1 };
+const infected = [];
+for (const [k, n] of Object.entries(INF)) {
+  const tr = blocks[k].trees;
+  for (let i = 0; i < n; i++) { const t = tr[(i * 3 + 1) % tr.length]; const p = t.pods[i % 4]; p.inf = true; infected.push(p); }
+}
+function ringTex(col, w = 10) {
+  const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d');
+  g.strokeStyle = col; g.lineWidth = w; g.beginPath(); g.arc(64, 64, 52, 0, 7); g.stroke();
+  g.globalAlpha = .25; g.fillStyle = col; g.beginPath(); g.arc(64, 64, 48, 0, 7); g.fill();
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+const T_RED = ringTex('#ff5a3c'), T_GRN = ringTex('#3fe08f');
+infected.forEach(p => {
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: T_RED, transparent: true, depthTest: false, opacity: 0 }));
+  s.position.copy(p.pos); s.renderOrder = 5; scene.add(s); p.halo = s;
+});
+
+/* ---------- labels (sprites) ---------- */
+function labelTex(txt, bg, fg, w = 256, h = 128, font = 72, round = 30) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d');
+  g.fillStyle = bg; g.beginPath(); g.roundRect(4, 4, w - 8, h - 8, round); g.fill();
+  g.fillStyle = fg; g.font = `800 ${font}px "Noto Sans","Segoe UI",sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(txt, w / 2, h / 2 + 3);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+function sprite(tex, sx, sy) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthTest: false, opacity: 0 })); s.scale.set(sx, sy, 1); s.renderOrder = 8; scene.add(s); return s; }
+const letters = {}, qmarks = {};
+for (const k of Object.keys(blocks)) {
+  letters[k] = sprite(labelTex(k, 'rgba(255,255,255,.95)', '#14201b', 128, 128, 74, 64), 2.2, 2.2); letters[k].position.copy(blocks[k].cen).setY(4.6);
+  qmarks[k] = sprite(labelTex('?', 'rgba(20,32,27,.88)', '#ffffff', 128, 128, 80, 64), 2.6, 2.6); qmarks[k].position.copy(blocks[k].cen).setY(5.2);
+}
+const closedLbl = sprite(labelTex('Closed', 'rgba(70,74,72,.92)', '#fff', 320, 110, 56, 40), 4.4, 1.5); closedLbl.position.copy(blocks.F.cen).add(new THREE.Vector3(3.5, 0, 3.2)).setY(2.4);
+const ORDER = ['A', 'G', 'D', 'B'];
+const nums = ORDER.map((k, i) => { const s = sprite(labelTex(String(i + 1), '#14201b', '#fff', 128, 128, 76, 64), 2.6, 2.6); s.position.copy(blocks[k].cen).setY(6.4); return s; });
+const missed = ['A', 'D'].map(k => { const s = sprite(labelTex('Missed by usual round', 'rgba(181,70,46,.95)', '#fff', 640, 110, 48, 40), 8.4, 1.45); s.position.copy(blocks[k].cen).setY(8.2); return s; });
+
+/* ---------- routes and scouts ---------- */
+function routeCurve(keys) { const path = new THREE.CurvePath(); let prev = GATE.clone().setY(0.7); for (const k of keys) { const p = blocks[k].cen.clone().setY(0.7); path.add(new THREE.LineCurve3(prev, p)); prev = p; } return path; }
+function routeMesh(curve, col, r) { const g = new THREE.TubeGeometry(curve, 600, r, 8, false); const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: col, emissive: col, emissiveIntensity: 0.35, roughness: .5 })); m.geometry.setDrawRange(0, 0); scene.add(m); return m; }
+const rCurve = routeCurve(ORDER), uCurve = routeCurve(['B', 'C', 'E', 'G']);
+const rMesh = routeMesh(rCurve, '#1f8f5f', 0.32), uMesh = routeMesh(uCurve, '#6f7f8f', 0.24);
+const setReveal = (m, f) => { const n = m.geometry.index.count; m.geometry.setDrawRange(0, Math.floor(clamp(f) * n / 6) * 6); };
+
+function scout(col) {
+  const g = new THREE.Group();
+  const body = new THREE.Mesh(new THREE.CapsuleGeometry(0.32, 0.8, 4, 10), new THREE.MeshStandardMaterial({ color: col, roughness: .6 })); body.position.y = 0.75;
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.24, 16, 12), new THREE.MeshStandardMaterial({ color: '#8a5a3c' })); head.position.y = 1.55;
+  const hat = new THREE.Mesh(new THREE.ConeGeometry(0.42, 0.28, 16), new THREE.MeshStandardMaterial({ color: '#e9d8a6' })); hat.position.y = 1.82;
+  const ring = new THREE.Mesh(new THREE.RingGeometry(0.75, 1.0, 32), new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: .85, side: THREE.DoubleSide })); ring.rotation.x = -Math.PI / 2; ring.position.y = 0.33;
+  [body, head, hat].forEach(m => m.castShadow = true); g.add(body, head, hat, ring); g.scale.setScalar(1.5); g.visible = false; scene.add(g); return g;
+}
+const scoutR = scout('#1f8f5f'), scoutU = scout('#5f7f9a');
+const PLAN_R = [['A', 7, 3], ['G', 7, 2], ['D', 8, 1], ['B', 8, 1]];
+const PLAN_U = [['B', 8, 1], ['C', 7, 0], ['E', 8, 0], ['G', 7, 1]];
+function walk(plan, min) {
+  let t0 = 0, prev = GATE.clone(), finds = 0, first = null, travelled = 0, total = 0, segs = [];
+  { let p = GATE.clone(); for (const [k] of plan) { const c = blocks[k].cen; segs.push(p.distanceTo(c)); total += p.distanceTo(c); p = c; } }
+  for (let i = 0; i < plan.length; i++) {
+    const [k, m, f] = plan[i]; const c = blocks[k].cen, tw = m * 0.35;
+    if (min < t0 + m) {
+      const u = min - t0;
+      if (u < tw) { const a = sm(u / tw); return { pos: prev.clone().lerp(c, a), finds, first, trail: (travelled + segs[i] * a) / total, block: k }; }
+      const ph = (u - tw) / (m - tw) * Math.PI * 2;
+      return { pos: c.clone().add(new THREE.Vector3(Math.sin(ph) * 2.2, 0, Math.cos(ph) * 1.6 - 1.6)), finds, first, trail: (travelled + segs[i]) / total, block: k };
+    }
+    t0 += m; finds += f; if (f && first === null) first = t0; travelled += segs[i]; prev = c;
+  }
+  return { pos: prev.clone(), finds, first, trail: 1, block: null };
+}
+const foundAt = {}; { let t = 0; for (const [k, m] of PLAN_R) { t += m; foundAt[k] = t; } }
+
+/* ---------- rain, gauge ---------- */
+const N = 2600, rp = new Float32Array(N * 6), seeds = [];
+for (let i = 0; i < N; i++) seeds.push([(rnd() - .5) * 90, rnd() * 34, (rnd() - .5) * 70, 26 + rnd() * 10]);
+const rg = new THREE.BufferGeometry(); rg.setAttribute('position', new THREE.BufferAttribute(rp, 3));
+const rain = new THREE.LineSegments(rg, new THREE.LineBasicMaterial({ color: '#d7e6ef', transparent: true, opacity: 0, fog: false })); rain.frustumCulled = false; scene.add(rain);
+const gauge = new THREE.Group(); gauge.position.copy(W(1, 64));
+const glass = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 3, 20, 1, true), new THREE.MeshStandardMaterial({ color: '#dff3ff', transparent: true, opacity: .35, side: THREE.DoubleSide })); glass.position.y = 1.5;
+const fill = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.36, 1, 20), new THREE.MeshStandardMaterial({ color: '#2f8fd8', emissive: '#1a5f99', emissiveIntensity: .4 })); fill.position.y = 0.01;
+const trig = new THREE.Mesh(new THREE.TorusGeometry(0.46, 0.05, 8, 24), new THREE.MeshBasicMaterial({ color: '#ff5a3c' })); trig.rotation.x = Math.PI / 2; trig.position.y = 1.5;
+gauge.add(glass, fill, trig); scene.add(gauge);
+
+/* ---------- Field Node (team CAD model) ---------- */
+const NODE = W(35, 31);
+const post = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.11, 2.6, 10), new THREE.MeshStandardMaterial({ color: '#8b9490', metalness: .4, roughness: .5 })); post.position.copy(NODE).setY(1.3); post.castShadow = true; scene.add(post);
+const nodeSpin = new THREE.Group(); nodeSpin.position.copy(NODE).setY(2.85); scene.add(nodeSpin);
+const pulse = new THREE.Mesh(new THREE.RingGeometry(0.9, 1.05, 48), new THREE.MeshBasicMaterial({ color: '#3fe08f', transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false })); pulse.position.copy(NODE).setY(2.85); scene.add(pulse);
+const parts = [];
+const ready = new Promise(res => {
+  const b = Uint8Array.from(atob(window.KS_GLB), c => c.charCodeAt(0)).buffer;
+  new GLTFLoader().parse(b, '', g => {
+    const m = g.scene; const box = new THREE.Box3().setFromObject(m); const size = box.getSize(new THREE.Vector3()), cen = box.getCenter(new THREE.Vector3());
+    const s = 1.7 / Math.max(size.x, size.y, size.z); m.scale.setScalar(s); m.position.copy(cen).multiplyScalar(-s);
+    nodeSpin.add(m); nodeSpin.updateMatrixWorld(true);
+    const C0 = new THREE.Box3().setFromObject(m).getCenter(new THREE.Vector3());
+    m.traverse(o => { if (!o.isMesh) return; o.castShadow = true;
+      const wc = new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3()); let d = wc.clone().sub(C0); if (d.length() < 1e-3) d.set(0, 1, 0); d.normalize();
+      const p0 = o.getWorldPosition(new THREE.Vector3()); const a = o.parent.worldToLocal(p0.clone()), bb = o.parent.worldToLocal(p0.clone().add(d));
+      parts.push({ o, base: o.position.clone(), off: bb.sub(a) }); });
+    res();
+  }, e => { console.error('GLB', e); res(); });
+});
+
+/* ---------- camera keyframes ---------- */
+const A_ = blocks.A.cen;
+const K = [];
+const key = (t, p, g) => K.push({ t, p: new THREE.Vector3(...p), g: new THREE.Vector3(...g) });
+key(0, [-58, 44, 70], [0, 0, 0]); key(S[1] - 0.2, [-30, 30, 52], [-2, 0, 2]);
+key(S[1] + 1.2, [A_.x + 7, 4.2, A_.z + 8], [A_.x, 1.0, A_.z]); key(S[1] + 9, [A_.x + 4, 3.4, A_.z + 6], [A_.x - 1, 1.0, A_.z]);
+key(S[1] + 17.5, [-6, 26, 34], [-8, 0, -2]); key(S[2], [-8, 27, 36], [-8, 0, -2]);
+key(S[2] + 1.2, [-44, 30, 30], [-6, 0, -2]); key(S[3] - 0.3, [-48, 34, 18], [-6, 0, -4]);
+key(S[3] + 0.4, [NODE.x + 4.6, 4.3, NODE.z + 5.6], [NODE.x, 2.6, NODE.z]); key(S[3] + 3.6, [NODE.x + 5.6, 4.8, NODE.z + 3.2], [NODE.x, 2.6, NODE.z]);
+key(S[3] + 6.4, [0, 50, 38], [0, 0, 1]); key(S[4] - 0.3, [2, 48, 36], [0, 0, 1]);
+key(S[4] + 0.6, [A_.x + 9.5, 6.6, A_.z + 10.5], [A_.x + 1, 1.2, A_.z + 1]); key(S[5] - 0.3, [A_.x + 7.5, 5.8, A_.z + 9.0], [A_.x + 1, 1.2, A_.z + 1]);
+key(S[5] + 0.8, [0, 64, 32], [0, 0, 2]); key(S[5] + 13.4, [0, 64, 32], [0, 0, 2]); key(S[5] + 15.5, [-4, 56, 34], [0, 0, 1]); key(S[6] - 0.3, [-6, 54, 34], [0, 0, 1]);
+key(S[6] + 0.8, [46, 40, 52], [2, 0, 0]); key(S[7] - 0.3, [56, 34, 30], [0, 0, 0]);
+key(S[7] + 0.4, [-12, 18, 28], [-6, 1, 0]); key(END, [-70, 60, 90], [0, 0, 0]);
+function camAt(t) {
+  let i = 0; while (i < K.length - 1 && K[i + 1].t <= t) i++;
+  const a = K[i], b = K[Math.min(i + 1, K.length - 1)]; const k = b.t > a.t ? sm((t - a.t) / (b.t - a.t)) : 0;
+  return { p: a.p.clone().lerp(b.p, k), g: a.g.clone().lerp(b.g, k) };
+}
+
+/* ---------- 2D overlays ---------- */
+const ovl = document.getElementById('ovl');
+const OV = [];
+function ov(html, css, tin, tout, fx = 'up', cls = '') {
+  const el = document.createElement('div'); el.className = 'ov ' + cls; el.style.cssText = css; el.innerHTML = html; ovl.appendChild(el);
+  const o = { el, tin, tout, fx }; OV.push(o); return o;
+}
+const $ = s => document.querySelector(s);
+const brand = ov('<svg width="34" height="38" viewBox="0 0 34 38"><path d="M17 2 31 7v11c0 9-6 15-14 18C9 33 3 27 3 18V7z" fill="#2B654F"/><path d="M17 11c-4 3-6 7-5 12 4 0 7-3 8-7 1 4 0 8-3 11" stroke="#9fe0bf" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg><span>KokoShield <small>Weather-guided disease scouting</small></span>', '', 0.2, END + 9, 'fade'); brand.el.id = 'brand'; brand.el.dataset.d = 'flex';
+const chap = ov('', '', 0.4, END - 0.6, 'fade'); chap.el.id = 'chap';
+const cap = ov('', '', 0, END + 9, 'none'); cap.el.id = 'cap';
+const prog = document.createElement('div'); prog.className = 'ov'; prog.id = 'prog'; ovl.appendChild(prog);
+
+/* S1 hook */
+ov(`<div class="kick">GSC 2026–27 · Food Resilience</div><div class="h1">After heavy rain,<br>a cocoa grower has</div>
+<div style="display:flex;align-items:center;gap:22px;margin-top:14px"><svg width="96" height="96" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="10"/><circle id="clk1" cx="50" cy="50" r="44" fill="none" stroke="#9fe0bf" stroke-width="10" stroke-dasharray="276.5" stroke-dashoffset="276.5" transform="rotate(-90 50 50)" stroke-linecap="round"/></svg><span style="font-size:84px;font-weight:800;color:#9fe0bf">30 minutes.</span></div>
+<div id="which" class="h2" data-at="5.4" style="margin-top:18px;opacity:0">Which blocks first?</div>`, 'left:70px;top:190px;width:820px', 0.5, S[1] - 0.3, 'left', 'glass');
+const rainCard = ov(`<div class="kick">24 h rainfall</div><div style="display:flex;align-items:baseline;gap:10px"><span id="mm" class="big" style="color:#2f8fd8">0</span><span style="font-size:36px;font-weight:800;color:#2f8fd8">mm</span></div>
+<div style="position:relative;height:16px;background:#e3ecef;border-radius:9px;margin:16px 0 10px;width:360px"><div id="mmbar" style="height:100%;width:0;background:#2f8fd8;border-radius:9px"></div><div style="position:absolute;left:180px;top:-8px;width:4px;height:32px;background:#B5462E"></div></div>
+<div id="trigtxt" class="lbl">Trigger: 30 mm</div>`, 'right:60px;top:130px;width:430px', 2.6, S[1] - 0.3, 'right', 'card');
+
+/* S2 problem */
+ov(`<div class="kick">The problem</div><div class="h2">Rain splash spreads black pod<br>from pod to pod</div>`, 'left:70px;top:130px;width:760px', S[1] + 0.4, S[2] - 0.3, 'left', 'glass');
+ov(`<div class="big" id="st1">0%</div><div class="lbl">of global cocoa production lost to black pod each year <span style="color:#7a8781">(Guest 2007)</span></div>`, 'left:70px;top:600px', S[1] + 2.4, S[2] - 0.3, 'up', 'card stat');
+ov(`<div style="display:flex;gap:10px;margin-bottom:12px"><span class="chip" id="c1" style="background:#e9f2ed;color:#2B654F">Ghana</span><span class="chip" id="c2" style="background:#e9f2ed;color:#2B654F">Ecuador</span><span class="chip" id="c3" style="background:#e9f2ed;color:#2B654F">Indonesia</span></div><div class="lbl">Heavy rain linked to lower cocoa yield in 3 producing countries <span style="color:#7a8781">(PNAS 2026)</span></div>`, 'left:540px;top:600px', S[1] + 8.0, S[2] - 0.3, 'up', 'card stat');
+ov(`<div style="display:flex;align-items:center;gap:22px"><svg width="120" height="120" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="#e3ecef" stroke-width="16"/><circle id="donut" cx="50" cy="50" r="40" fill="none" stroke="#2B654F" stroke-width="16" stroke-dasharray="251.3" stroke-dashoffset="251.3" transform="rotate(-90 50 50)"/></svg><div class="big" id="st3">0%</div></div><div class="lbl" style="margin-top:8px">of Malaysian cocoa area is smallholdings <span style="color:#7a8781">(MCB 2025)</span></div>`, 'left:1010px;top:600px', S[1] + 12.5, S[2] - 0.3, 'up', 'card stat');
+
+/* S3 market gap: animated competitor map */
+const dots = [['Weather forecast models', 1.6, 8.0, 2.4], ['Plantix photo diagnosis', 6.6, 1.6, 3.2], ['Spreadsheet records', 4.0, 3.2, 4.0], ['Usual round + paper log', 3.2, 1.3, 4.8], ['PlantwisePlus factsheets', 1.4, 2.4, 5.6]];
+const X = x => 70 + x * 78, Y = y => 560 - y * 50;
+ov(`<div class="kick">What is missing</div><div class="h2" style="font-size:36px;margin-bottom:14px">Tools diagnose, forecast or record.<br>None turns rain into a scouting route.</div>
+<svg width="900" height="600" viewBox="0 0 900 600" style="font-family:'Noto Sans','Segoe UI',sans-serif">
+<rect id="quad" x="460" y="60" width="390" height="250" fill="#2B654F" opacity="0"/>
+<line id="ax1" x1="70" y1="560" x2="860" y2="560" stroke="#14201b" stroke-width="3" stroke-dasharray="790" stroke-dashoffset="790"/>
+<line id="ax2" x1="70" y1="560" x2="70" y2="50" stroke="#14201b" stroke-width="3" stroke-dasharray="510" stroke-dashoffset="510"/>
+<line x1="460" y1="60" x2="460" y2="560" stroke="#c9d5cf" stroke-width="2" stroke-dasharray="8 8"/><line x1="70" y1="310" x2="860" y2="310" stroke="#c9d5cf" stroke-width="2" stroke-dasharray="8 8"/>
+<text x="465" y="594" font-size="21" fill="#56645d" text-anchor="middle">Field-action specificity →</text>
+<text x="84" y="44" font-size="21" fill="#56645d">↑ Weather / climate trigger</text>
+<text id="qlab" x="840" y="95" font-size="22" font-weight="800" fill="#2B654F" text-anchor="end" opacity="0">Weather-triggered field action</text>
+${dots.map((d, i) => `<g id="d${i}" opacity="0"><circle cx="${X(d[1])}" cy="${Y(d[2])}" r="15" fill="#8CAE9E"/><text x="${X(d[1]) + 24}" y="${Y(d[2]) + 7}" font-size="22" fill="#14201b">${d[0]}</text></g>`).join('')}
+<g id="ks" opacity="0"><circle id="ksring" cx="${X(8.6)}" cy="${Y(8.2)}" r="28" fill="none" stroke="#2B654F" stroke-width="4"/><circle cx="${X(8.6)}" cy="${Y(8.2)}" r="22" fill="#2B654F"/><text x="${X(8.6)}" y="${Y(8.2) + 56}" font-size="28" font-weight="800" fill="#2B654F" text-anchor="middle">KokoShield</text></g>
+</svg>`, 'right:60px;top:110px;width:960px', S[2] + 0.4, S[3] - 0.3, 'right', 'card');
+
+/* S4 solution */
+ov(`<div class="kick">Rain reading in</div><div class="h2" style="font-size:34px">Public rain gauge or the optional<br>Field Node (CAD concept)</div><div style="margin-top:12px;font-size:26px;color:#9fe0bf;font-weight:800">48 mm in 24 h ≥ 30 mm trigger</div>`, 'left:70px;top:130px;width:700px', S[3] + 0.4, S[3] + 5.6, 'left', 'glass');
+ov(`<div class="kick">KokoShield Field Desk</div><div class="h2">Ranked 30-minute route out</div>
+<div style="margin-top:14px;font-size:21px;line-height:1.9"><span class="sw" style="background:#B5462E"></span>Priority &nbsp; <span class="sw" style="background:#D9A23A"></span>Watch &nbsp; <span class="sw" style="background:#BFD4C5"></span>Routine &nbsp; <span class="sw" style="background:#a3a8a5"></span>Closed</div>`, 'left:70px;top:130px;width:640px', S[3] + 5.6, S[4] - 0.3, 'left', 'glass');
+const STOPS = [['A', 'North terraces', 'Slow drainage + prior case', 7], ['G', 'South rows', 'Slow drainage', 7], ['D', 'Lower grove', 'Slow drainage', 8], ['B', 'East rows', 'Prior confirmed case', 8]];
+ov(STOPS.map((s, i) => `<div class="row" id="stop${i}" style="opacity:0"><div class="num">${i + 1}</div><div style="flex:1"><div style="font-size:26px;font-weight:800">${s[0]} · ${s[1]}</div><div style="font-size:20px;color:#56645d">${s[2]}</div></div><div style="font-size:24px;font-weight:800">${s[3]} min</div></div>`).join('') +
+`<div id="tot" style="opacity:0;border-top:2px solid #e3ecef;padding-top:12px;font-size:24px;font-weight:800;color:#2B654F">30 of 30 min · Closed and over-budget blocks excluded</div>`, 'left:70px;top:390px;width:640px', S[3] + 7.0, S[4] - 0.3, 'left', 'card');
+ov(`<div class="phone"><div class="scr"><img src="assets/g_mobile_plan.jpg" alt=""></div></div>`, 'right:90px;top:120px', S[3] + 9.6, S[4] - 0.3, 'right');
+
+/* S5 record + confirm */
+ov(`<div class="kick">Scout log</div><div class="h2">Scouts record.<br>An adviser confirms.</div>`, 'left:70px;top:130px;width:560px', S[4] + 0.3, S[5] - 0.3, 'left', 'glass');
+const LOG = [['A · North terraces', '3 pods · brown lesions after rain', 'c', 4.6], ['G · South rows', '2 pods · spreading dark patch', 'c', 6.0], ['D · Lower grove', '1 pod · possible mechanical damage', 'r', 7.4]];
+ov(LOG.map((r, i) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:2px solid #eef2ef"><div><div style="font-size:26px;font-weight:800">${r[0]}</div><div style="font-size:20px;color:#56645d">${r[1]}</div></div><span class="status" id="stt${i}" style="background:#fbefd6;color:#8a5a0b">Pending</span></div>`).join('') +
+`<div id="only" style="opacity:0;margin-top:16px;font-size:24px;font-weight:800;color:#2B654F">Only confirmed pods count toward the result</div>`, 'left:70px;top:390px;width:640px', S[4] + 1.6, S[5] - 0.3, 'up', 'card');
+ov(`<div class="phone"><div class="scr"><img src="assets/g_mobile_log.jpg" alt=""><div class="tap" id="tap" style="left:240px;top:452px"></div></div></div>`, 'right:90px;top:120px', S[4] + 1.0, S[5] - 0.3, 'right');
+
+/* S6 pilot race */
+ov(`<div class="kick">How we will prove it</div><div class="h2">Same 30 minutes. Two routes.</div><div style="margin-top:10px;font-size:23px;color:#cfe6da"><svg width="18" height="22" viewBox="0 0 24 30" style="vertical-align:-4px;margin-right:8px" aria-hidden="true"><path d="M12 1C6 1 2 5.5 2 11c0 7.5 10 18 10 18s10-10.5 10-18C22 5.5 18 1 12 1z" fill="#9fe0bf"/><circle cx="12" cy="11" r="4" fill="#0c2018"/></svg>Tanjung Sepat, Selangor · one cocoa farm</div>`, 'left:70px;top:130px;width:700px', S[5] + 0.3, S[5] + 14.2, 'left', 'glass');
+ov(`<div style="display:flex;align-items:center;gap:20px"><svg width="110" height="110" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="#e3ecef" stroke-width="10"/><circle id="clk" cx="50" cy="50" r="42" fill="none" stroke="#2B654F" stroke-width="10" stroke-dasharray="263.9" stroke-dashoffset="263.9" transform="rotate(-90 50 50)" stroke-linecap="round"/></svg><div><div style="font-size:52px;font-weight:800" id="mins">0 min</div><div style="font-size:19px;color:#56645d">of 30 · demo simulation, prototype preset findings</div></div></div>`, 'right:60px;top:120px;width:560px', S[5] + 0.8, S[5] + 14.2, 'right', 'card');
+const scoreCard = (id, name, col) => `<div style="display:flex;align-items:center;gap:20px"><div style="width:18px;height:86px;border-radius:9px;background:${col}"></div><div style="flex:1"><div style="font-size:26px;font-weight:800">${name}</div><div style="font-size:20px;color:#56645d" id="${id}f">First find —</div></div><div style="text-align:right"><div class="big" style="font-size:80px;color:${col}" id="${id}n">0</div><div style="font-size:18px;color:#56645d">confirmed finds</div></div></div>`;
+ov(scoreCard('sr', 'Ranked route · A → G → D → B', '#1f8f5f'), 'right:60px;top:330px;width:560px', S[5] + 1.0, S[5] + 14.2, 'right', 'card');
+ov(scoreCard('su', 'Usual round · B → C → E → G', '#5f7f9a'), 'right:60px;top:520px;width:560px', S[5] + 1.2, S[5] + 14.2, 'right', 'card');
+const FACTS = ['One farm, target 4 post-rain rounds', 'Ranked route vs the usual round', 'Follow-up check counts what each missed', 'Measure: confirmed pods per scouting hour', 'Go on only if better in at least 3 of 4 rounds', 'Pilot budget: RM1,200'];
+ov(`<div class="kick">The pilot</div>` + FACTS.map((f, i) => `<div class="row" id="fact${i}" style="opacity:0;margin-bottom:12px"><div class="num" style="width:40px;height:40px;font-size:20px;background:#2B654F">✓</div><div style="font-size:27px;font-weight:700">${f}</div></div>`).join(''), 'right:60px;top:150px;width:760px', S[5] + 14.4, S[6] - 0.3, 'right', 'card');
+
+/* S7 impact + market */
+ov(`<div class="kick">Sustainable impact · Route to market</div><div class="h2">Less crop lost. Targeted treatment.</div>`, 'left:70px;top:130px;width:820px', S[6] + 0.3, S[7] - 0.3, 'left', 'glass');
+ov(`<div style="display:flex;gap:26px">
+<div class="card" style="width:400px"><div class="kick">Economic</div><div style="font-size:30px;font-weight:800">Fewer pods lost</div><div class="lbl" style="font-size:21px;margin-top:6px">Infected pods found and removed sooner after rain</div></div>
+<div class="card" style="width:400px"><div class="kick">Environmental</div><div style="font-size:30px;font-weight:800">Treat only where needed</div><div class="lbl" style="font-size:21px;margin-top:6px">Block-level map instead of whole-farm spraying</div></div>
+<div class="card" style="width:400px"><div class="kick">SDG targets</div><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px"><span class="chip" style="background:#e9f2ed;color:#2B654F">2.3</span><span class="chip" style="background:#e9f2ed;color:#2B654F">2.4</span><span class="chip" style="background:#e9f2ed;color:#2B654F">13.1</span></div><div class="lbl" style="font-size:21px;margin-top:8px">Income, resilient farming, climate adaptation</div></div></div>`, 'left:70px;top:330px', S[6] + 0.9, S[6] + 6.6, 'up');
+ov(`<div style="display:flex;align-items:center;gap:0">
+<div class="card" style="width:330px;text-align:center"><div style="font-size:26px;font-weight:800">Cooperative or buyer</div><div class="lbl" style="font-size:20px">pays the season fee</div></div>
+<svg width="200" height="90" viewBox="0 0 200 90"><line x1="10" y1="45" x2="180" y2="45" stroke="#fff" stroke-width="6"/><path d="M175 30 192 45 175 60" fill="none" stroke="#fff" stroke-width="6"/><circle id="f1" cx="10" cy="45" r="10" fill="#9fe0bf"/><text x="100" y="26" fill="#fff" font-size="22" font-weight="800" text-anchor="middle">RM75 / farm</text></svg>
+<div class="card" style="width:300px;text-align:center;background:#2B654F;color:#fff"><div style="font-size:30px;font-weight:800">KokoShield</div><div style="font-size:20px;color:#cfe6da">cluster service</div></div>
+<svg width="200" height="90" viewBox="0 0 200 90"><line x1="10" y1="45" x2="180" y2="45" stroke="#fff" stroke-width="6"/><path d="M175 30 192 45 175 60" fill="none" stroke="#fff" stroke-width="6"/><circle id="f2" cx="10" cy="45" r="10" fill="#9fe0bf"/><text x="100" y="26" fill="#fff" font-size="22" font-weight="800" text-anchor="middle">free app</text></svg>
+<div class="card" style="width:300px;text-align:center"><div style="font-size:26px;font-weight:800">Growers</div><div class="lbl" style="font-size:20px">use it at no cost</div></div></div>`, 'left:70px;top:300px;padding:22px 26px', S[6] + 6.8, S[7] - 0.3, 'up', 'glass');
+ov(`<div style="display:flex;gap:40px;align-items:center"><div style="width:620px" id="grid">${Array.from({ length: 60 }, (_, i) => `<span class="dot" id="g${i}" style="background:#d9e3dd"></span>`).join('')}</div>
+<div><div class="big" id="farms">0</div><div style="font-size:24px;font-weight:700" id="farmlbl">active farms</div><div class="lbl" style="font-size:21px;margin-top:6px">2027: first 20-farm cluster in Sabah or Sarawak<br>2028: three clusters, 60 farms</div></div></div>`, 'left:70px;top:520px', S[6] + 9.6, S[7] - 0.3, 'up', 'card');
+
+/* S8 close */
+ov(`<div class="kick">Universiti Malaya</div><div class="h1" style="font-size:72px">Find disease sooner<br>after the rain.</div>
+<div style="margin-top:22px;font-size:24px;color:#cfe6da;line-height:1.6">Leow Shen En · Chong Pohyi · Choong Zhuo Lin<br>Lee Jia Shern · Teoh Xi Xian</div>`, 'left:70px;top:250px;width:900px', S[7] + 0.8, END + 9, 'left', 'glass');
+
+/* kinetic headlines: split into words, revealed with a short stagger */
+function splitWords(root) {
+  const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); const nodes = []; while (tw.nextNode()) nodes.push(tw.currentNode);
+  const out = [];
+  nodes.forEach(nd => { const frag = document.createDocumentFragment();
+    nd.textContent.split(/(\s+)/).forEach(p => { if (!p) return; if (/^\s+$/.test(p)) frag.appendChild(document.createTextNode(p)); else { const w = document.createElement('span'); w.className = 'w'; w.textContent = p; frag.appendChild(w); out.push(w); } });
+    nd.parentNode.replaceChild(frag, nd); });
+  return out;
+}
+OV.forEach(o => { const hs = o.el.querySelectorAll('.h1,.h2'); if (!hs.length) return; o.words = [];
+  hs.forEach(h => { const at = h.dataset.at ? +h.dataset.at : null; splitWords(h).forEach((w, j) => { w._at = at; w._j = j; o.words.push(w); }); }); });
+const flashEl = document.getElementById('flash'), wipeEl = document.getElementById('wipe');
+const FLASHES = [4.6, S[1] + 5.5];
+function flashAt(t) { if (REDUCED) return 0; let v = 0; for (const f of FLASHES) { const d = t - f; v = Math.max(v, 0.85 * Math.exp(-((d / 0.045) ** 2)), 0.55 * Math.exp(-(((d - 0.17) / 0.05) ** 2)), 0.25 * Math.exp(-(((d - 0.32) / 0.08) ** 2))); } return v; }
+
+/* ---------- interaction state ---------- */
+let t = 0, playing = false, exploring = false, last = 0, lastSync = 0;
+const controls = new OrbitControls(camera, canvas); controls.enabled = false; controls.enableDamping = true;
+
+/* ---------- per-frame update (pure function of t) ---------- */
+const tmpC = new THREE.Color();
+function update(t) {
+  /* environment */
+  const rainL = Math.min(ramp(t, 2.2, 5.0), 1 - ramp(t, S[2] + 2.5, S[2] + 7));
+  const gold = ramp(t, S[7], S[7] + 4);
+  skyU.top.value.set('#8ec5e8').lerp(C('#4f5f69'), rainL).lerp(C('#6f9fd0'), gold);
+  skyU.bot.value.set('#e8f3f6').lerp(C('#9aa7ad'), rainL).lerp(C('#ffd59a'), gold);
+  scene.fog.near = lerp(120, 260, gold); scene.fog.far = lerp(420, 900, gold);
+  scene.fog.color.set('#dfeef2').lerp(C('#8f9ca2'), rainL).lerp(C('#f3d9b0'), gold);
+  sun.intensity = lerp(2.4, 0.8, rainL) + gold * 0.4; sun.color.set('#fff2dc').lerp(C('#ffb36b'), gold);
+  hemi.intensity = lerp(0.95, 0.65, rainL);
+  const fl = flashAt(t); hemi.intensity += fl * 1.6; skyU.top.value.lerp(C('#e8f0ff'), fl * 0.6); skyU.bot.value.lerp(C('#ffffff'), fl * 0.5); flashEl.style.opacity = (fl * 0.55).toFixed(3);
+  rain.material.opacity = 0.55 * rainL; rain.visible = rainL > 0.01;
+  if (rain.visible) for (let i = 0; i < N; i++) { const [x, y0, z, sp] = seeds[i]; const y = ((y0 - sp * t) % 34 + 34) % 34; rp.set([x, y, z, x + 0.25, y + 1.1, z + 0.08], i * 6); }
+  rg.attributes.position.needsUpdate = true;
+
+  /* gauge */
+  const mm = 48 * ramp(t, 3.0, 10.5); fill.scale.y = Math.max(0.01, mm / 48 * 2.4); fill.position.y = fill.scale.y / 2;
+  gauge.visible = t < S[4];
+
+  /* blocks: wet, priority colours */
+  const wet = ramp(t, 4.5, 10.5) * (1 - ramp(t, S[7], S[7] + 3));
+  const pr = ramp(t, S[3] + 5.6, S[3] + 6.8) * (1 - ramp(t, S[7] + 0.5, S[7] + 3.5));
+  for (const k in blocks) {
+    const b = blocks[k]; tmpC.set(NAT[k]); if (WET.has(k)) tmpC.lerp(C('#4a663a'), wet * 0.8);
+    tmpC.lerp(C(PRI[k]), pr); b.mat.color.copy(tmpC);
+    b.pud.material.opacity = WET.has(k) ? 0.38 * wet * (1 - pr * 0.6) : 0;
+    if (b.stripes) b.stripes.material.opacity = pr;
+  }
+  closedLbl.material.opacity = pr * (t < S[5] + 14 ? 1 : 0);
+
+  /* pods + halos */
+  const blk = ramp(t, S[1] + 3, S[1] + 9);
+  infected.forEach((p, i) => {
+    const turn = clamp(blk * 1.6 - i * 0.09);
+    const idx = podList.indexOf(p); pods.setColorAt(idx, tmpC.copy(p.base).lerp(C('#24170f'), turn));
+    let op = 0, tex = T_RED, s = 1.1;
+    const puls = 0.85 + 0.25 * Math.sin(t * 6 + i);
+    if (t > S[1] + 3 && t < S[2] + 0.5) { op = turn * (1 - ramp(t, S[2] - 0.2, S[2] + 0.5)); s = 1.4 * puls; }
+    if (t > S[4] && t < S[5] && p.block === 'A') { op = ramp(t, S[4] + 2.0, S[4] + 3.0); tex = T_GRN; s = 1.3 * puls; }
+    if (t >= S[5]) { const r = walk(PLAN_R, raceMin(t)); const found = raceMin(t) >= foundAt[p.block]; if (found) { op = 1; tex = T_GRN; s = 1.25 * puls; } }
+    if (t >= S[7]) { op = ramp(t, S[7] + 2, S[7] + 3.5); tex = T_GRN; s = 1.2 * puls; }
+    p.halo.material.map = tex; p.halo.material.opacity = op; p.halo.scale.set(s, s, 1);
+  });
+  pods.instanceColor.needsUpdate = true;
+
+  /* labels */
+  const q1 = win(t, 5.6, S[1] - 0.2, 0.5);
+  for (const k in qmarks) { qmarks[k].material.opacity = q1; const b = 1 + 0.08 * Math.sin(t * 4 + k.charCodeAt(0)); qmarks[k].scale.set(2.6 * b, 2.6 * b, 1); }
+  const lv = Math.max(win(t, S[3] + 5.6, S[4], 0.6), win(t, S[5], S[6], 0.6));
+  for (const k in letters) letters[k].material.opacity = lv;
+  nums.forEach((s, i) => { const a = win(t, S[3] + 6.6 + i * 0.7, S[5] - 0.2, 0.4); s.material.opacity = a; const z = 2.6 * (0.5 + 0.5 * bo(a)); s.scale.set(z, z, 1); });
+  missed.forEach(s => s.material.opacity = win(t, S[5] + 13.2, S[6] - 0.2, 0.5));
+
+  /* routes */
+  if (t < S[5]) { setReveal(rMesh, ramp(t, S[3] + 6.5, S[3] + 9.8) * (t < S[5] ? 1 : 0)); setReveal(uMesh, 0); }
+  else { const m = raceMin(t); setReveal(rMesh, walk(PLAN_R, m).trail); setReveal(uMesh, walk(PLAN_U, m).trail); }
+  rMesh.visible = (t > S[3] + 6 && t < S[4]) || (t > S[5] && t < S[6] + 0.5); uMesh.visible = t > S[5] && t < S[6] + 0.5;
+
+  /* scouts */
+  scoutR.visible = t > S[4] && t < S[6]; scoutU.visible = t > S[5] && t < S[6];
+  if (t > S[4] && t < S[5]) { const c = blocks.A.cen; scoutR.position.set(c.x + 1.6, 0.3, c.z + 1.4); scoutR.rotation.y = -0.8; scoutR.children[0].rotation.x = 0.35 * ramp(t, S[4] + 1, S[4] + 2); }
+  if (t >= S[5]) {
+    const m = raceMin(t); const a = walk(PLAN_R, m), b = walk(PLAN_U, m);
+    const pr0 = scoutR.position.clone(); scoutR.position.copy(a.pos).setY(0.3); scoutU.position.copy(b.pos).setY(0.3);
+    const bob = REDUCED ? 0 : Math.abs(Math.sin(t * 9)) * 0.12; scoutR.position.y += bob; scoutU.position.y += bob;
+    scoutR.children[0].rotation.x = 0;
+    const lookR = walk(PLAN_R, m + 0.15).pos, lookU = walk(PLAN_U, m + 0.15).pos;
+    scoutR.rotation.y = Math.atan2(lookR.x - a.pos.x, lookR.z - a.pos.z); scoutU.rotation.y = Math.atan2(lookU.x - b.pos.x, lookU.z - b.pos.z);
+  }
+
+  /* field node */
+  const ex = Math.min(ramp(t, S[3] + 1.0, S[3] + 2.4), 1 - ramp(t, S[3] + 3.8, S[3] + 5.0));
+  parts.forEach(p => p.o.position.copy(p.base).addScaledVector(p.off, ex * 0.55));
+  nodeSpin.rotation.y = t * 0.35;
+  const pu = (t - S[3] - 2.2) / 1.6; pulse.visible = pu > 0 && pu < 2;
+  if (pulse.visible) { const f = pu % 1; pulse.scale.setScalar(1 + f * 6); pulse.material.opacity = 0.8 * (1 - f); pulse.rotation.x = -Math.PI / 2; }
+
+  /* camera: shift the picture sideways so the farm sits beside the panels */
+  const shift = 330 * win(t, S[2] + 0.2, S[3] - 0.1, 0.8) - 110 * win(t, S[3] + 5.0, S[4], 0.8) + 300 * win(t, S[5] + 0.5, S[5] + 14.0, 0.8) + 380 * win(t, S[5] + 14.0, S[6], 0.8) - 420 * win(t, S[7] + 0.2, END + 5, 0.8);
+  camera.setViewOffset(1920, 1080, exploring ? 0 : shift, 0, 1920, 1080);
+  if (!exploring) { const c = camAt(t); camera.position.copy(c.p); camera.lookAt(c.g); controls.target.copy(c.g); }
+
+  /* overlays */
+  for (const o of OV) {
+    let vis = o.fx === 'none' ? 1 : Math.min(eo((t - o.tin) / 0.55), 1 - ei((t - o.tout + 0.35) / 0.35));
+    if (o.fx === 'none' && (t < o.tin || t > o.tout)) vis = 0;
+    if (vis <= 0.001) { o.el.style.display = 'none'; continue; }
+    o.el.style.display = o.el.dataset.d || 'block'; o.el.style.opacity = vis;
+    const k = 1 - vis; let tr = '';
+    if (o.fx === 'up') tr = `translateY(${k * 50}px)`; else if (o.fx === 'left') tr = `translateX(${-k * 80}px)`; else if (o.fx === 'right') tr = `translateX(${k * 80}px)`;
+    if (o === cap) tr = 'translateX(-50%)';
+    o.el.style.transform = tr;
+    if (o.words) o.words.forEach(w => { const a = REDUCED ? 1 : eo((t - (w._at ?? o.tin) - 0.12 - w._j * 0.05) / 0.4); w.style.opacity = a; w.style.transform = a >= 1 ? '' : `translateY(${(1 - a) * 22}px)`; });
+  }
+  /* brand wipe between scenes */
+  let wp = -1; for (let k = 1; k < 8; k++) if (Math.abs(t - S[k]) < 0.42) wp = (t - S[k] + 0.42) / 0.84;
+  if (wp >= 0 && !REDUCED) { wipeEl.style.display = 'flex'; wipeEl.style.transform = `translateX(${-3050 + wp * 5420}px) skewX(-16deg)`; } else wipeEl.style.display = 'none';
+  const si = Math.max(0, S.findIndex((s, i) => i < 8 && t >= s && t < S[i + 1]));
+  chap.el.textContent = `${si + 1} / 8 · ${NAMES[si]}`;
+  const c = CAPS.find(c => t >= c[0] - 0.05 && t < c[1] + 0.25);
+  cap.el.style.display = c ? 'block' : 'none'; if (c && cap.el.textContent !== c[2]) cap.el.textContent = c[2];
+  prog.style.width = (1920 * clamp(t / END)) + 'px';
+
+  /* scene-specific widgets */
+  $('#clk1').style.strokeDashoffset = 276.5 * (1 - ramp(t, 1.4, 3.4));
+  $('#which').style.opacity = ramp(t, 5.4, 6.2);
+  $('#mm').textContent = Math.round(mm); $('#mmbar').style.width = (360 * Math.min(mm, 60) / 60) + 'px';
+  const hit = mm >= 30; $('#trigtxt').innerHTML = hit ? '<b style="color:#B5462E">Trigger reached · 30 mm</b> → scout now' : 'Trigger: 30 mm';
+  $('#st1').textContent = t < S[1] + 4.4 ? Math.round(30 * ramp(t, S[1] + 2.6, S[1] + 4.4)) + '%' : '20–30%';
+  ['#c1', '#c2', '#c3'].forEach((s, i) => { const a = ramp(t, S[1] + 8.4 + i * 0.5, S[1] + 8.9 + i * 0.5); $(s).style.opacity = a; $(s).style.transform = `scale(${0.6 + 0.4 * bo(a)})`; });
+  const d3 = ramp(t, S[1] + 12.9, S[1] + 15); $('#st3').textContent = Math.round(86 * d3) + '%'; $('#donut').style.strokeDashoffset = 251.3 * (1 - 0.86 * d3);
+  $('#ax1').style.strokeDashoffset = 790 * (1 - ramp(t, S[2] + 0.8, S[2] + 1.8)); $('#ax2').style.strokeDashoffset = 510 * (1 - ramp(t, S[2] + 0.8, S[2] + 1.8));
+  dots.forEach((d, i) => { const a = ramp(t, S[2] + d[3], S[2] + d[3] + 0.4); const g = $('#d' + i); g.setAttribute('opacity', a); const cx = X(d[1]), cy = Y(d[2]), z = 0.3 + 0.7 * bo(a); g.setAttribute('transform', `translate(${cx} ${cy}) scale(${z}) translate(${-cx} ${-cy})`); });
+  const qa = ramp(t, S[2] + 7.2, S[2] + 8.2); $('#quad').setAttribute('opacity', (0.10 + 0.06 * Math.sin(t * 5)) * qa); $('#qlab').setAttribute('opacity', qa);
+  const ka = ramp(t, S[2] + 9.6, S[2] + 10.2); $('#ks').setAttribute('opacity', ka); { const cx = X(8.6), cy = Y(8.2), z = 0.4 + 0.6 * bo(ka); $('#ks').setAttribute('transform', `translate(${cx} ${cy}) scale(${z}) translate(${-cx} ${-cy})`); } $('#ksring').setAttribute('r', 22 + 18 * ramp(t, S[2] + 9.6, S[2] + 11) ); $('#ksring').setAttribute('opacity', 1 - ramp(t, S[2] + 10, S[2] + 11.2));
+  STOPS.forEach((s, i) => { const a = ramp(t, S[3] + 7.2 + i * 0.6, S[3] + 7.7 + i * 0.6); const e = $('#stop' + i); e.style.opacity = a; e.style.transform = `translateX(${(1 - a) * -30}px)`; });
+  $('#tot').style.opacity = ramp(t, S[3] + 10, S[3] + 10.6);
+  LOG.forEach((r, i) => { const e = $('#stt' + i); const on = t > S[4] + r[3]; e.textContent = on ? (r[2] === 'c' ? 'Confirmed' : 'Ruled out') : 'Pending';
+    e.style.background = on ? (r[2] === 'c' ? '#dcefe3' : '#e6e8e7') : '#fbefd6'; e.style.color = on ? (r[2] === 'c' ? '#1f6b46' : '#56645d') : '#8a5a0b';
+    const pop = 1 + 0.15 * (1 - ramp(t, S[4] + r[3], S[4] + r[3] + 0.4)) * (on ? 1 : 0); e.style.transform = `scale(${pop})`; });
+  $('#only').style.opacity = ramp(t, S[4] + 8.2, S[4] + 8.8);
+  const tp = ((t - S[4] - 4.2) % 1.4) / 1.4; const tapOn = t > S[4] + 4.2 && t < S[4] + 8; $('#tap').style.opacity = tapOn ? (1 - tp) : 0; $('#tap').style.transform = `scale(${0.5 + tp})`;
+  const m = raceMin(t); $('#mins').textContent = Math.floor(m) + ' min'; $('#clk').style.strokeDashoffset = 263.9 * (1 - m / 30);
+  const a = walk(PLAN_R, m), b = walk(PLAN_U, m);
+  $('#srn').textContent = a.finds; $('#sun').textContent = b.finds;
+  $('#srf').textContent = a.first ? `First find ${a.first} min · 0 affected blocks missed` : 'First find —';
+  $('#suf').textContent = b.first ? `First find ${b.first} min` + (m >= 30 ? ' · 2 affected blocks missed' : '') : 'First find —';
+  FACTS.forEach((f, i) => { $('#fact' + i).style.opacity = ramp(t, S[5] + 14.8 + i * 0.75, S[5] + 15.3 + i * 0.75); });
+  [['#f1', S[6] + 7.2], ['#f2', S[6] + 7.9]].forEach(([s, t0]) => { const f = ((t - t0) % 1.6) / 1.6; $(s).setAttribute('cx', t > t0 ? 10 + 165 * f : 10); $(s).setAttribute('opacity', t > t0 ? 1 - f * 0.3 : 0); });
+  const n = t < S[6] + 13.2 ? 20 * ramp(t, S[6] + 10.4, S[6] + 12.4) : 20 + 40 * ramp(t, S[6] + 13.2, S[6] + 15.2);
+  for (let i = 0; i < 60; i++) $('#g' + i).style.background = i < Math.round(n) ? (i < 20 ? '#2B654F' : '#8CAE9E') : '#d9e3dd';
+  $('#farms').textContent = Math.round(n);
+}
+function raceMin(t) { return 30 * ramp(t, S[5] + 1.2, S[5] + 13.2); }
+
+/* ---------- render / modes ---------- */
+let postUpdate = null;
+function frame(tt) { update(tt); if (postUpdate) postUpdate(); if (exploring) controls.update(); renderer.render(scene, camera); }
+window.renderAt = async tt => { frame(tt); return true; };
+window.KS_READY = Promise.all([ready, document.fonts.ready]).then(() => { frame(0); return true; });
+
+function fit() { const st = document.getElementById('stage'); const k = Math.min((innerWidth - 32) / 1920, (innerHeight - 24) / 1080); st.style.transform = `scale(${k})`; }
+addEventListener('resize', fit); fit();
+
+/* ================= interactive mode: story player, Explore hotspots, "Your turn" challenge ================= */
+if (!VIDEO) {
+  const audio = new Audio('assets/soundtrack.mp3'); audio.preload = 'auto';
+  const el = id => document.getElementById(id);
+  const pp = el('pp'), seek = el('seek'), tm = el('tm'), exBtn = el('explore'), chBtn = el('challenge'), ctl = el('ctl');
+  const ovlEl = el('ovl'), chal = el('chal'), info = el('info'), toastEl = el('toast'), cta = el('cta');
+  const ICON_PLAY = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z" fill="currentColor"/></svg>';
+  const ICON_PAUSE = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z" fill="currentColor"/></svg>';
+  let mode = 'story', lastMove = performance.now(), toastT = 0;
+  addEventListener('pointermove', () => { lastMove = performance.now(); });
+  addEventListener('keydown', () => { lastMove = performance.now(); });
+  const toast = msg => { toastEl.textContent = msg; toastEl.style.opacity = 1; toastT = performance.now(); };
+  const fmt = x => `${Math.floor(x / 60)}:${String(Math.floor(x % 60)).padStart(2, '0')}`;
+
+  /* ---------- player ---------- */
+  const chipBtns = NAMES.map((n, i) => { const b = document.createElement('button'); b.textContent = `${i + 1} ${n}`; b.setAttribute('aria-label', `Chapter ${i + 1}: ${n}`);
+    b.onclick = () => { setMode('story'); go(S[i] + 0.05); }; el('chips').appendChild(b); return b; });
+  function setPlay(p) {
+    playing = p; pp.innerHTML = (p ? ICON_PAUSE : ICON_PLAY) + `<span>${p ? 'Pause' : 'Play'}</span>`; pp.setAttribute('aria-label', p ? 'Pause the story' : 'Play the story');
+    if (p) { if (mode !== 'story') setMode('story'); cta.hidden = true; if (t >= END - 0.05) t = 0; try { audio.currentTime = t; } catch (e) {} audio.play().catch(() => {}); }
+    else audio.pause();
+  }
+  function go(x) { t = clamp(x, 0, END); try { audio.currentTime = t; } catch (e) {} cta.hidden = true; if (!playing) frame(t); }
+  function setMode(m) {
+    if (m !== 'story' && playing) setPlay(false);
+    if (mode === 'challenge' && m !== 'challenge') leaveChallenge();
+    mode = m; exploring = m === 'explore'; controls.enabled = exploring;
+    exBtn.setAttribute('aria-pressed', String(m === 'explore')); chBtn.setAttribute('aria-pressed', String(m === 'challenge'));
+    chal.hidden = m !== 'challenge'; ovlEl.style.display = m === 'story' ? '' : 'none'; info.hidden = true; cta.hidden = true;
+    [el('chips'), seek, tm].forEach(x => { x.hidden = m !== 'story'; });
+    postUpdate = m === 'challenge' ? applyChallenge : null;
+    if (m === 'challenge') resetChallenge();
+    if (m === 'explore') toast('Drag to orbit · scroll to zoom · click a block or the Field Node');
+    canvas.style.cursor = m === 'explore' ? 'grab' : 'default';
+    if (!playing) frame(mode === 'challenge' ? CH_T : t);
+  }
+  pp.onclick = () => setPlay(!playing);
+  seek.oninput = () => { if (mode !== 'story') setMode('story'); go(+seek.value); };
+  exBtn.onclick = () => setMode(mode === 'explore' ? 'story' : 'explore');
+  chBtn.onclick = () => setMode(mode === 'challenge' ? 'story' : 'challenge');
+  el('startBtn').onclick = () => { el('start').hidden = true; setPlay(true); };
+  el('startCh').onclick = () => { el('start').hidden = true; setMode('challenge'); };
+  el('ctaCh').onclick = () => setMode('challenge');
+  el('ctaEx').onclick = () => setMode('explore');
+  el('ctaRe').onclick = () => { go(0); setPlay(true); };
+  addEventListener('keydown', e => {
+    const tag = e.target.tagName;
+    if (tag === 'INPUT' && e.target.type === 'range' && e.code.startsWith('Arrow')) return;
+    if (e.code === 'Space' && tag !== 'BUTTON' && tag !== 'INPUT') { e.preventDefault(); setPlay(!playing); }
+    else if (e.code === 'ArrowRight') { setMode('story'); go(t + 5); }
+    else if (e.code === 'ArrowLeft') { setMode('story'); go(t - 5); }
+    else if (/^Digit[1-8]$/.test(e.code)) { setMode('story'); go(S[+e.code.slice(5) - 1] + 0.05); }
+    else if (e.key === 'e' || e.key === 'E') exBtn.click();
+    else if (e.key === 'c' || e.key === 'C') chBtn.click();
+    else if (e.code === 'Escape') { if (!info.hidden) info.hidden = true; else if (mode !== 'story') setMode('story'); }
+  });
+
+  /* ---------- picking (raycast) ---------- */
+  const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+  const blockMeshes = Object.keys(blocks).map(k => { blocks[k].mesh.userData.block = k; return blocks[k].mesh; });
+  function pick(e) {
+    const r = canvas.getBoundingClientRect(); ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+    const hb = ray.intersectObjects(blockMeshes, false)[0];
+    const hn = mode === 'explore' ? ray.intersectObjects([nodeSpin, post], true)[0] : null;
+    if (hn && (!hb || hn.distance < hb.distance + 2)) return { node: true };
+    return hb ? { block: hb.object.userData.block } : null;
+  }
+  let down = null;
+  canvas.addEventListener('pointerdown', e => { down = [e.clientX, e.clientY]; });
+  canvas.addEventListener('pointermove', e => { if (mode === 'story') return; const h = pick(e); canvas.style.cursor = h ? 'pointer' : (mode === 'explore' ? 'grab' : 'default'); });
+  canvas.addEventListener('pointerup', e => {
+    if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) { down = null; return; }   /* a drag, not a click */
+    down = null; const h = pick(e); if (!h) return;
+    if (mode === 'challenge' && h.block) addBlock(h.block);
+    else if (mode === 'explore') showInfo(h);
+  });
+
+  /* ---------- Explore: info cards ---------- */
+  const INFO = { A: ['North terraces', 7], B: ['East rows', 8], C: ['Ridge rows', 7], D: ['Lower grove', 8], E: ['West rows', 8], F: ['Closed block', 0], G: ['South rows', 7], H: ['Packing lane', 7] };
+  const PRIOR = new Set(['A', 'B']), PODS = { A: 3, G: 2, D: 1, B: 1 };
+  const PRI_LABEL = k => k === 'F' ? 'Closed' : WET.has(k) ? 'Priority' : k === 'B' ? 'Watch' : 'Routine';
+  function showInfo(h) {
+    let html;
+    if (h.node) html = `<div class="kick">Field Node · CAD concept</div><div class="h2" style="font-size:34px;padding-right:60px">Optional local sensor</div>
+      <p class="lbl">Ventilated hood for an air temperature and humidity sensor, 86 × 62 × 32 mm enclosure and an ESP32-class controller envelope. Rainfall and leaf wetness need a separate gauge or a field record. Not yet built or field-tested.</p>`;
+    else {
+      const k = h.block, [name, min] = INFO[k];
+      html = `<div class="kick">Block ${k}</div><div class="h2" style="font-size:36px;padding-right:60px">${name}</div>` + (k === 'F'
+        ? `<p class="lbl">Closed to scouts today, so KokoShield leaves it out of the route.</p>`
+        : `<div class="btns" style="margin:12px 0">${WET.has(k) ? '<span class="chip" style="background:#d8ecfb;color:#134b75">Slow drainage</span>' : '<span class="chip" style="background:#e9f2ed;color:#2B654F">Normal drainage</span>'}${PRIOR.has(k) ? '<span class="chip" style="background:#fbefd6;color:#8a5a0b">Past confirmed case</span>' : ''}</div>
+           <p class="lbl">Scout time: <b>${min} min</b> · KokoShield priority: <b>${PRI_LABEL(k)}</b><br>Demo farm: <b>${PODS[k] || 0}</b> simulated infected pod${PODS[k] === 1 ? '' : 's'} after this storm.</p>`);
+    }
+    el('infobody').innerHTML = html; info.hidden = false; el('infoclose').focus();
+  }
+  el('infoclose').onclick = () => { info.hidden = true; };
+
+  /* ---------- "Your turn" challenge ---------- */
+  const MIN = { A: 7, B: 8, C: 7, D: 8, E: 8, G: 7, H: 7 };
+  const CH_T = S[3] + 5.0;                                  /* after the storm, before KokoShield's colours appear */
+  const C2 = { route: [], walking: false, done: false, ks: false, hint: false, walkT0: 0, ksT0: 0 };
+  const scoutY = scout('#2f8fd8');
+  const ynums = Array.from({ length: 7 }, (_, i) => sprite(labelTex(String(i + 1), '#2f8fd8', '#fff', 128, 128, 76, 64), 2.6, 2.6));
+  const hintS = [
+    ...['A', 'D', 'G'].map(k => { const s = sprite(labelTex('Wet · slow drainage', 'rgba(47,143,216,.95)', '#fff', 640, 110, 46, 40), 7.6, 1.3); s.position.copy(blocks[k].cen).setY(8.4); return s; }),
+    ...['A', 'B'].map(k => { const s = sprite(labelTex('Past confirmed case', 'rgba(217,162,58,.95)', '#1f1606', 640, 110, 46, 40), 7.6, 1.3); s.position.copy(blocks[k].cen).add(new THREE.Vector3(0, 0, k === 'A' ? -2.0 : 0)).setY(8.4); return s; })];
+  let yMesh = null;
+  const bbtn = {};
+  Object.keys(MAP).forEach(k => { const b = document.createElement('button'); b.textContent = k;
+    b.setAttribute('aria-label', k === 'F' ? 'Block F, closed today' : `Add block ${k}, ${INFO[k][0]}, ${MIN[k]} minutes`); if (k === 'F') b.classList.add('closed');
+    b.onclick = () => addBlock(k); el('cblocks').appendChild(b); bbtn[k] = b; });
+  const used = () => C2.route.reduce((a, k) => a + MIN[k], 0);
+  const planOf = route => route.map(k => [k, MIN[k], PODS[k] || 0]);
+  function addBlock(k) {
+    if (C2.walking || C2.done || C2.ks) { toast('Press Try again to plan a new route'); return; }
+    if (k === 'F') { toast('Block F is closed to scouts today'); return; }
+    if (C2.route.includes(k)) { toast(`Block ${k} is already in your route`); return; }
+    if (used() + MIN[k] > 30) { toast(`Only ${30 - used()} min left: block ${k} needs ${MIN[k]} min`); return; }
+    C2.route.push(k); renderChallenge();
+  }
+  function rebuildRoute() {
+    if (yMesh) { scene.remove(yMesh); yMesh.geometry.dispose(); yMesh = null; }
+    if (C2.route.length) { yMesh = new THREE.Mesh(new THREE.TubeGeometry(routeCurve(C2.route), 400, 0.3, 8, false), new THREE.MeshStandardMaterial({ color: '#2f8fd8', emissive: '#2f8fd8', emissiveIntensity: 0.35 })); scene.add(yMesh); }
+  }
+  function renderChallenge() {
+    const u = used(); el('cbar').style.width = (100 * u / 30) + '%'; el('cmin').textContent = `${u} of 30 min used`;
+    el('clist').innerHTML = C2.route.length ? C2.route.map(k => `<li>Block ${k} · ${INFO[k][0]} · ${MIN[k]} min</li>`).join('')
+      : '<li style="list-style:none;margin-left:-30px;color:#9fb5aa">No blocks yet. Click a block on the farm or a letter above.</li>';
+    Object.entries(bbtn).forEach(([k, b]) => { b.classList.toggle('sel', C2.route.includes(k)); if (k !== 'F') b.setAttribute('aria-pressed', String(C2.route.includes(k))); });
+    rebuildRoute();
+  }
+  function resetChallenge() {
+    Object.assign(C2, { route: [], walking: false, done: false, ks: false });
+    el('cres').hidden = true; el('clive').hidden = true; el('clist').hidden = false; el('cwalk').hidden = false; el('cks').hidden = true; renderChallenge();
+  }
+  function leaveChallenge() { scoutY.visible = false; if (yMesh) yMesh.visible = false; ynums.forEach(s => s.material.opacity = 0); hintS.forEach(s => s.material.opacity = 0); }
+  function showResult() {
+    const found = C2.route.reduce((a, k) => a + (PODS[k] || 0), 0);
+    const missedB = Object.keys(PODS).filter(k => !C2.route.includes(k));
+    el('cres').innerHTML = `<div style="font-size:30px;font-weight:800">You found ${found} of 7 diseased pods</div>
+      <div style="margin-top:6px">${missedB.length ? `Missed: block${missedB.length > 1 ? 's' : ''} ${missedB.join(', ')} (red rings on the farm).` : 'You found every infected pod. Great scouting!'}</div>
+      <div style="margin-top:10px;color:#cfe6da">KokoShield ranks blocks with two signals you can't see from the gate: slow drainage after heavy rain and past confirmed cases. Its route A → G → D → B finds <b id="cksn">7</b> of 7 on this demo farm.</div>`;
+    el('cres').hidden = false; el('clist').hidden = true; el('cwalk').hidden = true; el('cks').hidden = false; el('cks').focus();
+  }
+  el('cwalk').onclick = () => { if (!C2.route.length) { toast('Pick at least one block first'); return; } C2.walking = true; C2.done = false; C2.walkT0 = performance.now(); el('clive').hidden = false; el('cfound').textContent = '0'; };
+  el('cks').onclick = () => { C2.ks = true; C2.ksT0 = performance.now(); el('cks').hidden = true; const n = el('cksn'); if (n) n.textContent = '0'; };
+  el('cundo').onclick = () => { if (C2.walking || C2.done || C2.ks) return; C2.route.pop(); renderChallenge(); };
+  el('creset').onclick = resetChallenge;
+  el('cback').onclick = () => setMode('story');
+  el('chint').onchange = e => { C2.hint = e.target.checked; };
+  function applyChallenge() {
+    const now = performance.now(), dur = 6;                         /* 30 scouting minutes walked in 6 seconds */
+    camera.setViewOffset(1920, 1080, 330, 0, 1920, 1080); camera.position.set(0, 60, 36); camera.lookAt(0, 0, 1);
+    for (const k in letters) letters[k].material.opacity = 1;
+    for (const k in qmarks) qmarks[k].material.opacity = 0;
+    nums.forEach(s => s.material.opacity = 0); missed.forEach(s => s.material.opacity = 0);
+    closedLbl.material.opacity = 1; pulse.visible = false; gauge.visible = false; uMesh.visible = false; scoutU.visible = false;
+    hintS.forEach(s => s.material.opacity = C2.hint ? 1 : 0);
+    ynums.forEach((s, i) => { const k = C2.route[i]; s.material.opacity = k && !C2.ks ? 1 : 0; if (k) s.position.copy(blocks[k].cen).add(new THREE.Vector3(2.6, 0, 0.6)).setY(5.6); });
+    const plan = planOf(C2.route); let m = 0, w = null;
+    if (C2.walking || C2.done) {
+      m = Math.min(30, (now - C2.walkT0) / 1000 / dur * 30); w = walk(plan, m);
+      el('cfound').textContent = w.finds;
+      if (C2.walking && m >= plan.reduce((a, p) => a + p[1], 0)) { C2.walking = false; C2.done = true; showResult(); }
+    }
+    scoutY.visible = !!w && !C2.ks;
+    if (w) { scoutY.position.copy(w.pos).setY(0.3 + (REDUCED ? 0 : Math.abs(Math.sin(now / 110)) * 0.12)); const nx = walk(plan, m + 0.15).pos; scoutY.rotation.y = Math.atan2(nx.x - w.pos.x, nx.z - w.pos.z); }
+    if (yMesh) { yMesh.visible = !C2.ks; setReveal(yMesh, w ? w.trail : 1); }
+    let km = -1;
+    if (C2.ks) {
+      km = Math.min(30, (now - C2.ksT0) / 1000 / dur * 30); const a = walk(PLAN_R, km);
+      scoutR.visible = true; scoutR.position.copy(a.pos).setY(0.3); scoutR.children[0].rotation.x = 0;
+      const nx = walk(PLAN_R, km + 0.15).pos; scoutR.rotation.y = Math.atan2(nx.x - a.pos.x, nx.z - a.pos.z);
+      rMesh.visible = true; setReveal(rMesh, a.trail); const n = el('cksn'); if (n) n.textContent = a.finds;
+    } else { scoutR.visible = false; rMesh.visible = false; }
+    const doneB = new Set(); if (w) { let acc = 0; for (const [k, mm] of plan) { acc += mm; if (m >= acc) doneB.add(k); } }
+    const ksB = new Set(); if (km >= 0) { let acc = 0; for (const [k, mm] of PLAN_R) { acc += mm; if (km >= acc) ksB.add(k); } }
+    infected.forEach((p, i) => {
+      const puls = 0.85 + 0.25 * Math.sin(now / 160 + i); let op = 0, tex = T_GRN;
+      if (C2.ks) { if (ksB.has(p.block)) op = 1; }
+      else if (doneB.has(p.block)) op = 1;
+      else if (C2.done) { op = 1; tex = T_RED; }
+      p.halo.material.map = tex; p.halo.material.opacity = op; p.halo.scale.set(1.3 * puls, 1.3 * puls, 1);
+    });
+  }
+
+  /* ---------- main loop ---------- */
+  window.KS_READY.then(() => {
+    renderChallenge(); setPlay(false);
+    last = performance.now();
+    const loop = now => {
+      const dt = (now - last) / 1000; last = now;
+      if (playing) {
+        t += Math.min(dt, 0.1);
+        if (t >= END) { t = END; setPlay(false); cta.hidden = false; el('ctaCh').focus(); }
+        if (audio.readyState >= 2 && Math.abs(audio.currentTime - t) > 0.35 && now - lastSync > 1000) { lastSync = now; try { audio.currentTime = t; } catch (e) {} }
+      }
+      ctl.style.opacity = (!playing || ctl.contains(document.activeElement) || now - lastMove < 2500) ? 1 : 0;
+      if (toastT && now - toastT > 2200) { toastEl.style.opacity = 0; toastT = 0; }
+      seek.value = t; tm.textContent = fmt(t);
+      const si = Math.max(0, S.findIndex((s, i) => i < 8 && t >= s && t < S[i + 1]));
+      chipBtns.forEach((b, i) => b.setAttribute('aria-current', String(i === si && mode === 'story')));
+      frame(mode === 'challenge' ? CH_T : t);
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  });
+}
+
+</script>

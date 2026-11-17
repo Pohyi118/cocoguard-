@@ -1,0 +1,65 @@
+KokoShield pitch video (v5 cinematic cut): photo credits
+========================================================
+
+Real photographs from Wikimedia Commons, cropped, colour-graded and shown with slow camera moves. None were taken on the pilot farm.
+
+ 1. "Leaf on the rain drops"
+    Author:  Amizhthamathi Ponnuswamy
+    Licence: CC BY-SA 4.0  https://creativecommons.org/licenses/by-sa/4.0/
+    Source:  https://commons.wikimedia.org/wiki/File:Leaf_on_the_rain_drops.jpg
+
+ 2. "Cacao black pod rot 29064726523"
+    Author:  Scot Nelson
+    Licence: CC0  https://creativecommons.org/publicdomain/zero/1.0/
+    Source:  https://commons.wikimedia.org/wiki/File:Cacao_black_pod_rot_29064726523.jpg
+
+ 3. "Rain Drops on Leaves (22147107412)"
+    Author:  James Mann from Moncton, New Brunswick, Canada
+    Licence: CC BY 2.0  https://creativecommons.org/licenses/by/2.0/
+    Source:  https://commons.wikimedia.org/wiki/File:Rain_Drops_on_Leaves_(22147107412).jpg
+
+ 4. "A farmer prunes a cocoa tree at a plantation in Deli Serdang North Sumatra (8289793323)"
+    Author:  USAID Indonesia
+    Licence: Public domain  (public domain)
+    Source:  https://commons.wikimedia.org/wiki/File:A_farmer_prunes_a_cocoa_tree_at_a_plantation_in_Deli_Serdang_North_Sumatra_(8289793323).jpg
+
+ 5. "Theobroma cacao 334070567"
+    Author:  Nico
+    Licence: CC0  https://creativecommons.org/publicdomain/zero/1.0/
+    Source:  https://commons.wikimedia.org/wiki/File:Theobroma_cacao_334070567.jpg
+
+ 6. "Cacao farm, Can Tho (45199902095)"
+    Author:  Isabell Schulz
+    Licence: CC BY-SA 2.0  https://creativecommons.org/licenses/by-sa/2.0/
+    Source:  https://commons.wikimedia.org/wiki/File:Cacao_farm,_Can_Tho_(45199902095).jpg
+
+ 7. "Cocoa farmer Flora Kebu explains her farming process at Kebu farm. (10687144284)"
+    Author:  Irene Scott/AusAID
+    Licence: CC BY 2.0  https://creativecommons.org/licenses/by/2.0/
+    Source:  https://commons.wikimedia.org/wiki/File:Cocoa_farmer_Flora_Kebu_explains_her_farming_process_at_Kebu_farm._(10687144284).jpg
+
+ 8. "Cacao black pod rot 39744592361"
+    Author:  Scot Nelson
+    Licence: CC0  https://creativecommons.org/publicdomain/zero/1.0/
+    Source:  https://commons.wikimedia.org/wiki/File:Cacao_black_pod_rot_39744592361.jpg
+
+ 9. "Cacao farm, Can Tho (32240062548)"
+    Author:  Isabell Schulz
+    Licence: CC BY-SA 2.0  https://creativecommons.org/licenses/by-sa/2.0/
+    Source:  https://commons.wikimedia.org/wiki/File:Cacao_farm,_Can_Tho_(32240062548).jpg
+
+10. "Cocoa farmer David Kebu Jnr and his son Snider Kebu display cocoa pods from Kebu farm. (10687079704)"
+    Author:  Irene Scott/AusAID
+    Licence: CC BY 2.0  https://creativecommons.org/licenses/by/2.0/
+    Source:  https://commons.wikimedia.org/wiki/File:Cocoa_farmer_David_Kebu_Jnr_and_his_son_Snider_Kebu_display_cocoa_pods_from_Kebu_farm._(10687079704).jpg
+
+11. "Birds eye view of a paddy field near Bhutiachang, Udalguri District"
+    Author:  GPhoto15
+    Licence: CC BY 4.0  https://creativecommons.org/licenses/by/4.0/
+    Source:  https://commons.wikimedia.org/wiki/File:Birds_eye_view_of_a_paddy_field_near_Bhutiachang,_Udalguri_District.jpg
+
+Other material
+--------------
+App screens, block map, hologram and route race: KokoShield Field Desk prototype, demo data (team's own work).
+Drone survey: concept animation on the app's demo map. Live-action farmer clips (when added): AI-generated, fictional farmer.
+Voice: AI-generated (Microsoft Edge neural voice 'Ava'). Music and sound effects: synthesised for this video.

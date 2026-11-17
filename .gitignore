@@ -1,0 +1,34 @@
+# Old video versions and render scratch (kept locally, too large / superseded)
+video/*.mp4
+video/*/*_noaudio.mp4
+video/segments/
+video/frames/
+video/v4/stage/assets/node3d/
+video/v5/stage/assets/node3d/
+video/v5/thumbs/
+video/v4/thumbs/
+video/v4/photos/
+video/v5/photos/
+
+# Uncompressed audio and mix intermediates
+*.wav
+*.npz
+video/audio/
+video/*/audio/
+video/*/*.mp3
+video/*/*.m4a
+video/v5/stage/assets/node3d.webm
+
+# Superseded page versions and work-in-progress
+KokoShield_3D/index_*_backup.html
+KokoShield_3D/index_drone_wip.html
+KokoShield_GSC_Ignite_Proposal_REVIEWED.pdf
+build/draft.pdf
+build/proposal_before_*.html
+build/kit/
+
+# Python / OS
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

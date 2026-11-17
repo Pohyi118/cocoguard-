@@ -1,0 +1,87 @@
+1
+00:00:00,600 --> 00:00:05,082
+After a heavy rain, a cocoa grower has about thirty minutes to scout.
+
+2
+00:00:05,082 --> 00:00:07,485
+Which blocks should they check first?
+
+3
+00:00:07,485 --> 00:00:10,798
+Guess wrong, and black pod spreads to healthy pods.
+
+4
+00:00:12,300 --> 00:00:19,031
+Black pod is spread by rain splash, and it is estimated to cost twenty to thirty percent of global cocoa production.
+
+5
+00:00:19,031 --> 00:00:23,499
+Heavy rain is already linked to lower yields in Ghana, Ecuador and Indonesia.
+
+6
+00:00:23,499 --> 00:00:30,521
+In Malaysia, eighty-six percent of cocoa land is smallholdings, where advisers cannot visit every farm after every storm.
+
+7
+00:00:32,020 --> 00:00:35,673
+Growers already have photo apps, forecasts and paper logs.
+
+8
+00:00:35,673 --> 00:00:41,469
+But none of them turns it rained heavily into walk these blocks first, in the time you have.
+
+9
+00:00:41,469 --> 00:00:44,177
+That empty corner is where KokoShield sits.
+
+10
+00:00:45,680 --> 00:00:53,351
+KokoShield Field Desk takes the rain reading, the farm's block map and past cases, and produces a ranked route sized to thirty minutes.
+
+11
+00:00:53,351 --> 00:00:58,522
+Every stop shows why it is there, and the route works on a phone or as a printed checklist.
+
+12
+00:01:00,020 --> 00:01:03,288
+Scouts log each suspected pod with a note and a photo.
+
+13
+00:01:03,288 --> 00:01:09,098
+The grower or an adviser then confirms or rules out every case, so only verified disease counts.
+
+14
+00:01:10,600 --> 00:01:13,142
+Our pilot is one cocoa farm in Tanjung Sepat.
+
+15
+00:01:13,142 --> 00:01:21,277
+Two scouts walk for the same thirty minutes, one on the ranked route and one on the usual round, then a follow-up check counts what each missed.
+
+16
+00:01:21,277 --> 00:01:27,152
+We move on only if the ranked route finds more confirmed pods per hour in at least three of four rounds.
+
+17
+00:01:27,152 --> 00:01:29,356
+The pilot costs twelve hundred ringgit.
+
+18
+00:01:30,860 --> 00:01:35,864
+Finding disease sooner means fewer pods lost and treatment only where it is needed.
+
+19
+00:01:35,864 --> 00:01:37,793
+Growers use KokoShield for free.
+
+20
+00:01:37,793 --> 00:01:45,871
+A cooperative or buyer pays seventy-five ringgit per farm per season, starting with a twenty-farm cluster in Sabah or Sarawak in 2027.
+
+21
+00:01:47,370 --> 00:01:49,925
+We are a team of five from Universiti Malaya.
+
+22
+00:01:49,925 --> 00:01:58,667
+KokoShield helps cocoa growers find disease sooner after the rain, starting with one farm and built to travel to every cocoa region facing wetter seasons.
