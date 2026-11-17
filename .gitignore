@@ -36,6 +36,8 @@ KokoShield_GSC_Ignite_Proposal_REVIEWED.pdf
 build/draft.pdf
 build/proposal_before_*.html
 build/kit/
+build/v3/proposal_v3_raw.pdf
+build/v3/patch_layout1.py
 
 # Python / OS
 __pycache__/

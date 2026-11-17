@@ -8,7 +8,8 @@ Track: Adaptation & Resilience / Food Resilience.
 
 | File | What it is |
 |---|---|
-| `KokoShield_GSC_Ignite_Proposal_v2.pdf` | The proposal (29 pages). The prototype kit (browser app, Bubble embed, Field Node CAD) is attached inside the PDF. |
+| `KokoShield_GSC_Ignite_Proposal_v3.pdf` | The proposal (20 pages): product first, one Built / Tested / Pending table, real prototype screenshots. The prototype HTML and Field Node CAD files are attached inside the PDF. |
+| `KokoShield_GSC_Ignite_Proposal_v2.pdf` | The previous 29-page proposal. |
 | `KokoShield_Pitch_Video.mp4` | Two-minute pitch film (1:59): four acts, real stock footage and photos, real footage of the Field Desk prototype (`prototype/`) on laptop and phone, the Field Node CAD model in 3D, drone survey concept, music and effects. |
 | `KokoShield_Pitch_Video_Layout.pdf` | Storyboard: every beat with timing, visuals, sound and narration. |
 | `KokoShield_Video_Photo_Credits.txt` | Licences and sources for every photo used in the video. |
@@ -17,7 +18,8 @@ Track: Adaptation & Resilience / Food Resilience.
 
 ## How the pieces were built
 
-- `build/` — proposal source (`proposal.html`), figure images and the scripts that patch and renumber it. Print to PDF with headless Edge; see `add_drone.py` for the last edit.
+- `build/v3/` — proposal v3 source: `capture_app.py` (real screenshots of `prototype/`), `charts.py` and `make_v3.py` (writes `proposal_v3.html`), `check_v3.py` (overflow check). Print with headless Edge, then attach the prototype and CAD zip.
+- `build/` — the v2 proposal source (`proposal.html`) and its patch scripts.
 - `video/v7/` — the current pitch video pipeline: `fetch_footage.py` + `extract_footage.py` (Pexels footage), `record_proto.py` (prototype footage), `patch_v7.py` + `build_page.py` (composition), then `voice_v5.py` → `restretch.py` → `make_sound_v5.py` + `sound_v5.py` → `capture_v5.py`.
 - `video/v6/` — the previous pipeline (prototype footage, no stock footage)
 - `video/v5/` — the previous pipeline: `voice_v5.py` (narration) → `make_sound_v5.py` + `sound_v5.py` (score and effects) → `capture_v5.py` (render). `stage/real.html` is the composition; `stage/node3d.html` renders the Field Node CAD model.
