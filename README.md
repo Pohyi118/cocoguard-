@@ -9,7 +9,7 @@ Track: Adaptation & Resilience / Food Resilience.
 | File | What it is |
 |---|---|
 | `KokoShield_GSC_Ignite_Proposal_v2.pdf` | The proposal (29 pages). The prototype kit (browser app, Bubble embed, Field Node CAD) is attached inside the PDF. |
-| `KokoShield_Pitch_Video.mp4` | Two-minute pitch film (1:59): four acts, real photos, real footage of the Field Desk prototype (`prototype/`) on laptop and phone, the Field Node CAD model in 3D, drone survey concept, music and effects. |
+| `KokoShield_Pitch_Video.mp4` | Two-minute pitch film (1:59): four acts, real stock footage and photos, real footage of the Field Desk prototype (`prototype/`) on laptop and phone, the Field Node CAD model in 3D, drone survey concept, music and effects. |
 | `KokoShield_Pitch_Video_Layout.pdf` | Storyboard: every beat with timing, visuals, sound and narration. |
 | `KokoShield_Video_Photo_Credits.txt` | Licences and sources for every photo used in the video. |
 | `KokoShield_Interactive/` | Interactive version of the pitch: play the story, explore the farm map, fly the drone survey, plan a scouting round. Open `index.html` in Chrome or Edge. |
@@ -18,7 +18,8 @@ Track: Adaptation & Resilience / Food Resilience.
 ## How the pieces were built
 
 - `build/` — proposal source (`proposal.html`), figure images and the scripts that patch and renumber it. Print to PDF with headless Edge; see `add_drone.py` for the last edit.
-- `video/v6/` — the current pitch video pipeline: `record_proto.py` records the prototype click by click, `patch_v6.py` and `build_page.py` assemble the composition, then voice, sound and `capture_v5.py` as in v5.
+- `video/v7/` — the current pitch video pipeline: `fetch_footage.py` + `extract_footage.py` (Pexels footage), `record_proto.py` (prototype footage), `patch_v7.py` + `build_page.py` (composition), then `voice_v5.py` → `restretch.py` → `make_sound_v5.py` + `sound_v5.py` → `capture_v5.py`.
+- `video/v6/` — the previous pipeline (prototype footage, no stock footage)
 - `video/v5/` — the previous pipeline: `voice_v5.py` (narration) → `make_sound_v5.py` + `sound_v5.py` (score and effects) → `capture_v5.py` (render). `stage/real.html` is the composition; `stage/node3d.html` renders the Field Node CAD model.
 - `video/v4/`, `video/` — earlier pipelines (real-image cut, 3D farm cut, slides cut).
 - `KokoShield_3D/` — the earlier three.js animated farm (superseded, kept for reference).

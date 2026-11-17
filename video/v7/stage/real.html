@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>KokoShield Pitch v6 cinematic</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#2B654F;--ink:#13201a;--red:#B0452E;--amb:#D6A03E;--rou:#C8D4BC}
+html,body{margin:0;background:#0c1411;overflow:hidden;font-family:'Noto Sans','Segoe UI',sans-serif}
+#stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:#0c1411}
+.shot,.ov{position:absolute;opacity:0;display:none;will-change:transform,opacity}
+.shot{inset:0;transform-origin:50% 50%}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#rain,#vig,#flash{position:absolute;inset:0;pointer-events:none}
+#vig{background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 52%,rgba(0,0,0,.5) 100%)}
+#flash{background:#eef6ff;opacity:0}
+.glass{background:rgba(10,26,20,.82);color:#fff;border-radius:22px;padding:26px 34px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.card{background:rgba(255,255,255,.97);color:var(--ink);border-radius:22px;padding:26px 30px;box-shadow:0 20px 50px rgba(8,30,20,.25)}
+.kick{font-size:21px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#9fe0bf;margin-bottom:10px}
+.card .kick{color:var(--g)}
+.h1{font-size:58px;font-weight:800;line-height:1.08}
+.h2{font-size:40px;font-weight:800;line-height:1.12}
+.big{font-size:96px;font-weight:800;line-height:1;color:var(--g);font-variant-numeric:tabular-nums}
+.lbl{font-size:24px;line-height:1.35;color:#33403a}
+.glass .lbl{color:#d6e9df}
+.chip{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:8px 18px;font-weight:700;font-size:22px}
+.w{display:inline-block;will-change:transform,opacity}
+#brand{left:44px;top:34px;display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.93);border-radius:999px;padding:10px 22px 10px 14px;font-weight:800;font-size:24px;color:var(--g)}
+#brand small{font-weight:600;color:#56645d;font-size:18px}
+#chap{right:44px;top:38px;background:rgba(10,26,20,.75);color:#fff;border-radius:999px;padding:10px 22px;font-size:19px;font-weight:700;letter-spacing:.04em}
+#credit{right:46px;top:92px;max-width:390px;text-align:right;color:rgba(255,255,255,.92);font-size:16px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.8);display:block;opacity:1}
+#cap{left:50%;bottom:44px;transform:translateX(-50%);max-width:1500px;background:rgba(6,14,10,.74);color:#fff;font-size:33px;line-height:1.35;font-weight:600;padding:14px 30px;border-radius:16px;text-align:center}
+#prog{left:0;bottom:0;height:8px;background:#9fe0bf;display:block;opacity:1}
+#cap,#brand,#chap,#credit,#prog{z-index:20}
+#wipe{position:absolute;top:-220px;left:0;width:2600px;height:1520px;background:linear-gradient(90deg,#123527 0%,#2B654F 38%,#2B654F 62%,#123527 100%);display:none;align-items:center;justify-content:center;z-index:30}
+#wipe svg{transform:skewX(16deg)}
+.pin{position:absolute;width:0;height:0}
+.pin .dot{position:absolute;left:-13px;top:-13px;width:26px;height:26px;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 4px rgba(0,0,0,.25)}
+.pin .lab{position:absolute;white-space:nowrap;font-size:27px;font-weight:800;color:#fff;padding:10px 18px;border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.phone{width:360px;height:740px;border-radius:52px;background:#0f1412;padding:14px;box-shadow:0 30px 60px rgba(0,0,0,.45)}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:40px;overflow:hidden;background:#fff}
+.phone img{position:absolute;left:0;top:0;width:100%}
+.laptop{width:1320px;height:870px;transform:scale(.88);transform-origin:0 0}
+.laptop .bezel{position:absolute;left:0;top:0;width:1320px;height:840px;background:#121615;border-radius:26px;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.laptop .screen{position:absolute;left:20px;top:20px;width:1280px;height:800px;overflow:hidden;border-radius:8px;background:#fff}
+.laptop .base{position:absolute;left:-70px;top:834px;width:1460px;height:24px;background:linear-gradient(#d3d8d6,#8c9390);border-radius:0 0 26px 26px}
+.zoom{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:0 0}
+.zoom img{position:absolute;left:0;top:0;width:1280px;height:800px}
+.cursor{position:absolute;left:0;top:0;width:34px;height:42px;z-index:5}
+.ripple{position:absolute;left:-30px;top:-30px;width:60px;height:60px;border-radius:50%;border:5px solid #2B654F;opacity:0}
+.badge{position:absolute;font:800 13px 'Noto Sans','Segoe UI',sans-serif;border-radius:6px;padding:3px 8px;min-width:52px;text-align:center;opacity:0}
+.tablet{position:absolute;background:#121615;border-radius:34px;padding:20px;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.row{display:flex;align-items:center;gap:18px;margin:0 0 14px}
+.num{flex:none;width:44px;height:44px;border-radius:50%;background:#2B654F;color:#fff;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center}
+.dot{display:inline-block;width:20px;height:20px;border-radius:50%;margin:5px}
+.stat{width:430px}
+.paper{background:#fff;padding:16px;border-radius:6px;box-shadow:0 24px 50px rgba(0,0,0,.45)}
+.glass.dark{background:rgba(6,12,16,.86)}
+.holo{background:rgba(6,20,28,.55);border:1px solid rgba(127,212,255,.35);border-radius:24px;padding:30px 40px;box-shadow:0 0 60px rgba(127,212,255,.25),inset 0 0 40px rgba(127,212,255,.08);backdrop-filter:blur(4px)}
+.holoframe,.holomap{position:relative;width:1040px;border-radius:18px;overflow:hidden;border:2px solid rgba(127,212,255,.55);box-shadow:0 0 50px rgba(127,212,255,.35),0 30px 70px rgba(0,0,0,.5);background:rgba(6,20,28,.6);transform-origin:50% 50%}
+.holoframe img{width:100%;display:block;opacity:.92;filter:saturate(1.1) contrast(1.05)}
+.holomap{width:1040px;height:571px}.holomap svg{opacity:.95}
+.scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(127,212,255,.06) 0 2px,transparent 2px 5px)}
+.aitag{position:absolute;left:50%;bottom:120px;transform:translateX(-50%);background:rgba(255,138,102,.9);color:#1a0d08;font-size:20px;font-weight:800;padding:8px 16px;border-radius:10px;white-space:nowrap}
+.split{position:relative;width:1920px;height:1080px}
+.half{position:absolute;top:0;width:960px;height:1080px;overflow:hidden}.half:first-child{left:0}.half:nth-child(2){left:960px;border-left:4px solid rgba(255,255,255,.25)}
+.half img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hmap{position:absolute;left:60px;top:330px;width:840px;height:461px;border-radius:14px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.hhead{position:absolute;left:60px;top:140px;background:rgba(8,16,12,.85);color:#fff;border-left:10px solid;border-radius:14px;padding:16px 22px}
+.hscore{position:absolute;right:60px;top:140px;font-size:120px;font-weight:800;line-height:1;text-shadow:0 4px 20px rgba(0,0,0,.6);font-variant-numeric:tabular-nums}
+.hscore small{display:block;font-size:20px;color:#cfe6da;text-align:right}
+.vs{position:absolute;left:50%;top:40px;transform:translateX(-50%);background:rgba(8,16,12,.9);border-radius:16px;padding:10px 28px;text-align:center;z-index:2}
+
+.lapwrap{position:absolute;left:50%;top:46px;transform-origin:50% 0}
+.lap{width:1468px;padding:14px;background:#0b0e0d;border-radius:24px;box-shadow:0 50px 110px rgba(0,0,0,.65),0 0 0 2px #2c3330 inset,0 0 80px rgba(159,224,191,.10)}
+.lscr,.pscr{position:relative;overflow:hidden;background:#fff}
+.lscr{width:1440px;height:900px;border-radius:8px}
+.deck{width:1640px;height:30px;margin:-2px 0 0 -86px;background:linear-gradient(#4a504d,#202523 70%,#121514);border-radius:2px 2px 26px 26px;box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.cam{position:absolute;left:0;top:0;transform-origin:0 0}.cam img{display:block}
+.glare{position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,0) 38%)}
+.ph2wrap{position:absolute;transform-origin:50% 50%}
+.ph2{width:414px;padding:12px;background:#0b0e0d;border-radius:58px;box-shadow:0 50px 110px rgba(0,0,0,.65),0 0 0 2px #2c3330 inset}
+.pscr{width:390px;height:844px;border-radius:46px}
+
+.rh img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rtag{position:absolute;left:40px;top:205px;display:flex;align-items:center;gap:10px;background:rgba(8,16,12,.78);color:#fff;font-size:20px;font-weight:700;padding:8px 14px;border-radius:10px}
+.recdot{width:12px;height:12px;border-radius:50%;box-shadow:0 0 10px currentColor}
+.rscore{position:absolute;right:40px;top:262px;text-align:right;color:#fff;text-shadow:0 3px 14px rgba(0,0,0,.7);font-variant-numeric:tabular-nums}
+.rscore span{display:block;font-size:76px;font-weight:800;line-height:1}.rscore small{font-size:19px;color:#e2efe8;font-weight:700}
+.mm{position:absolute;left:40px;top:400px;width:500px;height:275px;border-radius:14px;overflow:hidden;border:2px solid rgba(255,255,255,.55);box-shadow:0 20px 50px rgba(0,0,0,.55)}
+</style>
+<script src="data_v5.js"></script>
+</head>
+<body>
+<div id="stage">
+ <div id="bg"></div>
+ <canvas id="rain" width="1920" height="1080"></canvas>
+ <div id="flash"></div>
+ <div id="vig"></div>
+ <div id="ovl"></div>
+ <div id="wipe"><svg width="150" height="168" viewBox="0 0 34 38" aria-hidden="true"><path d="M17 2 31 7v11c0 9-6 15-14 18C9 33 3 27 3 18V7z" fill="#fff"/><path d="M17 11c-4 3-6 7-5 12 4 0 7-3 8-7 1 4 0 8-3 11" stroke="#2B654F" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></div>
+</div>
+<script>
+const K = window.KS5, S = K.starts, END = K.end, VA = K.voice_at, CAPS = K.caps, CRED = K.credits;
+const NAMES = K.names;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const sm = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+const ramp = (t, a, b) => sm((t - a) / (b - a));
+const eo = x => 1 - Math.pow(1 - clamp(x), 3), ei = x => clamp(x) * clamp(x);
+const bo = x => { x = clamp(x); const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const lerp = (a, b, k) => a + (b - a) * k;
+const at = (i, x) => S[i] + x;
+let seed = 3; const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let q = Math.imul(seed ^ seed >>> 15, 1 | seed); q = q + Math.imul(q ^ q >>> 7, 61 | q) ^ q; return ((q ^ q >>> 14) >>> 0) / 4294967296; };
+const $ = s => document.querySelector(s);
+const vis = (t, a, b, fin = 0.55, fout = 0.4) => Math.min(eo((t - a) / fin), 1 - ei((t - b + fout) / fout));
+const PH = '../photos/';
+
+/* ---------------- photo shots (Ken Burns + grade) ---------------- */
+const SHOTS = [];
+function shot(file, t0, t1, from, to, grade = '', pos = '50% 50%', extra = '') {
+  const el = document.createElement('div'); el.className = 'shot';
+  el.innerHTML = `<img src="${PH}${file}" style="object-position:${pos};filter:${grade}">${extra}`; $('#bg').appendChild(el);
+  SHOTS.push({ el, file, t0, t1, from, to, credit: CRED[file] || '' });
+}
+const pin = (x, y, text, col, dx, dy, side = 'right') => `<div class="pin" style="left:${x}px;top:${y}px"><div class="dot" style="background:${col}"></div><div class="lab" style="background:${col};${side === 'right' ? 'left' : 'right'}:${dx}px;top:${dy}px">${text}</div></div>`;
+/* ---------------- overlay system (cards, scenes) ---------------- */
+const OV = [];
+function ov(html, css, tin, tout, fx = 'up', cls = '', credit = '') {
+  const el = document.createElement('div'); el.className = 'ov ' + cls; el.style.cssText = css; el.innerHTML = html; $('#ovl').appendChild(el);
+  const o = { el, tin, tout, fx, credit }; OV.push(o); return o;
+}
+const brand = ov('<svg width="34" height="38" viewBox="0 0 34 38"><path d="M17 2 31 7v11c0 9-6 15-14 18C9 33 3 27 3 18V7z" fill="#2B654F"/><path d="M17 11c-4 3-6 7-5 12 4 0 7-3 8-7 1 4 0 8-3 11" stroke="#9fe0bf" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg><span>KokoShield <small>Weather-guided disease scouting</small></span>', '', 0.2, END - 2.2, 'fade');
+brand.el.id = 'brand'; brand.el.dataset.d = 'flex';
+const chap = ov('', '', 0.4, END - 2.4, 'fade'); chap.el.id = 'chap';
+const cap = ov('', '', 0, END - 2.3, 'none'); cap.el.id = 'cap';
+const credEl = document.createElement('div'); credEl.className = 'ov'; credEl.id = 'credit'; $('#ovl').appendChild(credEl);
+const prog = document.createElement('div'); prog.className = 'ov'; prog.id = 'prog'; $('#ovl').appendChild(prog);
+
+/* ---------- app-style block map (exact geometry from the Field Desk prototype) ---------- */
+const POLY = { A: '68,57 191,39 215,105 181,150 66,142', B: '209,38 362,34 367,133 286,151 232,125', C: '382,40 534,64 558,135 474,160 385,127',
+  D: '64,159 181,169 217,236 173,272 80,248 51,216', E: '221,154 287,170 368,151 391,236 319,273 244,250', F: '390,145 474,176 562,152 595,221 550,273 416,255',
+  G: '99,267 178,291 222,260 276,292 267,334 121,333', H: '283,290 322,286 405,263 547,291 503,333 291,335' };
+const LBL = { A: [137, 73], B: [308, 73], C: [462, 98], D: [113, 205], E: [307, 205], F: [491, 214], G: [185, 320], H: [387, 308] };
+const PRI = { A: '#B0452E', D: '#B0452E', G: '#B0452E', B: '#D6A03E', C: '#C8D4BC', E: '#C8D4BC', H: '#C8D4BC', F: 'url(#mclosed)' };
+function mapSVG(id, mode, extra = '') {
+  let grid = ''; for (let x = 25; x < 650; x += 25) grid += `M${x} 0V357`; for (let y = 25; y < 357; y += 25) grid += `M0 ${y}H650`;
+  const blocks = Object.keys(POLY).map(k => {
+    const fill = mode === 'priority' ? PRI[k] : (k === 'F' ? 'url(#mclosed)' : '#C8D4BC');
+    const dark = mode === 'priority' && ['A', 'D', 'G'].includes(k);
+    return `<polygon id="${id}-${k}" points="${POLY[k]}" fill="${fill}" stroke="#EEF0EB" stroke-width="3" stroke-linejoin="round"/>
+      <text id="${id}-l${k}" x="${LBL[k][0]}" y="${LBL[k][1]}" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="800" fill="${dark ? '#fff' : (k === 'F' ? '#67716B' : '#17201C')}" style="paint-order:stroke" stroke="${dark ? '#B0452E' : '#EEF0EB'}" stroke-width="4">${k}</text>`; }).join('');
+  return `<svg viewBox="0 0 650 357" style="display:block;width:100%;height:100%;font-family:'Noto Sans','Segoe UI',sans-serif">
+  <defs><pattern id="mclosed" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#E3E4E0"/><path d="M0 0v6" stroke="#A9A69F" stroke-width="1.3"/></pattern>
+  ${Object.keys(POLY).map(k => `<clipPath id="${id}-c${k}"><polygon points="${POLY[k]}"/></clipPath>`).join('')}</defs>
+  <rect width="650" height="357" fill="#EEF0EB"/><path d="${grid}" stroke="#17201C" stroke-opacity=".05" stroke-width="1"/>
+  <path d="M610 -8C617 56 565 99 597 141S611 230 627 271 617 326 648 362" stroke="#D3E0EA" stroke-width="10" fill="none"/>
+  <path d="M611 -8C617 56 566 99 598 141S611 230 627 271 617 326 648 362" stroke="#7FA0B9" stroke-width="2" fill="none"/>
+  <path d="M42 336L46 250 49 151 57 61M42 336L85 347 281 348 547 345M52 148L190 158 297 162 389 133 562 147" fill="none" stroke="#AFB6AA" stroke-width="1.4" stroke-dasharray="5 4"/>
+  ${blocks}
+  <rect x="36" y="330" width="12" height="12" rx="2" fill="#17201C" stroke="#fff" stroke-width="1.5"/><text x="14" y="321" font-size="12" fill="#56645d" font-weight="700">Gate</text>
+  <path d="M621 58L621 30M614 40L621 30 628 40" fill="none" stroke="#17201C" stroke-width="1.6"/><text x="617" y="72" font-size="12" fill="#56645d" font-weight="700">N</text>
+  ${extra}</svg>`;
+}
+const DRONE = `<g class="drone"><ellipse cx="6" cy="9" rx="17" ry="7" fill="#000" opacity=".18"/>
+  <path d="M-11 -11L11 11M11 -11L-11 11" stroke="#17201C" stroke-width="3.2" stroke-linecap="round"/>
+  ${[[-11, -11], [11, -11], [-11, 11], [11, 11]].map(([x, y]) => `<g transform="translate(${x} ${y})"><circle r="7.5" fill="rgba(255,255,255,.55)" stroke="#17201C" stroke-width="1.2"/><path class="blade" d="M-7 0H7" stroke="#17201C" stroke-width="1.6"/></g>`).join('')}
+  <rect x="-5" y="-5" width="10" height="10" rx="2.5" fill="#2B654F" stroke="#fff" stroke-width="1.2"/></g>`;
+
+
+/* ================= KokoShield cinematic pitch (v5): four acts ================= */
+/* Act boundaries: 1 Storm & crisis (S[0]-S[2]), 2 Activation (S[2]-S[5]), 3 Race (S[5]-S[7]), 4 Vision & ask (S[7]-END). */
+const AI = (txt) => `<div class="aitag">${txt}</div>`;   /* placeholder tag for AI clips still to be generated */
+
+/* ---------- real footage (Pexels License clips, cut to 30 fps frame sequences by extract_footage.py) ---------- */
+const VFR = {"rain1": 150, "rainleaf": 156, "ghana": 198, "orchard_a": 348, "leafbg": 349, "aerialbg": 486, "orchard_b": 319, "path_a": 319, "podbg": 258, "aerial_v": 144, "path_end": 481}, VCRED = {"rain1": "Video: Nothing Ahead · Pexels", "rainleaf": "Video: Srinivas Kashyap · Pexels", "ghana": "Cocoa farmer, Ghana · Video: Zeal Creative Studios · Pexels", "orchard_a": "Video: Prodèép Nëpalënsis · Pexels", "leafbg": "", "aerialbg": "", "orchard_b": "", "path_a": "", "podbg": "", "aerial_v": "Video: Serg Alesenko · Pexels", "path_end": "Video: Ucundinamarca Virtual · Pexels"};
+const VS = [];
+function vshot(seg, t0, t1, from, to, grade = '', credit = null) {
+  const el = document.createElement('div'); el.className = 'shot';
+  el.innerHTML = `<img style="filter:${grade};width:100%;height:100%;object-fit:cover">`; $('#bg').appendChild(el);
+  const o = { el, file: seg, t0, t1, from, to, credit: credit ?? VCRED[seg] ?? '' }; SHOTS.push(o);
+  VS.push({ img: el.querySelector('img'), seg, n: VFR[seg], t0 }); return o;
+}
+function updateVids(t) {
+  for (const v of VS) {
+    const shown = v.img.closest('.shot, .ov'); if (shown && shown.style.display === 'none') continue;
+    const i = Math.max(0, Math.min(v.n - 1, Math.round((t - v.t0) * 30)));
+    if (v.img.dataset.i !== String(i)) { v.img.dataset.i = i; v.img.src = `assets/vid/${v.seg}/f${String(i + 1).padStart(4, '0')}.jpg`; PEND.push(v.img.decode().catch(() => 0)); }
+  }
+}
+/* ---------- ACT 1: the disease and the problem (cold) ---------- */
+const COLD = 'saturate(.6) brightness(.62) contrast(1.12) hue-rotate(-6deg)';
+vshot('rain1', -0.2, 4.6, [1.04, 0, 0], [1.14, -1, 1], COLD);
+vshot('rainleaf', 4.2, 8.9, [1.03, 0, 0], [1.1, 1, 0], 'saturate(.7) brightness(.66) contrast(1.1)');
+shot('13_black_pod.jpg', 8.5, S[1] + 0.5, [1.02, 0, 0], [1.16, -4, -3], 'saturate(.8) brightness(.72) contrast(1.12)', '50% 43%');
+vshot('ghana', S[1] - 0.1, at(1, 6.4), [1.03, 0, 0], [1.1, 0, 0], 'saturate(.7) brightness(.66) contrast(1.08)');
+vshot('orchard_a', at(1, 5.8), S[2] + 0.5, [1.03, 0, 0], [1.12, 0, 0], 'saturate(.5) brightness(.55) contrast(1.15)');
+/* ---------- ACT 2: the solution (glow over dim real footage) ---------- */
+vshot('leafbg', S[2] - 0.2, S[3] + 0.5, [1.15, 0, 0], [1.2, 0, 0], 'brightness(.3) blur(8px) saturate(.7)', '');
+vshot('aerialbg', S[3] + 0.1, S[4] + 0.4, [1.1, 0, 0], [1.18, 0, 0], 'brightness(.38) blur(6px) saturate(.85)', '');
+/* ---------- ACT 3: proof and the find ---------- */
+shot('06_farm.jpg', at(5, 9.6), S[6] + 0.4, [1.1, 0, 0], [1.18, 0, 0], 'brightness(.32) blur(8px)');
+shot('12_black_pod.jpg', S[6] - 0.2, at(6, 4.0), [1.0, 0, 0], [1.14, -3, 0], 'brightness(.85) saturate(1.05)', '50% 40%');
+vshot('podbg', at(6, 3.4), at(6, 9.2), [1.1, 0, 0], [1.16, 0, 0], 'brightness(.4) blur(9px)', '');
+shot('06_farm.jpg', at(6, 8.6), S[7] + 0.4, [1.1, 0, 0], [1.16, 0, 0], 'brightness(.3) blur(8px)');
+/* ---------- ACT 4: impact and the ask (golden) ---------- */
+const GOLD = 'sepia(.22) saturate(1.15) brightness(.9) contrast(1.05)';
+vshot('aerial_v', S[7] - 0.2, at(7, 4.4), [1.04, 0, 0], [1.12, 0, 0], GOLD);
+shot('15_farmer.jpg', at(7, 4.0), at(7, 8.4), [1.04, 0, 0], [1.12, 0, -2], GOLD, '50% 30%');
+shot('22_rice.jpg', at(7, 8.0), S[8] + 0.6, [1.04, 0, 0], [1.14, 2, 0], GOLD);
+vshot('path_end', S[8] + 0.2, END + 1, [1.04, 0, 0], [1.1, 0, 0], GOLD);
+
+/* ---------- ACT 1 overlays ---------- */
+ov(`<div class="kick">GSC 2026–27 · Food Resilience</div><div class="h1" style="font-size:66px">Black pod is driven by rain.</div><div class="big" style="font-size:112px;color:#ff8a66;margin-top:12px" id="loss">0%</div><div class="lbl" style="color:#e6cfc7">of the world's cocoa destroyed every year <span style="color:#9a8c86">(Guest 2007)</span></div>`,
+  'left:70px;top:230px;width:860px', 4.6, S[1] - 0.3, 'left', 'glass dark');
+ov(`<div style="display:flex;align-items:center;gap:22px"><svg width="110" height="110" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="10"/><circle id="clk1" cx="50" cy="50" r="44" fill="none" stroke="#ff8a66" stroke-width="10" stroke-dasharray="276.5" stroke-dashoffset="0" transform="rotate(-90 50 50)" stroke-linecap="round"/></svg><div><div style="font-size:70px;font-weight:800;color:#ff8a66;line-height:1" id="tmin">30:00</div><div class="lbl" style="color:#e6cfc7">to scout the whole farm</div></div></div>`,
+  'left:70px;top:150px', at(1, 1.0), S[2] - 0.3, 'left', 'glass dark');
+ov(`<div class="kick" style="color:#ff8a66">The problem</div><div class="h2" style="font-size:38px">Too many blocks, too little time</div>${['Rain spreads black pod within days', 'About 30 minutes to scout after a storm', 'Usual round: the wettest blocks are found late'].map((x, i) => `<div class="row" id="pb${i}" style="opacity:0"><div class="num" style="background:#B0452E">${i + 1}</div><div style="font-size:25px;font-weight:700">${x}</div></div>`).join('')}`,
+  'left:70px;top:330px;width:780px', at(1, 1.4), S[2] - 0.3, 'left', 'glass dark');
+
+/* ---------- ACT 2: activation + hologram ---------- */
+ov(`<div style="text-align:center"><div style="font-size:26px;letter-spacing:.2em;color:#9fe0bf;font-weight:800">24 H RAINFALL</div><div style="display:flex;align-items:baseline;justify-content:center;gap:14px"><span id="mm2" class="big" style="font-size:150px;color:#7fd4ff;text-shadow:0 0 40px rgba(127,212,255,.6)">0</span><span style="font-size:44px;font-weight:800;color:#7fd4ff">mm</span></div>
+<div style="position:relative;height:14px;background:rgba(255,255,255,.12);border-radius:8px;width:560px;margin:10px auto"><div id="mmbar2" style="height:100%;width:0;background:#7fd4ff;border-radius:8px;box-shadow:0 0 18px #7fd4ff"></div><div style="position:absolute;left:280px;top:-9px;width:4px;height:32px;background:#ff8a66"></div></div>
+<div id="trig2" class="lbl" style="color:#cfe6da">Trigger 30 mm</div></div>`, 'left:560px;top:300px;width:800px', S[2] + 0.2, at(2, 5.6), 'fade', 'holo');
+ov(`<div style="text-align:center"><div class="kick" style="color:#9fe0bf;font-size:24px">The solution</div><div class="h1" style="font-size:78px;color:#fff;text-shadow:0 0 30px rgba(159,224,191,.5)">KokoShield</div><div style="font-size:30px;color:#9fe0bf;font-weight:700;letter-spacing:.08em">WEATHER-GUIDED DISEASE SCOUTING</div><div id="act2" style="margin-top:14px;font-size:34px;font-weight:800;color:#7fd4ff;opacity:0">● SYSTEM ACTIVE</div></div>`,
+  'left:460px;top:160px;width:1000px', at(2, 3.6), at(2, 6.4), 'fade', 'holo');
+/* hologram: the real Field Desk screens floating with scanlines + the drone sweep over the app map with wet blocks */
+const WATER2 = { A: [[118, 104, 34, 18], [160, 70, 20, 12]], D: [[118, 222, 40, 20], [158, 245, 18, 10]], G: [[150, 312, 36, 14], [222, 302, 22, 10]] };
+const SWEEP = [[40, 42], [610, 42], [610, 130], [40, 130], [40, 218], [610, 218], [610, 306], [40, 306]];
+const sweepLen = SWEEP.slice(1).reduce((a, p, i) => a + Math.hypot(p[0] - SWEEP[i][0], p[1] - SWEEP[i][1]), 0);
+ov(`<div class="holomap">${mapSVG('hm', 'priority', `<polyline id="sw" points="${SWEEP.map(p => p.join(',')).join(' ')}" fill="none" stroke="#7fd4ff" stroke-width="2.5" stroke-dasharray="${sweepLen}" stroke-dashoffset="${sweepLen}" opacity=".8"/>
+  ${Object.entries(WATER2).map(([k, bl]) => `<g id="hw${k}" clip-path="url(#hm-c${k})" opacity="0">${bl.map(([x, y, rx, ry]) => `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="#7fd4ff" opacity=".75"/>`).join('')}</g>`).join('')}
+  ${['A', 'D', 'G'].map(k => `<g id="hs${k}" opacity="0"><rect x="${WATER2[k][0][0] - 46}" y="${WATER2[k][0][1] - 40}" width="92" height="22" rx="7" fill="#1f6fb8"/><text x="${WATER2[k][0][0]}" y="${WATER2[k][0][1] - 25}" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">STANDING WATER</text></g>`).join('')}
+  <polyline id="hr" points="42,336 137,93 133,205 294,87 185,300" fill="none" stroke="#9fe0bf" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="900" stroke-dashoffset="900"/>
+  ${[['A', 137, 93, 1], ['D', 133, 205, 2], ['B', 294, 87, 3], ['G', 185, 300, 4]].map(([k, x, y, n]) => `<g id="hn${n}" opacity="0"><circle cx="${x}" cy="${y}" r="13" fill="#17201C" stroke="#9fe0bf" stroke-width="2.5"/><text x="${x}" y="${y + 5}" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">${n}</text></g>`).join('')}
+  <g id="hd" transform="translate(40 42)">${DRONE}</g>`)}<div class="scan"></div></div>`, 'left:150px;top:150px', at(3, 0.6), at(3, 6.5), 'fade');
+ov(`<div class="kick">How it works · inputs</div>${[['Drone: standing water', 'A · D · G', 1.2], ['Rain gauge', '48 mm / 24 h', 2.2], ['Block drainage', 'slow in A, D, G', 3.2], ['Past confirmed cases', 'A · B', 4.2]].map(([a, b, d], i) => `<div class="row" id="in${i}" style="opacity:0"><div class="num" style="background:#1f6fb8">✓</div><div style="flex:1;font-size:24px;font-weight:700">${a}</div><div style="font-size:22px;color:#9fe0bf;font-weight:800">${b}</div></div>`).join('')}
+<div id="out2" style="opacity:0;border-top:2px solid rgba(255,255,255,.2);padding-top:12px;margin-top:6px"><div class="kick" style="color:#7fd4ff">Output · 30-minute priority route</div><div class="h2" style="font-size:38px">A → D → B → G</div><div class="lbl" style="color:#cfe6da">Computed in seconds. Reason beside every stop.</div></div>`,
+  'left:1230px;top:150px;width:620px', at(3, 0.9), at(3, 6.5), 'right', 'glass');
+
+
+/* ---------- ACT 2b: Field Node 3D (real CAD model, turntable + explode) ---------- */
+shot('06_farm.jpg', S[4] - 0.2, S[5] + 0.4, [1.12, 0, 0], [1.2, 0, 0], 'brightness(.28) blur(8px) saturate(.7)');
+const n3d = ov(`<img id="n3d" src="assets/node3d/f0000.png" style="width:1100px;height:800px;display:block">`, 'left:80px;top:140px', S[4] + 0.2, at(4, 7.4), 'fade', '', 'KokoShield Field Node CAD model (concept, not yet built)');
+const N3D = Array.from({ length: 210 }, (_, i) => { const im = new Image(); im.src = `assets/node3d/f${String(i).padStart(4, '0')}.png`; return im; });
+ov(`<div class="kick">Field Node · CAD concept</div><div class="h2" style="font-size:40px">Local sensor at block level</div>
+${[['Ventilated hood', 'air temperature + humidity sensor', 1.8], ['Enclosure', '86 × 62 × 32 mm, 3D-printed', 2.6], ['Controller envelope', 'ESP32-class board', 3.4], ['Status', 'concept · not yet field-tested', 4.4]].map(([a, b, d], i) => `<div class="row" id="nc${i}" style="opacity:0"><div class="num" style="background:#1f6fb8">${i + 1}</div><div><div style="font-size:26px;font-weight:800">${a}</div><div style="font-size:21px;color:#cfe6da">${b}</div></div></div>`).join('')}`,
+  'left:1230px;top:200px;width:620px', S[4] + 0.6, at(4, 7.4), 'right', 'glass');
+
+/* ---------- ACT 3: the proof: two real scouts, same 30 minutes, the prototype's aerial map with GPS trails ---------- */
+const NODE={gate:[42,336],w1:[46,250],w2:[48,200],m0:[52,148],ma:[120,152],m1:[190,158],mx:[222,146],mb:[255,149],m2:[297,158],me:[330,150],m3:[378,140],m4:[474,168],
+ l1:[90,258],l2:[176,281],l3:[228,252],l4:[300,278],gh0:[280,284],gh:[280,300],l5:[402,256],l6:[556,286],vd:[215,200],vf:[392,200],s1:[281,348],s2:[400,346],s3:[547,345],
+ eA:[128,134],eB:[300,136],eC:[474,148],eD:[115,174],eE:[300,180],eG:[190,292],eH:[405,280]};
+const LINKS='gate-w1 w1-w2 w2-m0 m0-ma ma-m1 m1-mx mx-mb mb-m2 m2-me me-m3 m3-m4 w1-l1 l1-l2 l2-l3 l3-l4 l4-gh0 gh0-gh gh-s1 l4-l5 l5-l6 l6-s3 gate-s1 s1-s2 s2-s3 m1-vd vd-l3 m3-vf vf-l5 ma-eA ma-eD m2-eB m2-eE m4-eC l2-eG l5-eH';
+const GRAPH = (() => { const g = {}; for (const k in NODE) g[k] = []; for (const l of LINKS.split(' ')) { const [a, b] = l.split('-'), d = Math.hypot(NODE[a][0] - NODE[b][0], NODE[a][1] - NODE[b][1]); g[a].push([b, d]); g[b].push([a, d]); } return g; })();
+function shortestP(a, b) { const dist = { [a]: 0 }, prev = {}, done = new Set();
+  for (;;) { let u = null; for (const k in dist) if (!done.has(k) && (u === null || dist[k] < dist[u])) u = k; if (u === null || u === b) break; done.add(u);
+    for (const [v, w] of GRAPH[u]) { const nd = dist[u] + w; if (dist[v] === undefined || nd < dist[v]) { dist[v] = nd; prev[v] = u; } } }
+  const nodes = [b]; while (nodes[0] !== a) nodes.unshift(prev[nodes[0]]); return nodes; }
+const PLAN_R = [['A', 7, 3], ['D', 8, 2], ['B', 8, 1], ['G', 7, 1]], PLAN_U = [['B', 8, 1], ['C', 7, 0], ['E', 8, 0], ['G', 7, 1]];
+function buildRoute(plan) {   /* path along the footpath network, one leg per stop, with find times like the prototype's finds() */
+  const legs = []; let prev = 'gate', e = 0; const finds = [];
+  for (const [k, m, f] of plan) { const pts = shortestP(prev, 'e' + k).map(n => NODE[n]); let L = 0; const cum = [0]; for (let i = 1; i < pts.length; i++) { L += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); cum.push(L); }
+    legs.push({ k, m, t0: e, pts, cum, L }); for (let q = 1; q <= f; q++) finds.push({ t: e + m * q / (f + 1), k, q }); e += m; prev = 'e' + k; }
+  const all = []; legs.forEach((g, i) => g.pts.forEach((pt, j) => { if (i && !j) return; all.push(pt); }));
+  return { legs, finds, all };
+}
+const RR = buildRoute(PLAN_R), RU = buildRoute(PLAN_U);
+function posAt(R, min) {
+  for (const g of R.legs) { if (min >= g.t0 + g.m && g !== R.legs[R.legs.length - 1]) continue;
+    const u = Math.max(0, min - g.t0), tw = g.m * 0.28;
+    if (u < tw) { const d = sm(u / tw) * g.L; let i = 1; while (i < g.cum.length - 1 && g.cum[i] < d) i++; const a = (d - g.cum[i - 1]) / Math.max(1e-6, g.cum[i] - g.cum[i - 1]);
+      return { x: lerp(g.pts[i - 1][0], g.pts[i][0], a), y: lerp(g.pts[i - 1][1], g.pts[i][1], a), leg: g, walked: d }; }
+    const c = g.pts[g.pts.length - 1], ph = (u - tw) / (g.m - tw) * Math.PI * 2;   /* searching inside the block */
+    return { x: c[0] + Math.sin(ph) * 16, y: c[1] - 10 + Math.cos(ph) * 10 - 10 * Math.sin(ph / 2), leg: g, walked: g.L }; }
+}
+const STOPXY = k => NODE['e' + k];
+function miniMap(id, R, col) {
+  const poly = Object.keys(POLY).map(k => { const f = { A: '#B0452E', D: '#B0452E', G: '#B0452E', B: '#D6A03E' }[k];
+    return `<polygon points="${POLY[k]}" fill="${f || 'none'}" fill-opacity="${f ? .32 : 0}" stroke="#fff" stroke-opacity="${k === 'F' ? .35 : .75}" stroke-width="${f ? 2.2 : 1.2}" stroke-linejoin="round"/>
+      <text x="${LBL[k][0]}" y="${LBL[k][1]}" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="800" fill="#fff" style="paint-order:stroke" stroke="rgba(0,0,0,.45)" stroke-width="3">${k}</text>`; }).join('');
+  const route = R.all.map(p => p.join(',')).join(' ');
+  return `<svg viewBox="0 0 650 357" style="display:block;width:100%;height:100%;font-family:'Noto Sans','Segoe UI',sans-serif">
+    <image href="assets/farm_aerial.jpg" x="-40" y="-188" width="1100" height="733" preserveAspectRatio="none"/><rect x="-40" y="-188" width="1100" height="733" fill="rgba(10,30,20,.18)"/>
+    ${poly}<polyline points="${route}" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-dasharray="6 7" stroke-linejoin="round"/>
+    <polyline id="${id}trl" points="" fill="none" stroke="${col}" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <g id="${id}pins"></g>
+    <rect x="36" y="330" width="12" height="12" rx="2" fill="#17201C" stroke="#fff" stroke-width="1.5"/>
+    <g id="${id}dot"><circle r="15" fill="${col}" opacity=".28" id="${id}halo"/><circle r="8.5" fill="${col}" stroke="#fff" stroke-width="3"/></g></svg>`;
+}
+function realHalf(id, who, title, col, R, seg, grade) {
+  return `<div class="half rh" id="${id}"><img id="${id}v" style="filter:${grade}">
+    <div class="rtag"><span class="recdot" style="background:${col}"></span>${who}</div>
+    <div class="hhead" style="border-color:${col};top:262px"><div style="font-size:24px;font-weight:800">${title}</div><div style="font-size:19px;color:#cfe6da" id="${id}f">First find —</div></div>
+    <div class="rscore"><span id="${id}n" style="color:${col}">0</span><small>suspect pods</small></div>
+    <div class="mm">${miniMap(id, R, col)}</div></div>`;
+}
+const raceT0 = at(5, 1.0), raceT1 = at(5, 9.6), raceMin = t => 30 * ramp(t, raceT0, raceT1);
+const raceOv = ov(`<div class="split">${realHalf('hu', 'Scout 1 · usual round', 'Usual round · B → C → E → G', '#9fb4c6', RU, 'orchard_b', 'saturate(.55) brightness(.62) contrast(1.1)')}${realHalf('hr2', 'Scout 2 · KokoShield route', 'Priority route · A → D → B → G', '#3fe08f', RR, 'path_a', 'saturate(1.05) brightness(.8) contrast(1.05)')}
+  <div class="vs"><div class="kick" style="margin:0;color:#9fe0bf">The proof · same farm</div><div id="clk3" style="font-size:54px;font-weight:800;color:#fff">0:00</div><div style="font-size:18px;color:#cfe6da">of 30 min · same time</div></div></div>`,
+  'left:0;top:0', S[5] + 0.2, at(5, 10.3), 'fade', '', 'Real footage: Prodèép Nëpalënsis, Ucundinamarca Virtual · Pexels · routes and finds: demo simulation on the prototype map');
+VS.push({ img: $('#huv'), seg: 'orchard_b', n: VFR.orchard_b, t0: S[5] + 0.2 }, { img: $('#hr2v'), seg: 'path_a', n: VFR.path_a, t0: S[5] + 0.2 });
+function drawSide(id, R, min, col) {
+  const p = posAt(R, min); $('#' + id + 'dot').setAttribute('transform', `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`);
+  $('#' + id + 'halo').setAttribute('r', (13 + 5 * Math.abs(Math.sin(min * 3))).toFixed(1));
+  const pts = []; for (const g of R.legs) { if (g.t0 > min) break; const done = g === p.leg ? p.walked : g.L;
+    g.pts.forEach((pt, j) => { if (g.cum[j] <= done + 1e-6) pts.push(pt); }); if (g === p.leg) { pts.push([p.x, p.y]); break; } }
+  $('#' + id + 'trl').setAttribute('points', pts.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' '));
+  const got = R.finds.filter(f => f.t <= min);
+  $('#' + id + 'pins').innerHTML = got.map(f => { const [x, y] = STOPXY(f.k), a = Math.min(1, (min - f.t) / 0.8), dx = (f.q - 2) * 13;
+    return `<g transform="translate(${x + dx} ${y - 22}) scale(${(0.4 + 0.6 * eo(a)).toFixed(2)})"><path d="M0 0c-7-9-11-14-11-20a11 11 0 0 1 22 0c0 6-4 11-11 20z" fill="#B0452E" stroke="#fff" stroke-width="2"/><circle cy="-20" r="4" fill="#fff"/></g>`; }).join('');
+  $('#' + id + 'n').textContent = got.length; $('#' + id + 'f').textContent = got.length ? `First find at minute ${Math.round(got[0].t)}` : 'First find —';
+}
+ov(`<div class="kick">The find · Block A · minute 2</div><div class="h2" style="font-size:40px">Dark lesions on the lower pods.</div><div class="lbl" style="color:#cfe6da;margin-top:6px">Logged on the phone, offline, in three taps.</div>`, 'left:70px;top:150px;width:720px', at(6, 0.4), at(6, 8.2), 'left', 'glass');
+ov(`<span class="chip" style="background:#2B654F;color:#fff;font-size:24px;box-shadow:0 8px 20px rgba(0,0,0,.3)">Adviser confirms · only the affected blocks are treated</span>`, 'left:600px;top:40px', at(6, 10.4), S[7] - 0.3, 'up');
+
+/* ---------- ACT 4: vision and ask ---------- */
+ov(`<div class="kick">Sustainable impact</div>${[['Fewer pods lost', 'to a climate-driven disease'], ['Higher smallholder income', 'and food systems that hold'], ['SDG 2.3 · 2.4 · 13.1', 'income, resilient farming, adaptation']].map(([a, b], i) => `<div class="row" id="vi${i}" style="opacity:0"><div class="num">✓</div><div><div style="font-size:30px;font-weight:800">${a}</div><div style="font-size:21px;color:#cfe6da">${b}</div></div></div>`).join('')}`,
+  'left:70px;top:150px;width:760px', at(7, 2.6), at(7, 8.6), 'left', 'glass');
+ov(`<div class="kick">Cross-crop</div><div class="h2" style="font-size:40px">Rice blast · China</div><div class="lbl" style="color:#cfe6da;margin-top:6px">Same route planner, new crop profile already in the prototype.</div>`, 'left:70px;top:150px;width:720px', at(7, 8.8), S[8] - 0.3, 'left', 'glass');
+ov(`<div class="phone" style="width:300px;height:620px"><div class="scr"><img src="assets/rec/rice/f0000.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 0"></div></div>`, 'right:140px;top:200px', at(7, 9.2), S[8] - 0.3, 'right');
+ov(`<div style="text-align:center"><div class="kick" style="font-size:24px">The ask</div><div class="h1" style="font-size:78px;color:#fff">RM 1,200</div><div class="lbl" style="color:#cfe6da;font-size:28px;margin-top:8px">to complete the first single-farm pilot:<br>four paired post-rain rounds, one adviser, one Malaysian cocoa farm</div></div>`,
+  'left:410px;top:230px;width:1100px', at(8, 0.6), at(8, 9.6), 'up', 'glass');
+ov(`<div style="width:1920px;height:1080px;background:#0f2a20;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center">
+  <svg width="130" height="146" viewBox="0 0 34 38"><path d="M17 2 31 7v11c0 9-6 15-14 18C9 33 3 27 3 18V7z" fill="#2B654F" stroke="#9fe0bf" stroke-width="1"/><path d="M17 11c-4 3-6 7-5 12 4 0 7-3 8-7 1 4 0 8-3 11" stroke="#9fe0bf" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+  <div style="font-size:70px;font-weight:800;margin-top:18px">KokoShield</div><div style="font-size:30px;color:#9fe0bf;margin-top:6px">Find disease sooner after the rain.</div>
+  <div style="font-size:22px;color:#cfe6da;margin-top:26px">Universiti Malaya · GSC 2026–27 · Food Resilience</div>
+  <div style="font-size:16px;color:#a9c3b7;margin-top:40px;max-width:1300px;line-height:1.5">Footage: Nothing Ahead, Srinivas Kashyap, Zeal Creative Studios, Prodèép Nëpalënsis, Ucundinamarca Virtual, Serg Alesenko (Pexels License). Photos: Scot Nelson (CC0), Irene Scott/AusAID (CC BY 2.0), Isabell Schulz (CC BY-SA 2.0), GPhoto15 (CC BY 4.0), via Wikimedia Commons. App footage: KokoShield Field Desk prototype, demo data. Drone survey, routes and counts: demo simulation. Voice: AI-generated.</div></div>`,
+  'left:0;top:0', at(8, 9.4), END + 5, 'fade');
+
+
+/* ================= real prototype footage (recorded frame by frame from prototype/KokoShield_Prototype.html) ================= */
+const PEND = []; const RECS = [];
+const LAPCSS = 'left:0;top:0;width:1920px;height:1080px';
+function rec({ name, n, kind, tin, tout, map, cam = [[0, 1, 720, 450]], at: pos = '', fx = 'fade', credit = 'KokoShield Field Desk prototype · demo farm and demo data' }) {
+  const W = kind === 'lap' ? 1440 : 390, H = kind === 'lap' ? 900 : 844;
+  const html = kind === 'lap'
+    ? `<div class="lapwrap" style="${pos}"><div class="lap"><div class="lscr"><div class="cam" style="width:${W}px;height:${H}px"><img style="width:${W}px;height:${H}px"></div><div class="glare"></div></div></div><div class="deck"></div></div>`
+    : `<div class="ph2wrap" style="${pos}"><div class="ph2"><div class="pscr"><div class="cam" style="width:${W}px;height:${H}px"><img style="width:${W}px;height:${H}px"></div><div class="glare"></div></div></div></div>`;
+  const o = ov(html, LAPCSS, tin, tout, fx, '', credit);
+  const r = { o, name, n, kind, map, cam, W, H, img: o.el.querySelector('img'), camEl: o.el.querySelector('.cam'), dev: o.el.querySelector(kind === 'lap' ? '.lapwrap' : '.ph2wrap'), tin, tout };
+  RECS.push(r); return r;
+}
+function camAt(cam, rt) {
+  if (rt <= cam[0][0]) return cam[0].slice(1);
+  for (let i = 0; i < cam.length - 1; i++) { const a = cam[i], b = cam[i + 1];
+    if (rt <= b[0]) { const k = sm((rt - a[0]) / (b[0] - a[0])); return [lerp(a[1], b[1], k), lerp(a[2], b[2], k), lerp(a[3], b[3], k)]; } }
+  return cam[cam.length - 1].slice(1);
+}
+function updateRecs(t) {
+  for (const r of RECS) {
+    if (r.o.el.style.display === 'none') continue;
+    const rt = Math.max(0, r.map(t)), i = Math.max(0, Math.min(r.n - 1, Math.round(rt * 30)));
+    if (r.img.dataset.i !== String(i)) { r.img.dataset.i = i; r.img.src = `assets/rec/${r.name}/f${String(i).padStart(4, '0')}.jpg`; PEND.push(r.img.decode().catch(() => 0)); }
+    const [sc, cx, cy] = camAt(r.cam, rt);
+    const tx = Math.min(0, Math.max(r.W - r.W * sc, r.W / 2 - cx * sc)), ty = Math.min(0, Math.max(r.H - r.H * sc, r.H / 2 - cy * sc));
+    r.camEl.style.transform = `translate(${tx}px,${ty}px) scale(${sc})`;
+    const life = (t - r.tin) / Math.max(0.1, r.tout - r.tin);   /* slow cinematic drift of the device itself */
+    r.dev.style.transform = r.kind === 'lap'
+      ? `translateX(-50%) perspective(2200px) rotateX(${4 - 3 * life}deg) rotateY(${-5 + 6 * life}deg) scale(${0.86 + 0.05 * life})`
+      : `translateX(-50%) perspective(1800px) rotateY(${-8 + 10 * life}deg) rotateZ(${-1.5 + 2 * life}deg) scale(${0.98 + 0.04 * life})`;
+  }
+}
+/* Act 2: the alert lands on the real Field plan (rec 0-6.5 s), push to the rain card */
+rec({ name: 'plan', n: 522, kind: 'lap', tin: at(2, 6.0), tout: S[3] + 0.25, map: t => t - at(2, 6.0),
+  cam: [[0, 1.0, 720, 450], [1.2, 1.0, 720, 450], [3.2, 1.7, 1245, 205], [6.5, 1.75, 1245, 205]] });
+/* Act 2: after the drone sweep, the same recording continues (rec 6.5-17.4 s): blocks, usual vs priority, route list, Start scouting */
+rec({ name: 'plan', n: 522, kind: 'lap', tin: at(3, 6.0), tout: S[4] + 0.2, map: t => 6.5 + (t - at(3, 6.0)),
+  cam: [[6.5, 1.0, 720, 450], [7.3, 1.3, 330, 470], [10.6, 1.3, 330, 470], [11.4, 1.0, 720, 450], [13.1, 1.0, 720, 450], [13.6, 1.55, 1245, 330], [15.0, 1.55, 1245, 330], [15.5, 1.3, 1245, 620], [16.2, 1.0, 720, 450]] });
+/* Act 2b: the Field Node in the app (Sensor node page, Assembled -> Exploded) */
+rec({ name: 'sensor', n: 84, kind: 'lap', tin: at(4, 7.0), tout: S[5] + 0.2, map: t => t - at(4, 7.0),
+  cam: [[0, 1.25, 640, 560], [2.8, 1.35, 640, 560]] });
+/* Act 3: race ends on the prototype's own Compare screen */
+rec({ name: 'compare', n: 162, kind: 'lap', tin: at(5, 10.0), tout: S[6] + 0.2, map: t => t - at(5, 10.0),
+  cam: [[0, 1.0, 720, 450], [1.4, 1.5, 360, 330], [2.6, 1.5, 360, 330], [4.6, 1.35, 720, 560]] });
+/* Act 3b: the scout's phone, Walk screen: Found black pod -> 3 pods -> Save -> Stop 2 */
+rec({ name: 'walk', n: 180, kind: 'phone', tin: at(6, 3.2), tout: at(6, 8.3), map: t => t - at(6, 3.2), at: 'left:1330px;top:110px',
+  cam: [[0, 1.0, 195, 422], [6, 1.0, 195, 422]] });
+/* Act 3b: adviser confirms on the Scout log */
+rec({ name: 'log', n: 144, kind: 'lap', tin: at(6, 8.7), tout: S[7] + 0.2, map: t => t - at(6, 8.5),
+  cam: [[0, 1.0, 720, 450], [0.9, 1.45, 560, 300], [4.8, 1.45, 560, 300]] });
+
+/* ---------- per-frame ---------- */
+const rainAt = t => Math.max(0.4 * Math.min(ramp(t, 0, 1.0), 1 - ramp(t, S[1] + 0.2, S[1] + 2.2)), 0.35 * Math.min(ramp(t, S[1] + 2.0, S[1] + 3), 1 - ramp(t, S[2] - 1.2, S[2] - 0.3)));
+const FLASHES = [1.6, 3.4, 9.6];
+const flashAt = t => { let v = 0; for (const f of FLASHES) { const d = t - f; v = Math.max(v, 0.85 * Math.exp(-((d / 0.045) ** 2)), 0.55 * Math.exp(-(((d - 0.17) / 0.05) ** 2)), 0.25 * Math.exp(-(((d - 0.32) / 0.08) ** 2))); } return v; };
+function along(pts, f) { let L = 0; const segs = pts.slice(1).map((p, i) => { const l = Math.hypot(p[0] - pts[i][0], p[1] - pts[i][1]); L += l; return l; }); let d = clamp(f) * L;
+  for (let i = 0; i < segs.length; i++) { if (d <= segs[i]) { const k = segs[i] ? d / segs[i] : 0; return [lerp(pts[i][0], pts[i + 1][0], k), lerp(pts[i][1], pts[i + 1][1], k), Math.atan2(pts[i + 1][1] - pts[i][1], pts[i + 1][0] - pts[i][0])]; } d -= segs[i]; }
+  const p = pts[pts.length - 1]; return [p[0], p[1], 0]; }
+function update(t) {
+  for (const s of SHOTS) { const v = vis(t, s.t0, s.t1, 0.6, 0.6); if (v <= 0.001) { s.el.style.display = 'none'; continue; }
+    s.el.style.display = 'block'; s.el.style.opacity = v; const k = sm((t - s.t0) / (s.t1 - s.t0));
+    s.el.style.transform = `scale(${lerp(s.from[0], s.to[0], k)}) translate(${lerp(s.from[1], s.to[1], k)}%, ${lerp(s.from[2], s.to[2], k)}%)`; }
+  drawRain(t, rainAt(t)); const fl = flashAt(t); $('#flash').style.opacity = (fl * 0.65).toFixed(3);
+  const cold = Math.min(1, 1 - ramp(t, S[2] - 0.5, S[2] + 1)); $('#vig').style.opacity = 0.6 + 0.4 * cold;
+  let credit = ''; for (const s of SHOTS) if (s.el.style.display === 'block' && +s.el.style.opacity > 0.5 && s.credit) credit = s.credit;
+  for (const o of OV) {
+    let v = o.fx === 'none' ? ((t >= o.tin && t <= o.tout) ? 1 : 0) : vis(t, o.tin, o.tout);
+    if (v <= 0.001) { o.el.style.display = 'none'; continue; }
+    o.el.style.display = o.el.dataset.d || 'block'; o.el.style.opacity = v; const k = 1 - v; let tr = '';
+    if (o.fx === 'up') tr = `translateY(${k * 50}px)`; else if (o.fx === 'left') tr = `translateX(${-k * 80}px)`; else if (o.fx === 'right') tr = `translateX(${k * 80}px)`;
+    if (o === cap) tr = 'translateX(-50%)'; o.el.style.transform = tr;
+    if (o.credit && v > 0.5) credit = o.credit;
+    if (o.words) o.words.forEach(w => { const a = eo((t - (w._at ?? o.tin) - 0.12 - w._j * 0.05) / 0.4); w.style.opacity = a; w.style.transform = a >= 1 ? '' : `translateY(${(1 - a) * 22}px)`; });
+  }
+  credEl.textContent = t < END - 2.3 ? credit : ''; credEl.style.display = 'block';
+  let si = 0; for (let i = 0; i < S.length - 1; i++) if (t >= S[i]) si = i;
+  chap.el.textContent = `Act ${[1, 1, 2, 2, 2, 3, 3, 4, 4][si]} · ${NAMES[si]}`;
+  const c = CAPS.find(c => t >= c[0] - 0.05 && t < c[1] + 0.25); cap.el.style.display = c && t < END - 2.3 ? 'block' : 'none'; if (c && cap.el.textContent !== c[2]) cap.el.textContent = c[2];
+  prog.style.width = (1920 * clamp(t / END)) + 'px';
+  const wipe = $('#wipe'); let wp = -1; for (const k of [2, 5, 7]) if (Math.abs(t - S[k]) < 0.42) wp = (t - S[k] + 0.42) / 0.84;
+  if (wp >= 0) { wipe.style.display = 'flex'; wipe.style.transform = `translateX(${-3050 + wp * 5420}px) skewX(-16deg)`; } else wipe.style.display = 'none';
+  /* act 1 */
+  $('#loss').textContent = t < 7.4 ? Math.round(30 * ramp(t, 5.6, 7.4)) + '%' : '20–30%';
+  const left = 30 * 60 * (1 - 0.06 * ramp(t, at(1, 1.0), S[2])); const mm_ = Math.floor(left / 60), ss = Math.floor(left % 60);
+  $('#tmin').textContent = `${mm_}:${String(ss).padStart(2, '0')}`; $('#clk1').style.strokeDashoffset = 276.5 * (1 - left / 1800);
+  [0, 1, 2].forEach(i => { const d = [3.0, 5.5, 9.8][i], q = ramp(t, at(1, d), at(1, d + 0.4)); const e = $('#pb' + i); e.style.opacity = q; e.style.transform = `translateX(${(1 - q) * -30}px)`; });
+  /* act 2 */
+  const mm2 = 48 * ramp(t, at(2, 0.4), at(2, 2.8)); $('#mm2').textContent = Math.round(mm2); $('#mmbar2').style.width = (560 * Math.min(mm2, 60) / 60) + 'px';
+  $('#trig2').innerHTML = mm2 >= 30 ? '<b style="color:#ff8a66">TRIGGER REACHED · 30 mm</b>' : 'Trigger 30 mm';
+  $('#act2').style.opacity = ramp(t, at(2, 5.0), at(2, 5.4)) * (0.7 + 0.3 * Math.sin(t * 8));
+  const u = t - S[3]; const f1 = sm((u - 0.8) / 2.4);
+  const [dx, dy, dang] = along(SWEEP, f1); $('#hd').setAttribute('transform', `translate(${dx} ${dy}) rotate(${dang * 180 / Math.PI + 90}) scale(1.5)`);
+  document.querySelectorAll('#hd .blade').forEach((b, i) => b.setAttribute('transform', `rotate(${(t * 2200 + i * 45) % 360})`));
+  $('#sw').setAttribute('stroke-dashoffset', sweepLen * (1 - f1));
+  ['A', 'D', 'G'].forEach(k => { const a = clamp((f1 - (WATER2[k][0][1] - 20) / 330) * 5); $('#hw' + k).setAttribute('opacity', a * (0.7 + 0.3 * Math.sin(t * 6))); $('#hs' + k).setAttribute('opacity', a); });
+  [0, 1, 2, 3].forEach(i => { const a = ramp(u, 1.1 + i * 0.6, 1.4 + i * 0.6); const e = $('#in' + i); e.style.opacity = a; e.style.transform = `translateX(${(1 - a) * 30}px)`; });
+  $('#hr').setAttribute('stroke-dashoffset', 900 * (1 - ramp(u, 3.6, 5.0)));
+  [1, 2, 3, 4].forEach(n => $('#hn' + n).setAttribute('opacity', ramp(u, 3.5 + n * 0.3, 3.8 + n * 0.3)));
+  $('#out2').style.opacity = ramp(u, 4.9, 5.3);
+  document.querySelectorAll('.holoframe,.holomap').forEach(h => { h.style.transform = `perspective(1600px) rotateY(${-6 + 3 * Math.sin(t * 0.7)}deg) rotateX(${2 * Math.sin(t * 0.5)}deg)`; });
+  /* act 2b */
+  { const u = t - S[4] - 0.2; const fi = Math.max(0, Math.min(209, Math.round(u * 30))); const im = N3D[fi]; if (im.complete) $('#n3d').src = im.src; }
+  [0, 1, 2, 3].forEach(i => { const q = ramp(t, S[4] + [1.8, 2.6, 3.4, 4.4][i], S[4] + [1.8, 2.6, 3.4, 4.4][i] + 0.4); const e = $('#nc' + i); e.style.opacity = q; e.style.transform = `translateX(${(1 - q) * 30}px)`; });
+  updateRecs(t);
+  /* act 3 */
+  updateVids(t);
+  { const m = raceMin(t); if (t > S[5] - 0.5 && t < at(5, 10.8)) { drawSide('hu', RU, m, '#9fb4c6'); drawSide('hr2', RR, m, '#3fe08f'); }
+    $('#clk3').textContent = `${Math.floor(m)}:${String(Math.floor((m % 1) * 60)).padStart(2, '0')}`; }
+  /* act 4 */
+  [0, 1, 2].forEach(i => { const q = ramp(t, at(7, 3.0 + i * 0.9), at(7, 3.5 + i * 0.9)); const e = $('#vi' + i); e.style.opacity = q; e.style.transform = `translateX(${(1 - q) * -30}px)`; });
+}
+
+/* kinetic headlines */
+function splitWords(root) { const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); const ns = []; while (tw.nextNode()) ns.push(tw.currentNode); const out = [];
+  ns.forEach(nd => { const fr = document.createDocumentFragment(); nd.textContent.split(/(\s+)/).forEach(p => { if (!p) return; if (/^\s+$/.test(p)) fr.appendChild(document.createTextNode(p)); else { const w = document.createElement('span'); w.className = 'w'; w.textContent = p; fr.appendChild(w); out.push(w); } }); nd.parentNode.replaceChild(fr, nd); }); return out; }
+OV.forEach(o => { const hs = o.el.querySelectorAll('.h1,.h2'); if (!hs.length) return; o.words = []; hs.forEach(h => { const a = h.dataset.at ? +h.dataset.at : null; splitWords(h).forEach((w, j) => { w._at = a; w._j = j; o.words.push(w); }); }); });
+
+/* rain + lightning */
+const rc = $('#rain').getContext('2d'); const DROPS = Array.from({ length: 1000 }, () => [rnd() * 2200 - 140, rnd() * 1200, 1100 + rnd() * 700, 20 + rnd() * 30, 0.2 + rnd() * 0.5]);
+function drawRain(t, k) { rc.clearRect(0, 0, 1920, 1080); if (k < 0.01) return; rc.strokeStyle = '#dbe8f1'; rc.lineWidth = 1.6;
+  for (const [x0, y0, v, len, a] of DROPS) { const y = ((y0 + v * t) % 1200) - 60, x = x0 + y * 0.14; rc.globalAlpha = a * k; rc.beginPath(); rc.moveTo(x, y); rc.lineTo(x + len * 0.14, y + len); rc.stroke(); } rc.globalAlpha = 1; }
+/* cursor helper for the laptop scenes */
+function cursor(id, t, keys) {   /* keys: [time, cssX, cssY, click?] */
+  const cur = $('#' + id + 'cur'), rip = $('#' + id + 'rip'); let i = 0; while (i < keys.length - 1 && keys[i + 1][0] <= t) i++;
+  const a = keys[i], b = keys[Math.min(i + 1, keys.length - 1)], k = b[0] > a[0] ? sm((t - a[0]) / (b[0] - a[0])) : 0;
+  const x = lerp(a[1], b[1], k) * CSS, y = lerp(a[2], b[2], k) * CSS; cur.style.transform = `translate(${x}px,${y}px)`;
+  let r = 0, rs = 1; for (const kk of keys) if (kk[3] && t >= kk[0] && t < kk[0] + 0.6) { const f = (t - kk[0]) / 0.6; r = 1 - f; rs = 0.4 + f * 1.4; }
+  rip.style.opacity = r; rip.style.transform = `scale(${rs})`;
+}
+
+window.renderAt = async t => { PEND.length = 0; update(t); await Promise.all(PEND); return true; };
+window.KS_READY = Promise.all([document.fonts.ready, ...[...document.images].map(im => im.complete ? 1 : new Promise(r => { im.onload = im.onerror = r; }))]).then(() => { update(0); return true; });
+</script>
+</body>
+</html>

@@ -58,8 +58,68 @@ Real photographs from Wikimedia Commons, cropped, colour-graded and shown with s
     Licence: CC BY 4.0  https://creativecommons.org/licenses/by/4.0/
     Source:  https://commons.wikimedia.org/wiki/File:Birds_eye_view_of_a_paddy_field_near_Bhutiachang,_Udalguri_District.jpg
 
+
+Video footage (Pexels)
+----------------------
+Real footage from Pexels, used under the Pexels License (free to use; attribution not required but given here). None was filmed on the pilot farm.
+
+ 1. "Lush tropical banana plantation in rain"
+    Creator: Nothing Ahead
+    Licence: Pexels License  https://www.pexels.com/license/
+    Source:  https://www.pexels.com/video/lush-tropical-banana-plantation-in-rain-34411622/
+
+ 2. "Tropical rainfall on banana leaves in slow motion"
+    Creator: Srinivas Kashyap
+    Licence: Pexels License  https://www.pexels.com/license/
+    Source:  https://www.pexels.com/video/tropical-rainfall-on-banana-leaves-in-slow-motion-32089669/
+
+ 3. "A cacao fruit on a tree"
+    Creator: Frank Meriño
+    Licence: Pexels License  https://www.pexels.com/license/
+    Source:  https://www.pexels.com/video/a-cacao-fruit-on-a-tree-8505961/
+
+ 4. "Chocolate fruit, Philippines"
+    Creator: Joey D.
+    Licence: Pexels License  https://www.pexels.com/license/
+    Source:  https://www.pexels.com/video/chocolate-fruit-tasty-philippines-3995569/
+
+ 5. "Rural cocoa farmer drying beans in Ghana"
+    Creator: Zeal Creative Studios
+    Licence: Pexels License  https://www.pexels.com/license/
+    Source:  https://www.pexels.com/video/rural-cocoa-farmer-drying-beans-in-ghana-31283621/
+
+ 6. "Walking in a rubber tree plantation"
+    Creator: naratip sretan
+    Licence: Pexels License  https://www.pexels.com/license/
+    Source:  https://www.pexels.com/video/walking-in-a-rubber-tree-plantation-13325421/
+
+ 7. "Man walking on a mango farm"
+    Creator: Prodèép Nëpalënsis
+    Licence: Pexels License  https://www.pexels.com/license/
+    Source:  https://www.pexels.com/video/man-walking-on-a-mango-farm-5018897/
+
+ 8. "Rural farmer carrying harvest in tropical setting"
+    Creator: Souhityo Das
+    Licence: Pexels License  https://www.pexels.com/license/
+    Source:  https://www.pexels.com/video/rural-farmer-carrying-harvest-in-tropical-setting-36681147/
+
+ 9. "An aerial view of a farm with trees and houses"
+    Creator: Serg Alesenko
+    Licence: Pexels License  https://www.pexels.com/license/
+    Source:  https://www.pexels.com/video/an-aerial-view-of-a-farm-with-trees-and-houses-15678785/
+
+10. "A couple of farmers harvesting crops by hand"
+    Creator: Asad Photo Maldives
+    Licence: Pexels License  https://www.pexels.com/license/
+    Source:  https://www.pexels.com/video/a-couple-of-farmers-harvesting-crops-by-hand-12540973/
+
+11. "A person walking down a dirt path in a field"
+    Creator: Ucundinamarca Virtual
+    Licence: Pexels License  https://www.pexels.com/license/
+    Source:  https://www.pexels.com/video/a-person-walking-down-a-dirt-path-in-a-field-17190661/
+
 Other material
 --------------
 App screens, block map, hologram and route race: KokoShield Field Desk prototype, demo data (team's own work).
-Drone survey: concept animation on the app's demo map. Live-action farmer clips (when added): AI-generated, fictional farmer.
+Drone survey: concept animation on the app's demo map. The two scouts in the route comparison are stock footage; their routes and finds are a demo simulation on the prototype map.
 Voice: AI-generated (Microsoft Edge neural voice 'Ava'). Music and sound effects: synthesised for this video.
