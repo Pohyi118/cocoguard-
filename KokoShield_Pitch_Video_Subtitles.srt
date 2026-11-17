@@ -1,91 +1,103 @@
 1
-00:00:00,600 --> 00:00:05,040
-After heavy rain, a cocoa grower has about thirty minutes to scout.
+00:00:05,600 --> 00:00:07,650
+Black pod is driven by rain.
 
 2
-00:00:05,090 --> 00:00:07,000
-Which blocks should they check first?
+00:00:07,700 --> 00:00:13,120
+Every year it destroys an estimated twenty to thirty percent of the world's cocoa.
 
 3
-00:00:07,050 --> 00:00:11,080
-Guess wrong, and black pod spreads to healthy pods.
+00:00:14,360 --> 00:00:16,160
+The storm has just stopped.
 
 4
-00:00:12,300 --> 00:00:18,550
-Black pod spreads by rain splash and costs an estimated twenty to thirty percent of global cocoa production.
+00:00:16,210 --> 00:00:22,750
+A Malaysian smallholder has thirty minutes to scout before the disease spreads, and no way to know which block to check first.
 
 5
-00:00:18,600 --> 00:00:23,210
-Heavy rain is already linked to lower yields in Ghana, Ecuador and Indonesia.
+00:00:22,800 --> 00:00:25,720
+Memory and habit are all he has.
 
 6
-00:00:23,260 --> 00:00:31,210
-In Malaysia, eighty-six percent of cocoa land is smallholdings, and advisers can't visit every farm after every storm.
+00:00:30,000 --> 00:00:31,200
+KokoShield.
 
 7
-00:00:32,020 --> 00:00:36,050
-Growers already have photo apps, forecasts and paper logs.
+00:00:31,250 --> 00:00:33,100
+Weather-guided disease scouting.
 
 8
-00:00:36,100 --> 00:00:41,220
-But none of them turns "it rained heavily" into "walk these blocks first, in the time you have".
+00:00:33,150 --> 00:00:38,290
+Thirty millimetres of rain in twenty-four hours, and the system activates.
 
 9
-00:00:41,270 --> 00:00:45,000
-That empty corner is where KokoShield sits.
+00:00:39,340 --> 00:00:42,110
+A borrowed drone marks where water is standing.
 
 10
-00:00:45,680 --> 00:00:53,680
-KokoShield Field Desk combines the rain reading, the block map and past cases into a ranked route that fits thirty minutes.
+00:00:42,160 --> 00:00:51,270
+KokoShield combines that with the rain gauge, each block's drainage and past confirmed cases, and in seconds builds a thirty-minute priority route.
 
 11
-00:00:53,730 --> 00:00:58,310
-Every stop shows why it's there, on a phone or a printed checklist.
+00:00:51,320 --> 00:00:53,140
+Block A first, then D.
 
 12
-00:01:00,020 --> 00:01:03,720
-Scouts log each suspected pod with a note and a photo.
+00:00:53,190 --> 00:00:54,810
+He goes.
 
 13
-00:01:03,770 --> 00:01:09,820
-An adviser then confirms or rules out every case, so only verified disease counts.
+00:00:56,070 --> 00:01:04,180
+And our own Field Node, a 3D-printed sensor concept, adds local temperature and humidity at block level.
 
 14
-00:01:10,600 --> 00:01:13,860
-Our pilot runs on one cocoa farm in Tanjung Sepat.
+00:01:07,020 --> 00:01:08,580
+Same thirty minutes.
 
 15
-00:01:13,910 --> 00:01:19,150
-Two scouts walk the same thirty minutes: one on the ranked route, one on the usual round.
+00:01:08,630 --> 00:01:11,920
+One scout on the usual round, one on the ranked route.
 
 16
-00:01:19,200 --> 00:01:21,680
-A follow-up check counts what each missed.
+00:01:11,970 --> 00:01:13,970
+Same time, sharper path.
 
 17
-00:01:21,730 --> 00:01:26,810
-We go ahead only if the ranked route finds more confirmed pods per hour in three of four rounds.
+00:01:14,020 --> 00:01:19,240
+In the demo: fourteen suspect pods per scouting hour, against four.
 
 18
-00:01:26,860 --> 00:01:29,970
-The pilot budget is twelve hundred ringgit.
+00:01:22,110 --> 00:01:25,680
+Minute two, block A. Dark lesions on the lower pods.
 
 19
-00:01:30,860 --> 00:01:35,600
-Finding disease sooner means fewer pods lost, and treatment only where it's needed.
+00:01:25,730 --> 00:01:31,990
+He logs three on his phone, the adviser confirms, and only the affected blocks are treated.
 
 20
-00:01:35,650 --> 00:01:37,830
-Growers use KokoShield for free.
+00:01:33,860 --> 00:01:36,380
+Fewer pods lost to a changing climate.
 
 21
-00:01:37,880 --> 00:01:46,600
-A cooperative or buyer pays seventy-five ringgit per farm per season, starting with a twenty-farm cluster in Sabah or Sarawak in 2027.
+00:01:36,430 --> 00:01:38,170
+Higher smallholder income.
 
 22
-00:01:47,370 --> 00:01:49,910
-We're a team of five from Universiti Malaya.
+00:01:38,220 --> 00:01:39,820
+Food systems that hold.
 
 23
-00:01:49,960 --> 00:01:58,410
-KokoShield helps cocoa growers find disease sooner after the rain: one farm first, then every cocoa region facing wetter seasons.
+00:01:39,870 --> 00:01:44,060
+And the same route planner, ready for rice blast in China.
+
+24
+00:01:45,330 --> 00:01:49,810
+We're asking for twelve hundred ringgit to complete the first single-farm pilot.
+
+25
+00:01:49,860 --> 00:01:51,060
+KokoShield.
+
+26
+00:01:51,110 --> 00:01:53,330
+Find disease sooner after the rain.

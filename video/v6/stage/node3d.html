@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Field Node 3D</title>
+<style>html,body{margin:0;background:transparent;overflow:hidden}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head><body><canvas id="gl" width="1100" height="800"></canvas>
+<script type="module">
+import * as THREE from 'three'; import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)); const sm = x => { x = clamp(x); return x * x * (3 - 2 * x); }; const ramp = (t, a, b) => sm((t - a) / (b - a));
+const canvas = document.getElementById('gl');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true }); renderer.setPixelRatio(1); renderer.setSize(1100, 800, false);
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1; renderer.shadowMap.enabled = true;
+const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(30, 1100 / 800, 0.1, 100);
+scene.add(new THREE.HemisphereLight(0xdfefff, 0x3a3a3a, 1.1));
+const key = new THREE.DirectionalLight(0xfff4e0, 2.2); key.position.set(3, 5, 4); key.castShadow = true; key.shadow.mapSize.set(2048, 2048); scene.add(key);
+const rim = new THREE.DirectionalLight(0x7fd4ff, 1.4); rim.position.set(-4, 2, -3); scene.add(rim);
+const spin = new THREE.Group(); scene.add(spin); const parts = [];
+const ground = new THREE.Mesh(new THREE.CircleGeometry(2.2, 48), new THREE.ShadowMaterial({ opacity: 0.35 })); ground.rotation.x = -Math.PI / 2; ground.position.y = -0.95; ground.receiveShadow = true; scene.add(ground);
+const ring = new THREE.Mesh(new THREE.RingGeometry(1.6, 1.66, 64), new THREE.MeshBasicMaterial({ color: 0x7fd4ff, transparent: true, opacity: 0.6, side: THREE.DoubleSide })); ring.rotation.x = -Math.PI / 2; ring.position.y = -0.94; scene.add(ring);
+const ready = new Promise(res => new GLTFLoader().load('../../../build/kit/CAD/KokoShield_Field_Node.glb', g => {
+  const m = g.scene; const box = new THREE.Box3().setFromObject(m); const size = box.getSize(new THREE.Vector3()), cen = box.getCenter(new THREE.Vector3());
+  const s = 2.0 / Math.max(size.x, size.y, size.z); m.scale.setScalar(s); m.position.copy(cen).multiplyScalar(-s); spin.add(m); spin.updateMatrixWorld(true);
+  const C0 = new THREE.Box3().setFromObject(m).getCenter(new THREE.Vector3());
+  m.traverse(o => { if (!o.isMesh) return; o.castShadow = o.receiveShadow = true; if (o.material) { o.material = o.material.clone(); o.material.roughness = 0.55; o.material.metalness = 0.1; }
+    const wc = new THREE.Box3().setFromObject(o).getCenter(new THREE.Vector3()); let d = wc.clone().sub(C0); if (d.length() < 1e-3) d.set(0, 1, 0); d.normalize();
+    const p0 = o.getWorldPosition(new THREE.Vector3()); const a = o.parent.worldToLocal(p0.clone()), bb = o.parent.worldToLocal(p0.clone().add(d)); parts.push({ o, base: o.position.clone(), off: bb.sub(a) }); });
+  res();
+}, undefined, e => { console.error(e); res(); }));
+window.renderAt = async u => {   /* u: seconds into the 7 s beat */
+  await ready;
+  const ex = Math.min(ramp(u, 1.6, 3.2), 1 - ramp(u, 5.4, 6.4));
+  parts.forEach(p => p.o.position.copy(p.base).addScaledVector(p.off, ex * 0.6));
+  spin.rotation.y = -0.6 + u * 0.55; spin.position.y = 0.05 * Math.sin(u * 1.5);
+  const r = 4.6 - 0.5 * ramp(u, 0, 2); camera.position.set(r * Math.sin(0.5), 2.0 + 0.3 * Math.sin(u * 0.4), r * Math.cos(0.5)); camera.lookAt(0, -0.1, 0);
+  ring.material.opacity = 0.35 + 0.25 * Math.sin(u * 3); ring.scale.setScalar(1 + 0.03 * Math.sin(u * 3));
+  renderer.render(scene, camera); return true;
+};
+window.KS_READY = ready.then(() => true);
+</script></body></html>
