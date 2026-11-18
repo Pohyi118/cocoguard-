@@ -1,0 +1,194 @@
+[
+ {
+  "t0": 0.0,
+  "t1": 4.6000000000000005,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\growth_timelapse_smooth.mp4",
+  "audio": false,
+  "src0": 0.0,
+  "src1": 4.930014492753624
+ },
+ {
+  "t0": 4.6000000000000005,
+  "t1": 5.573,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\opening_healthy_pod_rain.mp4",
+  "audio": false,
+  "src0": 0.0,
+  "src1": 0.9174546077423776
+ },
+ {
+  "t0": 5.573,
+  "t1": 7.233,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\opening_healthy_pod_rain.mp4",
+  "audio": true,
+  "src0": 0.95,
+  "src1": 2.576666666666666
+ },
+ {
+  "t0": 7.233,
+  "t1": 9.128,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\opening_storm_over_farm.mp4",
+  "audio": true,
+  "src0": 1.6,
+  "src1": 3.908663148636764
+ },
+ {
+  "t0": 9.128,
+  "t1": 23.126,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\shot3_stream_drainage.mp4",
+  "audio": true,
+  "src0": 0.0,
+  "src1": 7.881187788731722
+ },
+ {
+  "t0": 23.126,
+  "t1": 30.538,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\farmer1_after_storm.mp4",
+  "audio": true,
+  "src0": 0.0,
+  "src1": 7.665371469688791
+ },
+ {
+  "t0": 30.538,
+  "t1": 33.832,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_frames\\shot1_first_oblique.jpeg",
+  "audio": false,
+  "src0": 0,
+  "src1": 0
+ },
+ {
+  "t0": 33.832,
+  "t1": 40.432,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\shot1_descent_to_aerial.mp4",
+  "audio": true,
+  "src0": 0.0,
+  "src1": 6.56666666666667
+ },
+ {
+  "t0": 40.432,
+  "t1": 44.801,
+  "path": "c:\\Documents\\cocoguard-\\video\\v8_flow\\rec\\plan_activate.mp4",
+  "audio": false,
+  "src0": 2.1360000000000072,
+  "src1": 6.471666666666676
+ },
+ {
+  "t0": 44.801,
+  "t1": 47.958999999999996,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\drone_closeup_flyaway.mp4",
+  "audio": true,
+  "src0": 0.3,
+  "src1": 3.4246666666666625
+ },
+ {
+  "t0": 47.958999999999996,
+  "t1": 50.309,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\drone_topdown_pass.mp4",
+  "audio": true,
+  "src0": 1.0,
+  "src1": 6.520567375886529
+ },
+ {
+  "t0": 50.309,
+  "t1": 56.252,
+  "path": "node",
+  "audio": false,
+  "src0": 0.4,
+  "src1": 5.6
+ },
+ {
+  "t0": 55.652,
+  "t1": 60.291,
+  "path": "link",
+  "audio": false,
+  "src0": 55.652,
+  "src1": 60.257666666666665
+ },
+ {
+  "t0": 60.291,
+  "t1": 67.133,
+  "path": "c:\\Documents\\cocoguard-\\video\\v8_flow\\rec\\plan_route.mp4",
+  "audio": false,
+  "src0": 0.6729848866498739,
+  "src1": 7.361980787704132
+ },
+ {
+  "t0": 67.133,
+  "t1": 71.917,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\farmer2_he_goes.mp4",
+  "audio": true,
+  "src0": 0.2,
+  "src1": 4.950666666666675
+ },
+ {
+  "t0": 71.917,
+  "t1": 73.90199999999999,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\pod_black_pod_closeup.mp4",
+  "audio": true,
+  "src0": 0.0,
+  "src1": 3.8836691855583574
+ },
+ {
+  "t0": 73.90199999999999,
+  "t1": 78.57399999999998,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\farmer3_find_photo.mp4",
+  "audio": true,
+  "src0": 0.3,
+  "src1": 4.938666666666665
+ },
+ {
+  "t0": 78.57399999999998,
+  "t1": 81.065,
+  "path": "c:\\Documents\\cocoguard-\\video\\v8_flow\\rec\\log_confirm.mp4",
+  "audio": false,
+  "src0": 1.4889999999999999,
+  "src1": 3.660846846846849
+ },
+ {
+  "t0": 81.065,
+  "t1": 98.356,
+  "path": "c:\\Documents\\cocoguard-\\video\\v8_flow\\rec\\race.mp4",
+  "audio": false,
+  "src0": 0.0,
+  "src1": 17.257666666666665
+ },
+ {
+  "t0": 98.356,
+  "t1": 102.321,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\farmer3_find_photo.mp4",
+  "audio": true,
+  "src0": 4.4,
+  "src1": 7.969735182849939
+ },
+ {
+  "t0": 102.321,
+  "t1": 104.054,
+  "path": "c:\\Documents\\cocoguard-\\video\\v8_flow\\work\\shot1_reversed.mp4",
+  "audio": true,
+  "src0": 1.4,
+  "src1": 4.538449701865746
+ },
+ {
+  "t0": 104.054,
+  "t1": 106.46900000000001,
+  "path": "c:\\Documents\\cocoguard-\\video\\v5\\flow_clips\\farmer1_after_storm.mp4",
+  "audio": true,
+  "src0": 5.0,
+  "src1": 7.958592132505178
+ },
+ {
+  "t0": 106.46900000000001,
+  "t1": 112.69500000000001,
+  "path": "map",
+  "audio": false,
+  "src0": 106.46900000000001,
+  "src1": 112.66166666666668
+ },
+ {
+  "t0": 112.69500000000001,
+  "t1": 119.039,
+  "path": "c:\\Documents\\cocoguard-\\video\\v8_flow\\work\\shot1_reversed.mp4",
+  "audio": false,
+  "src0": 7.9,
+  "src1": 7.9
+ }
+]

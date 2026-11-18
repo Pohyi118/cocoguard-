@@ -1,0 +1,68 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Field Node</title>
+<style>html,body{margin:0;background:transparent;overflow:hidden}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head><body><canvas id="gl" width="1920" height="1080"></canvas>
+<script type="module">
+// Product shot of the KokoShield Field Node CAD model: slow turn, then the lid lifts and the sensor hood slides out.
+// window.renderAt(u) renders time u (s) and returns screen positions of each part's anchor for the video's callouts.
+import * as THREE from 'three'; import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)); const sm = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+const ramp = (t, a, b) => sm((t - a) / (b - a));
+const W = 1920, H = 1080, canvas = document.getElementById('gl');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H, false); renderer.setClearColor(0x000000, 0);
+renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer); scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+const camera = new THREE.PerspectiveCamera(26, W / H, 0.1, 100);
+const key = new THREE.DirectionalLight(0xfff1e0, 2.4); key.position.set(3.5, 6, 4); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+key.shadow.camera.left = key.shadow.camera.bottom = -3; key.shadow.camera.right = key.shadow.camera.top = 3; key.shadow.radius = 6; scene.add(key);
+const rim = new THREE.DirectionalLight(0x9fd8c0, 1.6); rim.position.set(-5, 2.5, -4); scene.add(rim);
+scene.add(new THREE.HemisphereLight(0xe8f2ec, 0x1a2420, 0.35));
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(12, 12), new THREE.ShadowMaterial({ opacity: 0.42 }));
+ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+const spin = new THREE.Group(); scene.add(spin); const parts = {};
+const DIR = { 'Enclosure_Lid': [0, 1, 0, 0.95], 'Ventilated_Sensor_Hood': [1, 0.12, 0, 0.75], 'Sensor_Size_Envelope': [1, 0.12, 0, 0.75],
+              'Enclosure_Base': [0, 0, 0, 0], 'Controller_Size_Envelope': [0, 0.18, 0, 1] };
+const COL = { Enclosure_Base: 0x2f3c36, Enclosure_Lid: 0xc9cec8, Ventilated_Sensor_Hood: 0xb98f55, Sensor_Size_Envelope: 0x3a6fa8, Controller_Size_Envelope: 0x1f6b4f };
+const ready = new Promise(res => new GLTFLoader().load('CAD/KokoShield_Field_Node.glb', g => {
+  const m = g.scene;                                             // glTF is Y-up
+  spin.add(m); spin.updateMatrixWorld(true);
+  const box = new THREE.Box3().setFromObject(m), size = box.getSize(new THREE.Vector3()), cen = box.getCenter(new THREE.Vector3());
+  const s = 2.3 / Math.max(size.x, size.z); m.scale.multiplyScalar(s); spin.updateMatrixWorld(true);
+  const b2 = new THREE.Box3().setFromObject(m), c2 = b2.getCenter(new THREE.Vector3());
+  m.position.sub(new THREE.Vector3(c2.x, b2.min.y, c2.z)); spin.updateMatrixWorld(true);
+  m.traverse(o => {
+    if (!o.isMesh) return; o.castShadow = o.receiveShadow = true;
+    let n = o; while (n && !DIR[n.name]) n = n.parent; const key = n ? n.name : o.name;
+    if (o.material) { o.material = o.material.clone(); o.material.roughness = 0.58; o.material.metalness = 0.04; o.material.envMapIntensity = 0.75;
+      const col = COL[key]; if (col) o.material.color.set(col); }
+    if (!parts[key]) parts[key] = { node: n || o, base: (n || o).position.clone(), meshes: [] };
+    parts[key].meshes.push(o);
+  });
+  res();
+}, undefined, e => { console.error(e); res(); }));
+const v = new THREE.Vector3();
+function anchor(name) {   // top-centre of a part's bounding box, projected to screen pixels
+  const p = parts[name]; if (!p) return null; const b = new THREE.Box3(); p.meshes.forEach(o => b.expandByObject(o));
+  const c = b.getCenter(new THREE.Vector3()); v.set(c.x, b.max.y * 0.6 + c.y * 0.4, c.z).project(camera);
+  return [Math.round((v.x + 1) / 2 * W), Math.round((1 - v.y) / 2 * H)];
+}
+window.renderAt = async u => {
+  await ready;
+  const ex = ramp(u, 2.2, 3.8);
+  for (const [name, p] of Object.entries(parts)) {
+    const d = DIR[name]; if (!d) continue;
+    p.node.position.set(p.base.x + d[0] * d[3] * ex * 0.045, p.base.y + d[1] * d[3] * ex * 0.045, p.base.z + d[2] * d[3] * ex * 0.045);
+  }
+  spin.rotation.y = -0.85 + u * 0.16;
+  const r = 7.4 - 0.6 * ramp(u, 0, 3.5);
+  camera.position.set(r * Math.sin(0.55), 2.6 + 0.25 * ramp(u, 2, 4), r * Math.cos(0.55)); camera.lookAt(0, 0.62, 0);
+  spin.updateMatrixWorld(true); camera.updateMatrixWorld(true);
+  renderer.render(scene, camera);
+  return { hood: anchor('Ventilated_Sensor_Hood'), lid: anchor('Enclosure_Lid'), base: anchor('Enclosure_Base'), board: anchor('Controller_Size_Envelope') };
+};
+window.KS_READY = ready.then(() => Object.keys(parts));
+</script></body></html>

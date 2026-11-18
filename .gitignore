@@ -44,3 +44,9 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+
+# Flow cut (video/v8_flow): renders, stems, downloads, frames
+video/v8_flow/work/
+video/v8_flow/audio/
+video/v8_flow/geo_dl/
+video/v8_flow/node/frames/

@@ -1,0 +1,179 @@
+1
+00:00:02,070 --> 00:00:04,950
+This cocoa pod is weeks from harvest.
+
+2
+00:00:05,673 --> 00:00:07,483
+Then the rain comes.
+
+3
+00:00:09,200 --> 00:00:10,705
+With the rain comes a disease:
+
+4
+00:00:10,745 --> 00:00:11,743
+black pod.
+
+5
+00:00:11,783 --> 00:00:14,255
+Each drop that splashes off an infected
+
+6
+00:00:14,295 --> 00:00:17,203
+pod can carry the disease to the next.
+
+7
+00:00:17,243 --> 00:00:19,455
+Worldwide, it destroys an estimated
+
+8
+00:00:19,495 --> 00:00:22,896
+twenty to thirty percent of cocoa, every year.
+
+9
+00:00:23,595 --> 00:00:24,651
+In Malaysia,
+
+10
+00:00:24,691 --> 00:00:27,564
+most cocoa grows on small farms like this one.
+
+11
+00:00:27,604 --> 00:00:29,875
+After a storm, this farmer has a golden
+
+12
+00:00:29,915 --> 00:00:32,069
+half-hour to check eight blocks.
+
+13
+00:00:32,109 --> 00:00:33,399
+But where should he start?
+
+14
+00:00:36,613 --> 00:00:38,908
+KokoShield watches the rain for him.
+
+15
+00:00:38,948 --> 00:00:41,537
+Last night, forty-eight millimetres fell,
+
+16
+00:00:41,577 --> 00:00:43,401
+well past its alarm level.
+
+17
+00:00:43,441 --> 00:00:44,636
+Time to search.
+
+18
+00:00:45,181 --> 00:00:47,217
+To pick where, it gathers clues.
+
+19
+00:00:47,257 --> 00:00:48,655
+A borrowed drone shows
+
+20
+00:00:48,695 --> 00:00:50,519
+where water still stands.
+
+21
+00:00:50,559 --> 00:00:52,700
+A small 3D-printed sensor
+
+22
+00:00:52,740 --> 00:00:55,012
+measures how damp the air is.
+
+23
+00:00:55,052 --> 00:00:57,606
+Add the rain gauge and past outbreaks,
+
+24
+00:00:57,646 --> 00:00:59,950
+and every block gets a score.
+
+25
+00:01:00,568 --> 00:01:02,957
+In seconds, he has a thirty-minute plan:
+
+26
+00:01:02,997 --> 00:01:06,882
+block A first, then D, B and G.
+
+27
+00:01:07,410 --> 00:01:08,278
+He heads out.
+
+28
+00:01:08,318 --> 00:01:10,401
+His phone shows what to look for at each stop,
+
+29
+00:01:10,441 --> 00:01:11,660
+even offline.
+
+30
+00:01:12,297 --> 00:01:15,288
+Two minutes in, at block A, he spots it:
+
+31
+00:01:15,328 --> 00:01:17,340
+dark patches on the lower pods.
+
+32
+00:01:17,380 --> 00:01:20,722
+He snaps a photo, and an adviser confirms it.
+
+33
+00:01:21,545 --> 00:01:23,062
+But does the plan really help?
+
+34
+00:01:23,102 --> 00:01:24,711
+Let's test both routes.
+
+35
+00:01:28,930 --> 00:01:31,768
+His usual route finds two infected pods,
+
+36
+00:01:31,808 --> 00:01:34,350
+and walks right past two sick blocks.
+
+37
+00:01:34,390 --> 00:01:36,461
+KokoShield's route finds seven,
+
+38
+00:01:36,501 --> 00:01:37,697
+and misses none.
+
+39
+00:01:38,927 --> 00:01:40,703
+Every pod caught early can be
+
+40
+00:01:40,743 --> 00:01:42,531
+removed before it spreads.
+
+41
+00:01:42,571 --> 00:01:44,842
+That means less cocoa lost, and steadier
+
+42
+00:01:44,882 --> 00:01:46,729
+income for the families who grow it.
+
+43
+00:01:46,769 --> 00:01:48,403
+We're in talks with a cocoa farm
+
+44
+00:01:48,443 --> 00:01:50,962
+in Tanjung Sepat for the first pilot,
+
+45
+00:01:51,002 --> 00:01:52,955
+on a budget of twelve hundred ringgit.

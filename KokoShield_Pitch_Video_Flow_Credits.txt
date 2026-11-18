@@ -1,0 +1,40 @@
+KokoShield pitch video (v8): sources and credits
+===============================================
+
+Footage
+- Farm, farmer, storm, drone and cocoa growth time-lapse footage: AI-generated with Google Flow (Omni 1.1 Flash). The farm and the farmer are fictional and illustrative. They are not the pilot site or a real grower.
+- The farm footage starts from or lands on prototype/assets/farm_aerial.jpg, the illustrative aerial image the app uses.
+- App footage: screen recordings of the KokoShield Field Desk prototype (prototype/KokoShield_Prototype.html) with its demo data.
+- Field Node: rendered from the team's CAD model (KokoShield_Field_Node.glb, prototype kit). Concept prototype.
+
+Photographs (shown in the opening; also used as a reference for the black pod close-up)
+- "Cacao black pod rot 29064726523" by Scot Nelson, CC0
+  https://commons.wikimedia.org/wiki/File:Cacao_black_pod_rot_29064726523.jpg
+- "Cacao black pod rot 39744592361" by Scot Nelson, CC0
+  https://commons.wikimedia.org/wiki/File:Cacao_black_pod_rot_39744592361.jpg
+- "Cacao black pod rot 39572305384" by Scot Nelson, CC0
+  https://commons.wikimedia.org/wiki/File:Cacao_black_pod_rot_39572305384.jpg
+
+SDG icons
+- Sustainable Development Goal icons 2 and 13: United Nations, sdgs.un.org, used unaltered for information.
+
+Map
+- Country and state outlines: Natural Earth (public domain), naturalearthdata.com. Tanjung Sepat pin placed by the team.
+
+Sound
+- Narration: Microsoft Edge neural text-to-speech (en-US-AndrewMultilingualNeural), AI-generated voice.
+- Music: none. Sound effects placed in code (video/v8_flow/sound_v7.py).
+- Ambience: sound generated with the Flow clips, plus synthesized rain.
+- Thunder: "Closeup Thunder Strike 01" by loganzsound, CC0
+  https://freesound.org/people/loganzsound/sounds/840628/
+- Sound effects and tropical ambience: Freesound, all CC0 (freesound.org/s/<id>): whoosh 701104 and 71852, clock ticking 130388,
+  soft notification 879787, UI click 528561, camera shutter 431588, app melody 619837, soft pop 776443, tape rewind 372876,
+  UI blip 396193, UI back 833628, kalimba notification 879789, ambient bell 198416, bell bowl 255762,
+  Peruvian Amazon birds and frogs (daytime) 653743. Files in video/v8_flow/sfx.
+
+Figures
+- 20-30% of global cocoa production lost to black pod each year, spread by rain splash: Guest, D. (2007), as cited in the GSC proposal.
+- 86% of Malaysia's cultivated cocoa area is smallholdings (5,662 of 6,580 ha, 2025): Malaysian Cocoa Board, as cited in the GSC proposal.
+- 48 mm rain, 30 mm alarm level, route A-D-B-G, 7 vs 2 pods and 0 vs 2 missed blocks: the prototype's demo data, labelled on screen as demo data.
+- First pilot at a cocoa farm in Tanjung Sepat, Selangor (in talks), on a RM1,200 budget: GSC proposal and team.
+- Pilot plan (4 post-rain rounds over about 6 weeks; adviser reviews, travel, supplies, contingency) and SDG targets 2.3, 2.4 and 13.1: GSC proposal v3.
